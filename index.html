@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Reclaim – Habit Breaker</title>
+    
+    <!-- PWA Meta Tags & Icons (will be injected dynamically via JS for logo) -->
+    <link rel="manifest" id="dynamicManifest">
+    <link rel="icon" id="dynamicFavicon">
+    <link rel="apple-touch-icon" id="dynamicAppleIcon">
+    <meta name="theme-color" content="#07070f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
     <style>
         /* ----- RESET & ROOT ----- */
         * {
@@ -341,6 +350,36 @@
         .sig-actions button.clear-btn.hidden {
             display: none;
         }
+
+        /* ----- CUSTOM MODAL (Reset & Messages) ----- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(7, 7, 15, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            max-width: 340px;
+            width: 100%;
+            background: #1e293b;
+            border-radius: 32px;
+            padding: 28px 24px 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            text-align: center;
+        }
+        .modal-card .modal-icon { font-size: 48px; margin-bottom: 12px; }
+        .modal-card h3 { font-size: 22px; color: #fbbf24; margin-bottom: 8px; }
+        .modal-card p { color: #94a3b8; font-size: 15px; line-height: 1.5; margin-bottom: 20px; }
+        .modal-actions { display: flex; gap: 12px; }
+        .modal-actions .btn { margin-bottom: 0; flex: 1; padding: 14px; font-size: 15px; }
 
         /* ----- PANIC OVERLAY (Breathing) ----- */
         .panic-overlay {
@@ -787,9 +826,10 @@
                 </div>
 
                 <!-- BUTTONS -->
-                <button class="btn btn-primary" id="pledgeTodayBtn">📝 Pledge Today (Commit)</button>
+                <!-- The yellow button text will be dynamically changed by JS -->
+                <button class="btn btn-primary" id="pledgeTodayBtn">📝 Loading...</button>
                 <button class="btn btn-danger" id="panicBtn">⚡ Panic Button (Urge)</button>
-                <button class="btn btn-outline" id="relapseBtn">↺ Relapse (Reset Streak)</button>
+                <button class="btn btn-outline" id="relapseBtn">↺ Reset Streak</button>
 
                 <!-- QUICK JOURNAL -->
                 <div style="margin-top:16px; background:rgba(255,255,255,0.02); border-radius:16px; padding:12px;">
@@ -800,7 +840,7 @@
                 <div id="journalPreview" style="margin-top:8px; font-size:13px; color:#94a3b8;"></div>
             </div>
 
-            <!-- ===== PAGE 2: PLEDGE ===== -->
+            <!-- ===== PAGE 2: PLEDGE (Lifetime Commitment) ===== -->
             <div id="page-pledge" class="page">
                 <div class="pledge-box">
                     <h3>🕊️ Let's Commit.</h3>
@@ -814,21 +854,20 @@
 
                     <!-- SIGNATURE PAD -->
                     <div style="margin:12px 0 8px;">
-                        <label style="font-size:12px; color:#94a3b8; display:block; text-align:left; margin-bottom:4px;">✍️ SIGN WITH YOUR FINGER</label>
+                        <label style="font-size:12px; color:#94a3b8; display:block; text-align:left; margin-bottom:4px;">✍️ SIGN WITH YOUR FINGER (One-time ceremony)</label>
                         <div class="signature-pad-wrapper" id="sigWrapper">
                             <canvas id="signatureCanvas"></canvas>
                         </div>
-                        <!-- Locked Badge (shown when signed) -->
                         <div id="lockedBadgeContainer" style="display:none; margin-top:4px;">
-                            <span class="pledge-locked-badge">🔒 Commitment Signed &amp; Locked</span>
+                            <span class="pledge-locked-badge">🔒 Lifetime Commitment Signed &amp; Locked</span>
                         </div>
                         <div class="sig-actions">
                             <button class="clear-btn" id="clearSignatureBtn">🗑️ Clear</button>
                         </div>
                     </div>
 
-                    <button class="btn btn-success" id="finalCommitBtn">✅ I commit to myself</button>
-                    <p style="font-size:11px; color:#64748b; margin-top:8px;">* Your signature is stored only on your device.</p>
+                    <button class="btn btn-success" id="finalCommitBtn">✅ I commit to myself (Forever)</button>
+                    <p style="font-size:11px; color:#64748b; margin-top:8px;">* This is a one-time agreement. Once signed, it cannot be cleared.</p>
                 </div>
             </div>
 
@@ -838,49 +877,28 @@
                 <p class="muted" style="margin-bottom:16px;">What your progress really looks like.</p>
 
                 <div class="stats-dashboard">
-                    <!-- Hero -->
                     <div class="hero-stats">
                         <div class="hero-number" id="heroTimeRegained">0</div>
                         <div class="hero-label">Hours Regained During This Streak</div>
                         <div class="hero-sub" id="heroMotivation">Every minute counts. Keep going!</div>
                     </div>
-
-                    <!-- Mini Stats -->
                     <div class="mini-stats-grid">
                         <div class="mini-stat"><div class="num" id="miniDaily">0</div><div class="lbl">Daily (min)</div></div>
                         <div class="mini-stat"><div class="num" id="miniYearly">0</div><div class="lbl">Yearly (min)</div></div>
                         <div class="mini-stat"><div class="num" id="miniBooks">0</div><div class="lbl">Books</div></div>
                         <div class="mini-stat"><div class="num" id="miniMoney">$0</div><div class="lbl">Min Wage</div></div>
                     </div>
-
-                    <!-- Milestones -->
                     <div class="milestone-card">
                         <div style="font-weight:600; margin-bottom:8px; color:#cbd5e1;">🚀 Milestone Tracker</div>
-                        <div class="milestone-item">
-                            <div class="flex-between"><span>3 Day Streak</span><span id="milestone3">0 / 3</span></div>
-                            <div class="milestone-bar"><div class="fill" id="milestone3Bar" style="width:0%"></div></div>
-                        </div>
-                        <div class="milestone-item">
-                            <div class="flex-between"><span>7 Day Streak</span><span id="milestone7">0 / 7</span></div>
-                            <div class="milestone-bar"><div class="fill" id="milestone7Bar" style="width:0%"></div></div>
-                        </div>
-                        <div class="milestone-item">
-                            <div class="flex-between"><span>30 Day Streak</span><span id="milestone30">0 / 30</span></div>
-                            <div class="milestone-bar"><div class="fill" id="milestone30Bar" style="width:0%"></div></div>
-                        </div>
-                        <div class="milestone-item">
-                            <div class="flex-between"><span>90 Day Streak</span><span id="milestone90">0 / 90</span></div>
-                            <div class="milestone-bar"><div class="fill" id="milestone90Bar" style="width:0%"></div></div>
-                        </div>
+                        <div class="milestone-item"><div class="flex-between"><span>3 Day Streak</span><span id="milestone3">0 / 3</span></div><div class="milestone-bar"><div class="fill" id="milestone3Bar" style="width:0%"></div></div></div>
+                        <div class="milestone-item"><div class="flex-between"><span>7 Day Streak</span><span id="milestone7">0 / 7</span></div><div class="milestone-bar"><div class="fill" id="milestone7Bar" style="width:0%"></div></div></div>
+                        <div class="milestone-item"><div class="flex-between"><span>30 Day Streak</span><span id="milestone30">0 / 30</span></div><div class="milestone-bar"><div class="fill" id="milestone30Bar" style="width:0%"></div></div></div>
+                        <div class="milestone-item"><div class="flex-between"><span>90 Day Streak</span><span id="milestone90">0 / 90</span></div><div class="milestone-bar"><div class="fill" id="milestone90Bar" style="width:0%"></div></div></div>
                     </div>
-
-                    <!-- Weekly Dots -->
                     <div class="week-card">
                         <div style="font-weight:600; color:#cbd5e1;">📅 Weekly Consistency</div>
                         <div class="week-dots" id="weekDotsContainer"></div>
                     </div>
-
-                    <!-- Equivalents -->
                     <div class="milestone-card">
                         <div style="font-weight:600; margin-bottom:8px; color:#cbd5e1;">🎯 What you could do with that time</div>
                         <div class="equiv-grid">
@@ -889,13 +907,9 @@
                             <div class="equiv-item"><div class="icon">🏃</div><div class="val" id="equivRun">0</div><div class="lbl">Km Run</div></div>
                         </div>
                     </div>
-
-                    <!-- BADGE SYSTEM -->
                     <div class="milestone-card">
                         <div style="font-weight:600; margin-bottom:8px; color:#fbbf24;">🎖️ Your Badges</div>
-                        <div class="badge-grid" id="badgeGrid">
-                            <!-- Generated by JS -->
-                        </div>
+                        <div class="badge-grid" id="badgeGrid"></div>
                         <div style="margin-top:8px; font-size:12px; color:#64748b; text-align:center;" id="badgeNextMilestone">Next badge at 3 days</div>
                     </div>
                 </div>
@@ -918,6 +932,19 @@
         </div>
     </div>
 
+    <!-- ===== CUSTOM MODAL (For Reset & Messages) ===== -->
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-card">
+            <div class="modal-icon" id="modalIcon">⚠️</div>
+            <h3 id="modalTitle">Are you sure?</h3>
+            <p id="modalDesc">This action cannot be undone.</p>
+            <div class="modal-actions" id="modalActions">
+                <button class="btn btn-outline" id="modalCancelBtn">Go Back</button>
+                <button class="btn btn-danger" id="modalConfirmBtn">Yes, Proceed</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== PANIC OVERLAY ===== -->
     <div class="panic-overlay" id="panicOverlay">
         <div class="breath-wrapper">
@@ -933,7 +960,132 @@
 
     <script>
         // ============================================================
-        // SPLASH
+        // 1. DYNAMIC APP LOGO GENERATION (PWA Icon)
+        // ============================================================
+        function generateAppLogo() {
+            const size = 512;
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Background (Dark)
+            const bg = ctx.createRadialGradient(256, 256, 0, 256, 256, 512);
+            bg.addColorStop(0, '#1e293b');
+            bg.addColorStop(1, '#07070f');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, size, size);
+
+            // Glowing Sun (Gold)
+            const sunGrad = ctx.createRadialGradient(256, 180, 20, 256, 180, 120);
+            sunGrad.addColorStop(0, '#fbbf24');
+            sunGrad.addColorStop(0.6, '#f59e0b');
+            sunGrad.addColorStop(1, 'rgba(251,191,36,0)');
+            ctx.beginPath();
+            ctx.arc(256, 180, 120, 0, Math.PI * 2);
+            ctx.fillStyle = sunGrad;
+            ctx.fill();
+
+            // Mountain (Teal/Gold gradient)
+            ctx.beginPath();
+            ctx.moveTo(60, 400);
+            ctx.lineTo(180, 200);
+            ctx.lineTo(260, 310);
+            ctx.lineTo(340, 150);
+            ctx.lineTo(450, 400);
+            ctx.closePath();
+
+            const mountainGrad = ctx.createLinearGradient(0, 150, 0, 400);
+            mountainGrad.addColorStop(0, '#2dd4bf');
+            mountainGrad.addColorStop(0.5, '#14b8a6');
+            mountainGrad.addColorStop(1, '#0f172a');
+            ctx.fillStyle = mountainGrad;
+            ctx.fill();
+            ctx.strokeStyle = '#fbbf24';
+            ctx.lineWidth = 6;
+            ctx.stroke();
+
+            // Snow cap
+            ctx.beginPath();
+            ctx.moveTo(310, 170);
+            ctx.lineTo(340, 150);
+            ctx.lineTo(360, 180);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.fill();
+
+            // "R" Text overlay (subtle)
+            ctx.fillStyle = 'rgba(251,191,36,0.15)';
+            ctx.font = 'bold 140px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('R', 256, 320);
+
+            // Border glow
+            ctx.strokeStyle = 'rgba(251,191,36,0.1)';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.roundRect(10, 10, size - 20, size - 20, 40);
+            ctx.stroke();
+
+            return canvas.toDataURL('image/png');
+        }
+
+        // Polyfill roundRect if needed
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+                if (r > w / 2) r = w / 2;
+                if (r > h / 2) r = h / 2;
+                this.moveTo(x + r, y);
+                this.arcTo(x + w, y, x + w, y + h, r);
+                this.arcTo(x + w, y + h, x, y + h, r);
+                this.arcTo(x, y + h, x, y, r);
+                this.arcTo(x, y, x + w, y, r);
+                return this;
+            };
+        }
+
+        function setupPWA() {
+            const logoDataUrl = generateAppLogo();
+
+            // Favicon
+            const favicon = document.getElementById('dynamicFavicon');
+            favicon.rel = 'icon';
+            favicon.href = logoDataUrl;
+
+            // Apple Touch Icon
+            const appleIcon = document.getElementById('dynamicAppleIcon');
+            appleIcon.rel = 'apple-touch-icon';
+            appleIcon.href = logoDataUrl;
+
+            // Manifest
+            const manifest = {
+                name: 'Reclaim - Habit Breaker',
+                short_name: 'Reclaim',
+                description: 'Break bad habits and reclaim your life.',
+                start_url: '/',
+                display: 'standalone',
+                background_color: '#07070f',
+                theme_color: '#07070f',
+                icons: [{
+                    src: logoDataUrl,
+                    sizes: '512x512',
+                    type: 'image/png',
+                    purpose: 'any maskable'
+                }]
+            };
+            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            const manifestURL = URL.createObjectURL(manifestBlob);
+            const manifestLink = document.getElementById('dynamicManifest');
+            manifestLink.rel = 'manifest';
+            manifestLink.href = manifestURL;
+        }
+
+        // Run logo generation
+        setupPWA();
+
+        // ============================================================
+        // 2. SPLASH SCREEN
         // ============================================================
         window.addEventListener('load', function() {
             setTimeout(function() {
@@ -942,7 +1094,7 @@
         });
 
         // ============================================================
-        // DATA LAYER
+        // 3. DATA LAYER
         // ============================================================
         const STREAK_KEY = 'reclaim_streak';
         const LAST_DATE_KEY = 'reclaim_last';
@@ -975,40 +1127,84 @@
         }
 
         // ============================================================
-        // STREAK ADVANCEMENT (Reusable)
+        // 4. CUSTOM MODAL SYSTEM
         // ============================================================
-        function advanceStreak() {
+        function showModal(icon, title, desc, confirmText, cancelText, onConfirm) {
+            const modal = document.getElementById('customModal');
+            document.getElementById('modalIcon').innerText = icon;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('modalConfirmBtn').innerText = confirmText || 'Yes';
+            document.getElementById('modalCancelBtn').innerText = cancelText || 'Go Back';
+
+            // Remove old listeners
+            const confirmBtn = document.getElementById('modalConfirmBtn');
+            const cancelBtn = document.getElementById('modalCancelBtn');
+            const newConfirm = confirmBtn.cloneNode(true);
+            const newCancel = cancelBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newConfirm, confirmBtn);
+            cancelBtn.parentNode.replaceChild(newCancel, cancelBtn);
+
+            newConfirm.addEventListener('click', function() {
+                modal.classList.remove('active');
+                if (onConfirm) onConfirm();
+            });
+            newCancel.addEventListener('click', function() {
+                modal.classList.remove('active');
+            });
+            // Click outside to close
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) modal.classList.remove('active');
+            });
+
+            modal.classList.add('active');
+        }
+
+        // ============================================================
+        // 5. STREAK ADVANCEMENT (Daily Check-in)
+        // ============================================================
+        function dailyCheckIn() {
             const today = new Date().toISOString().split('T')[0];
             const lastDate = getLastDate();
-            let current = getStreak();
+            const current = getStreak();
 
             if (lastDate === today) {
-                alert("✅ You've already pledged today! Come back tomorrow.");
-                return false;
+                showModal('✅', 'Already Checked In!', 'You have already locked in today. Come back tomorrow to continue your streak.', 'Great', '', null);
+                return;
             }
 
+            let newStreak = current;
             if (lastDate) {
                 const yesterday = new Date();
                 yesterday.setDate(yesterday.getDate() - 1);
                 const yStr = yesterday.toISOString().split('T')[0];
                 if (lastDate === yStr) {
-                    current += 1;
+                    newStreak += 1;
                 } else {
-                    current = 1;
+                    newStreak = 1;
                 }
             } else {
-                current = 1;
+                newStreak = 1;
             }
 
-            saveStreak(current, today);
+            saveStreak(newStreak, today);
             savePledge(today);
-            alert(`🔥 Day ${current} locked in! Stay strong.`);
+
+            // Show success
+            let message = `Day ${newStreak} locked in! 🔥`;
+            if (newStreak === 1) message = 'Day 1 starts now! You got this. 💪';
+            else if (newStreak === 3) message = '🌱 3 days! You\'re sprouting!';
+            else if (newStreak === 7) message = '🌿 7 days! You\'re grounded!';
+            else if (newStreak === 21) message = '💪 21 days! You\'re a warrior!';
+            else if (newStreak === 30) message = '🏆 30 days! You\'re a champion!';
+            else if (newStreak % 10 === 0) message = `🎉 ${newStreak} days! Unstoppable!`;
+
+            showModal('🔥', 'Daily Check-in Successful!', message, 'Awesome', '', null);
             updateAllUI();
-            return true;
         }
 
         // ============================================================
-        // SIGNATURE CANVAS – FIXED & LOCKABLE
+        // 6. SIGNATURE CANVAS – FIXED & LOCKABLE
         // ============================================================
         let isDrawing = false;
         let lastX = 0,
@@ -1018,8 +1214,6 @@
         function initCanvas() {
             canvas = document.getElementById('signatureCanvas');
             if (!canvas) return;
-
-            // Fixed internal resolution
             canvas.width = 600;
             canvas.height = 200;
             ctx = canvas.getContext('2d');
@@ -1027,18 +1221,10 @@
             ctx.lineWidth = 4;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
-
-            // Load saved signature
             loadSignatureToCanvas();
-
-            // Apply lock state
             applyPledgeLockState();
 
-            // Remove old listeners by cloning? We'll use named functions and add/remove.
-            // But simpler: just use flags in the event handlers.
-            // We will check a flag `isLocked` in the handlers.
-
-            // Mouse
+            // Remove old listeners to avoid duplicates
             canvas.removeEventListener('mousedown', startDraw);
             canvas.removeEventListener('mousemove', drawMove);
             canvas.removeEventListener('mouseup', endDraw);
@@ -1056,9 +1242,7 @@
             canvas.addEventListener('touchend', touchEnd, { passive: false });
         }
 
-        function isCanvasLocked() {
-            return isSignatureSaved();
-        }
+        function isCanvasLocked() { return isSignatureSaved(); }
 
         function getPos(e) {
             const rect = canvas.getBoundingClientRect();
@@ -1132,7 +1316,6 @@
             if (!canvas) return;
             const dataUrl = canvas.toDataURL('image/png');
             localStorage.setItem(SIG_IMG_KEY, dataUrl);
-            // Immediately lock the UI
             applyPledgeLockState();
         }
 
@@ -1151,7 +1334,7 @@
         }
 
         // ============================================================
-        // PLEDGE LOCK STATE UI
+        // 7. PLEDGE LOCK STATE UI
         // ============================================================
         function applyPledgeLockState() {
             const hasSig = isSignatureSaved();
@@ -1164,39 +1347,34 @@
             if (hasSig) {
                 wrapper.classList.add('locked');
                 wrapper.classList.remove('active');
-                if (canvasEl) {
-                    canvasEl.classList.add('locked');
+                if (canvasEl) { canvasEl.classList.add('locked');
                     canvasEl.style.pointerEvents = 'none';
-                    canvasEl.style.cursor = 'default';
-                }
+                    canvasEl.style.cursor = 'default'; }
                 if (clearBtn) clearBtn.classList.add('hidden');
                 if (lockedBadge) lockedBadge.style.display = 'block';
                 if (commitBtn) {
-                    commitBtn.innerText = '✅ Commitment Signed';
+                    commitBtn.innerText = '✅ Commitment Signed (Lifetime)';
                     commitBtn.disabled = true;
-                    commitBtn.classList.add('btn-success');
                 }
             } else {
                 wrapper.classList.remove('locked');
                 wrapper.classList.remove('active');
-                if (canvasEl) {
-                    canvasEl.classList.remove('locked');
+                if (canvasEl) { canvasEl.classList.remove('locked');
                     canvasEl.style.pointerEvents = 'auto';
-                    canvasEl.style.cursor = 'crosshair';
-                }
+                    canvasEl.style.cursor = 'crosshair'; }
                 if (clearBtn) clearBtn.classList.remove('hidden');
                 if (lockedBadge) lockedBadge.style.display = 'none';
                 if (commitBtn) {
-                    commitBtn.innerText = '✅ I commit to myself';
+                    commitBtn.innerText = '✅ I commit to myself (Forever)';
                     commitBtn.disabled = false;
                 }
             }
+            updateYellowButtonText(); // Update home button based on sig state
         }
 
-        // Clear button
         document.getElementById('clearSignatureBtn')?.addEventListener('click', function() {
             if (isSignatureSaved()) {
-                alert('Your commitment is locked. You cannot clear it.');
+                showModal('🔒', 'Cannot Clear', 'Your lifetime commitment is locked. It cannot be undone.', 'OK', '', null);
                 return;
             }
             if (confirm('Clear your signature?')) {
@@ -1211,7 +1389,7 @@
         });
 
         // ============================================================
-        // BADGE SYSTEM
+        // 8. BADGE SYSTEM
         // ============================================================
         const BADGE_DEFS = [
             { days: 3, icon: '🌱', name: 'Sprout' },
@@ -1239,7 +1417,6 @@
                     `;
             });
             grid.innerHTML = html;
-
             let next = BADGE_DEFS.find(b => streak < b.days);
             const nextMsg = document.getElementById('badgeNextMilestone');
             if (next) {
@@ -1250,8 +1427,17 @@
         }
 
         // ============================================================
-        // UI UPDATES
+        // 9. UI UPDATES
         // ============================================================
+        function updateYellowButtonText() {
+            const btn = document.getElementById('pledgeTodayBtn');
+            if (isSignatureSaved()) {
+                btn.innerText = '✅ Daily Check-in';
+            } else {
+                btn.innerText = '📝 Sign Commitment';
+            }
+        }
+
         function updateAllUI() {
             const streak = getStreak();
             const last = getLastDate();
@@ -1265,12 +1451,12 @@
             const hasSig = isSignatureSaved();
 
             if (pledgeDate === today) {
-                pledgeText.innerHTML = `✅ You pledged today! Stay strong.`;
+                pledgeText.innerHTML = `✅ You checked in today! Stay strong.`;
             } else {
                 if (hasSig) {
-                    pledgeText.innerHTML = `⏳ Tap "Pledge Today" to lock in your daily streak.`;
+                    pledgeText.innerHTML = `⏳ Tap "Daily Check-in" to lock in today's streak.`;
                 } else {
-                    pledgeText.innerHTML = `⏳ Sign the pledge first, then commit daily.`;
+                    pledgeText.innerHTML = `⏳ Sign the lifetime pledge first to start tracking.`;
                 }
             }
 
@@ -1285,7 +1471,7 @@
             loadSignatureToCanvas();
             updateStatsPage();
             renderBadges(streak);
-            applyPledgeLockState(); // Ensure UI lock state matches data
+            applyPledgeLockState(); // This updates the yellow button too
         }
 
         function calculateStats(minutes) {
@@ -1295,7 +1481,6 @@
             const books = Math.round(yearlyMins / 240);
             const money = (yearlyMins / 60 * 7.25).toFixed(0);
             const instaMins = 24000;
-
             document.getElementById('yearlyMinutesDisplay').innerText = `${yearlyMins.toLocaleString()} mins`;
             document.getElementById('statHours').innerText = hours.toLocaleString();
             document.getElementById('statBooks').innerText = books.toLocaleString();
@@ -1304,7 +1489,7 @@
         }
 
         // ============================================================
-        // ENHANCED STATS PAGE
+        // 10. ENHANCED STATS PAGE
         // ============================================================
         function updateStatsPage() {
             const streak = getStreak();
@@ -1325,7 +1510,6 @@
             } else {
                 document.getElementById('heroMotivation').innerText = "Legendary discipline! 🔥";
             }
-
             document.getElementById('miniDaily').innerText = dailyMin;
             document.getElementById('miniYearly').innerText = yearlyMins.toLocaleString();
             document.getElementById('miniBooks').innerText = Math.round(yearlyMins / 240);
@@ -1338,7 +1522,6 @@
                 document.getElementById(`milestone${target}Bar`).style.width = `${progress}%`;
             });
 
-            // Week dots
             const container = document.getElementById('weekDotsContainer');
             container.innerHTML = '';
             const today = new Date();
@@ -1351,21 +1534,17 @@
                 d.setDate(d.getDate() - i);
                 const dow = d.getDay() === 0 ? 6 : d.getDay() - 1;
                 dot.innerText = dayNames[dow];
-
                 const dateStr = d.toISOString().split('T')[0];
                 let isActive = false;
                 if (lastDate) {
                     const diffDays = Math.floor((new Date(lastDate) - new Date(dateStr)) / (1000 * 60 * 60 * 24));
-                    if (diffDays >= 0 && diffDays < streak) {
-                        isActive = true;
-                    }
+                    if (diffDays >= 0 && diffDays < streak) { isActive = true; }
                 }
                 if (isActive) dot.classList.add('active');
                 if (i === 0) dot.classList.add('today');
                 container.appendChild(dot);
             }
 
-            // Equivalents
             const totalHours = yearlyMins / 60;
             document.getElementById('equivMovies').innerText = Math.round(totalHours / 2);
             document.getElementById('equivSleep').innerText = Math.round(totalHours / 8);
@@ -1373,7 +1552,7 @@
         }
 
         // ============================================================
-        // NAVIGATION HELPER
+        // 11. NAVIGATION
         // ============================================================
         function navigateToPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1387,30 +1566,26 @@
         }
 
         // ============================================================
-        // PLEDGE LOGIC (Home Button & Commit Button)
+        // 12. BUTTON HANDLERS
         // ============================================================
 
-        // Home "Pledge Today" button
+        // Home Yellow Button
         document.getElementById('pledgeTodayBtn')?.addEventListener('click', function() {
             if (isSignatureSaved()) {
-                // Agreement already signed. Just do daily check-in.
-                if (confirm("✅ You've already signed the commitment. Ready to lock in today's streak?")) {
-                    advanceStreak();
-                }
+                // Daily Check-in mode
+                dailyCheckIn();
             } else {
-                // First time: go to pledge page to sign.
+                // Need to sign first
                 navigateToPage('page-pledge');
             }
         });
 
-        // Pledge page "I commit to myself" button
+        // Pledge page "Commit" button
         document.getElementById('finalCommitBtn')?.addEventListener('click', function() {
             if (isSignatureSaved()) {
-                alert("✅ Your commitment is already signed and locked.");
+                showModal('🔒', 'Already Committed', 'Your lifetime agreement is already signed and locked.', 'OK', '', null);
                 return;
             }
-
-            // Check if canvas has any drawing
             const canvas = document.getElementById('signatureCanvas');
             const ctx = canvas.getContext('2d');
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -1420,43 +1595,48 @@
                 if (data[i] !== 0) { empty = false; break; }
             }
             if (empty) {
-                alert('Please sign with your finger on the canvas above first!');
+                showModal('✍️', 'Sign First!', 'Please draw your signature on the canvas above.', 'OK', '', null);
                 return;
             }
 
-            // Save the signature permanently
             saveSignatureImage();
-
-            // Advance the streak for today (since they just signed)
             const today = new Date().toISOString().split('T')[0];
+            // Start the streak from day 1 automatically.
             const lastDate = getLastDate();
             let current = getStreak();
-
-            if (lastDate === today) {
-                // Should not happen, but just in case
-            } else if (lastDate) {
+            if (lastDate === today) { /* already */ } else if (lastDate) {
                 const yesterday = new Date();
                 yesterday.setDate(yesterday.getDate() - 1);
                 const yStr = yesterday.toISOString().split('T')[0];
                 if (lastDate === yStr) { current += 1; } else { current = 1; }
             } else { current = 1; }
-
             saveStreak(current, today);
             savePledge(today);
 
-            alert(`🕊️ Commitment signed! Day ${current} locked in. You cannot clear your signature now.`);
-
-            // Update UI and lock everything
+            showModal('🕊️', 'Lifetime Commitment Signed!', `Your agreement is locked forever. Day ${current} begins now. You cannot clear this signature.`, 'I Understand', '', null);
             updateAllUI();
             applyPledgeLockState();
-
-            // Navigate back to home
             navigateToPage('page-home');
         });
 
-        // ============================================================
-        // PANIC BUTTON (Breathing)
-        // ============================================================
+        // Reset Streak Button (with custom modal)
+        document.getElementById('relapseBtn')?.addEventListener('click', function() {
+            showModal(
+                '⚠️',
+                'Reset Your Streak?',
+                'Are you sure you want to reset your streak back to 0? This cannot be undone (but you can always start again!).',
+                'Yes, Reset It',
+                'Go Back',
+                function() {
+                    const today = new Date().toISOString().split('T')[0];
+                    saveStreak(0, today);
+                    showModal('💪', 'Streak Reset', 'Day 1 starts now. You\'ve got this!', 'Let\'s Go', '', null);
+                    updateAllUI();
+                }
+            );
+        });
+
+        // Panic Button
         document.getElementById('panicBtn')?.addEventListener('click', function() {
             document.getElementById('panicOverlay').classList.add('active');
             startBreathing();
@@ -1479,7 +1659,6 @@
             let step = 0;
             let timer = null;
             let countdown = 4;
-
             clearInterval(window.breathInterval);
             clearTimeout(window.breathTimeout);
 
@@ -1527,31 +1706,17 @@
             doStep();
         }
 
-        // ============================================================
-        // RELAPSE
-        // ============================================================
-        document.getElementById('relapseBtn')?.addEventListener('click', function() {
-            if (confirm('⚠️ Are you sure you want to reset your streak to 0?')) {
-                const today = new Date().toISOString().split('T')[0];
-                saveStreak(0, today);
-                alert('💪 Day 1 starts now.');
-                updateAllUI();
-            }
-        });
-
-        // ============================================================
-        // CALCULATE STATS
-        // ============================================================
+        // Calculate Stats
         document.getElementById('calcStatsBtn')?.addEventListener('click', function() {
             const val = parseInt(document.getElementById('dailyMinInput').value);
             if (!isNaN(val) && val >= 0) {
                 localStorage.setItem(DAILY_MIN_KEY, val.toString());
                 updateAllUI();
-            } else { alert('Enter a valid number.'); }
+            } else { showModal('❌', 'Invalid Input', 'Please enter a valid number of minutes.', 'OK', '', null); }
         });
 
         // ============================================================
-        // JOURNAL
+        // 13. JOURNAL
         // ============================================================
         function getJournals() {
             try { return JSON.parse(localStorage.getItem(JOURNAL_KEY)) || []; } catch (e) { return []; }
@@ -1593,25 +1758,24 @@
 
         document.getElementById('saveQuickJournal')?.addEventListener('click', function() {
             const text = document.getElementById('quickJournal').value.trim();
-            if (!text) { alert('Write something!'); return; }
+            if (!text) { showModal('📝', 'Empty Entry', 'Please write something before saving.', 'OK', '', null); return; }
             saveJournalEntry(text);
             document.getElementById('quickJournal').value = '';
-            alert('📖 Reflection saved.');
+            showModal('📖', 'Reflection Saved!', 'Your memory has been logged.', 'Great', '', null);
             updateAllUI();
         });
 
         // ============================================================
-        // BOTTOM NAV
+        // 14. BOTTOM NAV
         // ============================================================
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
-                const pageId = this.dataset.page;
-                navigateToPage(pageId);
+                navigateToPage(this.dataset.page);
             });
         });
 
         // ============================================================
-        // INIT
+        // 15. INIT
         // ============================================================
         document.getElementById('dailyMinInput').value = getDailyMin();
         updateAllUI();
