@@ -9,7 +9,76 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
         body { background: #07070f; color: #e2e8f0; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 12px; }
         
-        /* ----- MAIN CONTAINER (Glassmorphism) ----- */
+        /* =============================================
+                   SPLASH SCREEN (Starter Page)
+                   ============================================= */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #07070f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+            opacity: 1;
+            visibility: visible;
+        }
+        #splash-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .splash-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .splash-logo {
+            font-size: 72px;
+            animation: pulse-logo 1.4s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.3));
+        }
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .splash-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #fbbf24;
+            letter-spacing: 2px;
+            text-shadow: 0 0 40px rgba(251, 191, 36, 0.15);
+        }
+        .splash-sub {
+            font-size: 14px;
+            color: #64748b;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: -8px;
+        }
+        /* Spinning gradient ring (like a loading spinner) */
+        .splash-loader {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            padding: 4px;
+            background: conic-gradient(from 0deg, #fbbf24, #2dd4bf, #8b5cf6, #fbbf24);
+            animation: spin-loader 1.2s linear infinite;
+            mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px));
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px));
+            margin-top: 8px;
+        }
+        @keyframes spin-loader {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ----- MAIN APP WRAPPER (Glassmorphism) ----- */
         .app-wrapper {
             max-width: 420px;
             width: 100%;
@@ -23,7 +92,6 @@
             position: relative;
             overflow: hidden;
         }
-        /* Gradient Orb (Decorative) */
         .app-wrapper::before {
             content: '';
             position: absolute;
@@ -58,7 +126,7 @@
             color: #2dd4bf;
         }
 
-        /* ----- STATS CARD (The "Time Wasted" Section) ----- */
+        /* ----- STATS CARD ----- */
         .stats-card {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 24px;
@@ -70,7 +138,6 @@
         .stat-item { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 16px; text-align: center; }
         .stat-item .number { font-size: 24px; font-weight: 700; color: #fbbf24; }
         .stat-item .label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
-
         .comparison-list { margin-top: 16px; }
         .comparison-item { 
             display: flex; 
@@ -111,7 +178,7 @@
         .btn-outline { background: transparent; border: 1px solid #334155; color: #cbd5e1; }
         .btn-success { background: #2dd4bf; color: #0f172a; }
 
-        /* ----- PLEDGE SECTION (The "I Commit" Screen) ----- */
+        /* ----- PLEDGE SECTION (with Canvas Signature) ----- */
         .pledge-box {
             background: rgba(251, 191, 36, 0.05);
             border: 1px solid rgba(251, 191, 36, 0.15);
@@ -125,13 +192,38 @@
         .pledge-box ul li { padding: 6px 0; font-size: 15px; color: #cbd5e1; }
         .pledge-box ul li::before { content: "▹ "; color: #fbbf24; }
 
-        /* ----- PANIC MODAL (Breathing) ----- */
+        /* Canvas Signature Pad */
+        .signature-pad {
+            background: #0a0a18;
+            border: 2px dashed #334155;
+            border-radius: 16px;
+            width: 100%;
+            height: 160px;
+            touch-action: none;
+            cursor: crosshair;
+            margin: 12px 0;
+        }
+        .signature-pad.active { border-color: #fbbf24; border-style: solid; }
+        .sig-actions { display: flex; gap: 10px; justify-content: center; margin-bottom: 12px; }
+        .sig-actions button { 
+            padding: 8px 24px; 
+            border-radius: 40px; 
+            border: none; 
+            font-weight: 600; 
+            font-size: 14px;
+            background: #334155; 
+            color: #cbd5e1;
+            cursor: pointer;
+        }
+        .sig-actions button.clear-btn { background: #ef4444; color: white; }
+
+        /* ----- PANIC OVERLAY (Enhanced Breathing) ----- */
         .panic-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(7, 7, 15, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(7, 7, 15, 0.96);
+            backdrop-filter: blur(16px);
             z-index: 999;
             justify-content: center;
             align-items: center;
@@ -139,33 +231,68 @@
             padding: 20px;
         }
         .panic-overlay.active { display: flex; }
-        .breath-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, #fbbf24, #ef4444);
-            box-shadow: 0 0 80px rgba(251, 191, 36, 0.3);
-            transition: transform 4s ease-in-out;
+        
+        .breath-wrapper {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 30px;
         }
-        .breath-circle.inhale { transform: scale(1.6); }
-        .breath-circle.exhale { transform: scale(0.6); }
-        .breath-text { font-size: 28px; font-weight: 700; color: white; letter-spacing: 2px; }
-
-        /* ----- INPUTS ----- */
-        input, textarea {
+        .breath-ring {
+            position: absolute;
             width: 100%;
-            padding: 14px 18px;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid #334155;
-            border-radius: 16px;
-            color: white;
-            font-size: 16px;
-            margin-bottom: 12px;
-            outline: none;
-            transition: 0.2s;
+            height: 100%;
+            border-radius: 50%;
+            padding: 6px;
+            background: conic-gradient(from 0deg, #fbbf24, #ef4444, #8b5cf6, #2dd4bf, #fbbf24);
+            animation: spin-ring 10s linear infinite;
+            mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #fff calc(100% - 8px));
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #fff calc(100% - 8px));
+            transition: opacity 1s;
         }
-        input:focus, textarea:focus { border-color: #fbbf24; }
+        @keyframes spin-ring { 100% { transform: rotate(360deg); } }
+
+        .breath-circle {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #2dd4bf, #0f172a);
+            box-shadow: 0 0 60px rgba(45, 212, 191, 0.2);
+            transition: transform 4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 2;
+        }
+        .breath-circle.inhale {
+            transform: scale(1.4);
+            box-shadow: 0 0 100px rgba(251, 191, 36, 0.5), inset 0 0 80px rgba(251, 191, 36, 0.1);
+        }
+        .breath-circle.exhale {
+            transform: scale(0.7);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1), inset 0 0 40px rgba(239, 68, 68, 0.05);
+        }
+        .breath-circle .phase-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+        .breath-circle .countdown-text {
+            font-size: 48px;
+            font-weight: 800;
+            color: #fbbf24;
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+            line-height: 1;
+            margin-top: 4px;
+        }
 
         /* ----- TABS (Bottom Nav) ----- */
         .bottom-nav {
@@ -196,12 +323,26 @@
         .page.active { display: block; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Scrollbar hide */
         ::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
+<!-- =============================================
+     SPLASH SCREEN (Starter Page)
+     ============================================= -->
+<div id="splash-screen">
+    <div class="splash-content">
+        <div class="splash-logo">⛰️</div>
+        <div class="splash-title">Reclaim</div>
+        <div class="splash-sub">Your reset begins now</div>
+        <div class="splash-loader"></div>
+    </div>
+</div>
+
+<!-- =============================================
+     MAIN APP
+     ============================================= -->
 <div class="app-wrapper">
     <div class="content">
 
@@ -212,51 +353,48 @@
                 <span class="streak-pill" id="streakDisplay">🔥 0 Days</span>
             </div>
 
-            <!-- The Pledge Status -->
             <div id="pledgeStatus" style="background:rgba(45,212,191,0.05); border-radius:16px; padding:12px; margin-bottom:16px; border-left:4px solid #2dd4bf;">
                 <span id="pledgeText">You haven't pledged today. 👋</span>
             </div>
 
-            <!-- STATS: Time Wasted Calculator -->
+            <!-- STATS -->
             <div class="stats-card">
                 <div class="flex-between">
                     <span class="muted">⏳ Your Yearly Waste</span>
                     <span style="font-weight:700; color:#fbbf24;" id="yearlyMinutesDisplay">0 mins</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-top:8px;">
-                    <input type="number" id="dailyMinInput" placeholder="Daily minutes (e.g. 15)" value="15" style="margin-bottom:0; flex:1;">
-                    <button class="btn" style="width:auto; padding:0 20px; background:#334155; color:white; margin-bottom:0; border-radius:40px;" id="calcStatsBtn">Calculate</button>
+                    <input type="number" id="dailyMinInput" placeholder="Daily mins" value="15" style="margin-bottom:0; flex:1; background:rgba(0,0,0,0.4); border:1px solid #334155; border-radius:16px; padding:12px 16px; color:white; outline:none; width:100%;">
+                    <button class="btn" style="width:auto; padding:0 20px; background:#334155; color:white; margin-bottom:0; border-radius:40px;" id="calcStatsBtn">Calc</button>
                 </div>
                 <div class="stats-grid">
                     <div class="stat-item"><div class="number" id="statHours">0</div><div class="label">Hours / Year</div></div>
                     <div class="stat-item"><div class="number" id="statBooks">0</div><div class="label">Books Unread</div></div>
                 </div>
                 <div class="comparison-list">
-                    <div class="comparison-item"><span class="icon">📱</span> Instagram was built in <strong id="compInsta">0</strong> mins</div>
-                    <div class="comparison-item"><span class="icon">💵</span> Min wage job = <strong id="compMoney">$0</strong></div>
+                    <div class="comparison-item"><span class="icon">📱</span> Instagram built in <strong id="compInsta">0%</strong></div>
+                    <div class="comparison-item"><span class="icon">💵</span> Min wage = <strong id="compMoney">$0</strong></div>
                 </div>
             </div>
 
-            <!-- Dependency Score -->
             <div style="margin-bottom:16px;">
                 <div class="flex-between"><span class="muted">🧠 Dependency Score</span> <strong id="depScoreText">100%</strong></div>
                 <div class="gauge-container"><div class="gauge-fill" id="depGauge" style="width:100%;"></div></div>
             </div>
 
-            <!-- Action Buttons -->
             <button class="btn btn-primary" id="pledgeTodayBtn">📝 Pledge Today (Commit)</button>
             <button class="btn btn-danger" id="panicBtn">⚡ Panic Button (Urge)</button>
             <button class="btn btn-outline" id="relapseBtn">↺ Relapse (Reset Streak)</button>
             
             <div style="margin-top:16px; background:rgba(255,255,255,0.02); border-radius:16px; padding:12px;">
                 <span class="muted">📓 Quick Journal</span>
-                <textarea id="quickJournal" placeholder="How are you feeling right now?" rows="2" style="margin-top:6px; font-size:14px;"></textarea>
+                <textarea id="quickJournal" placeholder="How are you feeling right now?" rows="2" style="margin-top:6px; width:100%; background:rgba(0,0,0,0.4); border:1px solid #334155; border-radius:12px; padding:12px; color:white; resize:vertical; font-size:14px;"></textarea>
                 <button class="btn" style="background:#8b5cf6; padding:10px; margin-bottom:0; font-size:14px;" id="saveQuickJournal">Save Reflection</button>
             </div>
             <div id="journalPreview" style="margin-top:8px; font-size:13px; color:#94a3b8;"></div>
         </div>
 
-        <!-- ========== PAGE 2: THE PLEDGE (Ceremonial) ========== -->
+        <!-- ========== PAGE 2: THE PLEDGE (with Finger Signature) ========== -->
         <div id="page-pledge" class="page">
             <div class="pledge-box">
                 <h3>🕊️ Let's Commit.</h3>
@@ -267,16 +405,22 @@
                     <li>Letting go of my past self</li>
                     <li>Becoming the person I want to be</li>
                 </ul>
-                <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:12px; margin:12px 0; text-align:left;">
-                    <label style="font-size:12px; color:#94a3b8;">YOUR DIGITAL SIGNATURE</label>
-                    <input type="text" id="signatureInput" placeholder="Type your full name..." style="margin-top:4px; background:transparent; border:1px solid #334155; border-radius:8px;">
+                
+                <!-- Signature Canvas -->
+                <div style="margin: 12px 0 8px;">
+                    <label style="font-size:12px; color:#94a3b8; display:block; text-align:left; margin-bottom:4px;">✍️ SIGN WITH YOUR FINGER</label>
+                    <canvas id="signatureCanvas" class="signature-pad"></canvas>
+                    <div class="sig-actions">
+                        <button class="clear-btn" id="clearSignatureBtn">🗑️ Clear</button>
+                    </div>
                 </div>
+
                 <button class="btn btn-success" id="finalCommitBtn">✅ I commit to myself</button>
-                <p style="font-size:11px; color:#64748b; margin-top:8px;">* Your signature is not recorded anywhere except your phone.</p>
+                <p style="font-size:11px; color:#64748b; margin-top:8px;">* Your signature is stored only on your device.</p>
             </div>
         </div>
 
-        <!-- ========== PAGE 3: STATS (Full Details) ========== -->
+        <!-- ========== PAGE 3: STATS ========== -->
         <div id="page-stats" class="page">
             <h2 style="font-size:22px; margin-bottom:8px;">📊 Your Impact</h2>
             <p class="muted">Based on your current habits.</p>
@@ -306,20 +450,37 @@
     </div>
 </div>
 
-<!-- ========== PANIC OVERLAY (Breathing) ========== -->
+<!-- ========== PANIC OVERLAY (Enhanced Breathing) ========== -->
 <div class="panic-overlay" id="panicOverlay">
-    <div class="breath-circle" id="breathCircle"></div>
-    <div class="breath-text" id="breathText">Breathe In</div>
-    <p style="color:#94a3b8; margin-top:20px; text-align:center; max-width:300px;">Follow the circle. Inhale 4s, Hold 7s, Exhale 8s.</p>
-    <button class="btn btn-primary" style="margin-top:30px; max-width:200px; background:#334155; color:white;" id="closePanicBtn">I feel calmer. Close.</button>
+    <div class="breath-wrapper">
+        <div class="breath-ring" id="breathRing"></div>
+        <div class="breath-circle" id="breathCircle">
+            <span class="phase-text" id="phaseText">Breathe</span>
+            <span class="countdown-text" id="countdownText">4</span>
+        </div>
+    </div>
+    <p style="color:#94a3b8; text-align:center; max-width:300px; margin-bottom:20px;">Inhale 4s · Hold 7s · Exhale 8s</p>
+    <button class="btn btn-primary" style="max-width:200px; background:#334155; color:white; margin-bottom:0;" id="closePanicBtn">I feel calmer. Close</button>
 </div>
 
 <script>
-    // ----- DATA LAYER (localStorage) -----
+    // =============================================
+    // SPLASH SCREEN LOGIC
+    // =============================================
+    window.addEventListener('load', function() {
+        // Wait 2 seconds, then fade out the splash
+        setTimeout(function() {
+            document.getElementById('splash-screen').classList.add('hide');
+        }, 1800); // 1.8 seconds feels premium and snappy
+    });
+
+    // =============================================
+    // MAIN APP LOGIC
+    // =============================================
     const STREAK_KEY = 'reclaim_streak';
     const LAST_DATE_KEY = 'reclaim_last';
     const PLEDGE_KEY = 'reclaim_pledge';
-    const SIGNATURE_KEY = 'reclaim_sig';
+    const SIG_IMG_KEY = 'reclaim_sig_img';
     const JOURNAL_KEY = 'reclaim_journal';
     const DAILY_MIN_KEY = 'reclaim_daily_min';
 
@@ -327,7 +488,6 @@
     function getStreak() { return parseInt(localStorage.getItem(STREAK_KEY)) || 0; }
     function getLastDate() { return localStorage.getItem(LAST_DATE_KEY) || null; }
     function getPledgeDate() { return localStorage.getItem(PLEDGE_KEY) || null; }
-    function getSignature() { return localStorage.getItem(SIGNATURE_KEY) || ''; }
     function getDailyMin() { return parseInt(localStorage.getItem(DAILY_MIN_KEY)) || 15; }
 
     function saveStreak(count, date) {
@@ -341,118 +501,205 @@
         updateAllUI();
     }
 
-    function saveSignature(name) {
-        localStorage.setItem(SIGNATURE_KEY, name);
-    }
-
     // ----- UI UPDATES -----
     function updateAllUI() {
         const streak = getStreak();
         const last = getLastDate();
         const pledgeDate = getPledgeDate();
-        const sig = getSignature();
         const dailyMin = getDailyMin();
 
-        // Streak
         document.getElementById('streakDisplay').innerHTML = `🔥 ${streak} Days`;
 
-        // Pledge Status
         const today = new Date().toISOString().split('T')[0];
         const pledgeText = document.getElementById('pledgeText');
+        const hasSig = localStorage.getItem(SIG_IMG_KEY);
         if (pledgeDate === today) {
-            pledgeText.innerHTML = `✅ You pledged today, ${sig || 'Warrior'}! Stay strong.`;
+            pledgeText.innerHTML = `✅ You pledged today! Stay strong.`;
         } else {
-            pledgeText.innerHTML = `⏳ You haven't pledged today. Commit again!`;
+            pledgeText.innerHTML = hasSig ? `⏳ Pledge again to lock in today.` : `⏳ Sign & pledge to start.`;
         }
 
-        // Dependency Score (lower streak = higher dependency)
-        let score = Math.max(0, 100 - (streak * 3)); // 30 days = 10% dependency
+        let score = Math.max(0, 100 - (streak * 3));
         score = Math.min(100, score);
         document.getElementById('depScoreText').innerText = `${score}%`;
         document.getElementById('depGauge').style.width = `${score}%`;
 
-        // Stats Calculation
         calculateStats(dailyMin);
-
-        // Detail Page
         document.getElementById('detailDaily').innerText = `${dailyMin} min`;
         document.getElementById('detailStreak').innerText = `${streak} days`;
 
-        // Journal Preview
         renderJournalPreviews();
         renderFullJournal();
+        loadSignatureToCanvas();
     }
 
     function calculateStats(minutes) {
         if (!minutes || minutes < 0) minutes = 0;
         const yearlyMins = minutes * 365;
         const hours = Math.round(yearlyMins / 60);
-        const books = Math.round(yearlyMins / 240); // Avg book 4 hours
-        const money = (yearlyMins / 60 * 7.25).toFixed(0); // US min wage
-        const instaMins = 24000; // Instagram built in 400 hours
+        const books = Math.round(yearlyMins / 240);
+        const money = (yearlyMins / 60 * 7.25).toFixed(0);
+        const instaMins = 24000;
 
         document.getElementById('yearlyMinutesDisplay').innerText = `${yearlyMins.toLocaleString()} mins`;
         document.getElementById('statHours').innerText = hours.toLocaleString();
         document.getElementById('statBooks').innerText = books.toLocaleString();
-        document.getElementById('compInsta').innerText = `${Math.round(yearlyMins / instaMins * 100)}% of`;
+        document.getElementById('compInsta').innerText = `${Math.round((yearlyMins / instaMins) * 100)}% of`;
         document.getElementById('compMoney').innerText = `$${money}`;
-        
         document.getElementById('detailYearly').innerText = `${yearlyMins.toLocaleString()} min`;
         document.getElementById('detailBooks').innerText = books.toLocaleString();
         document.getElementById('detailMoney').innerText = `$${money}`;
     }
 
-    // ----- JOURNAL FUNCTIONS -----
-    function getJournals() {
-        try { return JSON.parse(localStorage.getItem(JOURNAL_KEY)) || []; } catch(e) { return []; }
-    }
-    function saveJournalEntry(text) {
-        const entries = getJournals();
-        entries.push({ date: new Date().toLocaleString(), text: text });
-        localStorage.setItem(JOURNAL_KEY, JSON.stringify(entries));
-        updateAllUI();
-    }
+    // ----- SIGNATURE CANVAS LOGIC -----
+    let isDrawing = false;
+    let lastX = 0, lastY = 0;
 
-    function renderJournalPreviews() {
-        const entries = getJournals();
-        const preview = document.getElementById('journalPreview');
-        if (entries.length === 0) { preview.innerText = 'No reflections yet. Write one above!'; return; }
-        const last = entries[entries.length - 1];
-        preview.innerText = `📌 Last: ${last.date} - "${last.text.substring(0, 40)}${last.text.length > 40 ? '...' : ''}"`;
-    }
+    function initCanvas() {
+        const canvas = document.getElementById('signatureCanvas');
+        if (!canvas) return;
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = canvas.clientWidth * 1.5;
+        canvas.height = canvas.clientHeight * 1.5;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(1.5, 1.5);
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
 
-    function renderFullJournal() {
-        const entries = getJournals();
-        const container = document.getElementById('fullJournalList');
-        if (entries.length === 0) { container.innerHTML = '<div class="muted" style="padding:20px;text-align:center;">No memory logs yet.</div>'; return; }
-        let html = '';
-        const reversed = entries.slice().reverse();
-        reversed.forEach(e => {
-            html += `<div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; margin-bottom:8px; border-left: 3px solid #fbbf24;">
-                        <div style="font-size:11px; color:#64748b;">${e.date}</div>
-                        <div style="font-size:14px; margin-top:4px;">${e.text}</div>
-                    </div>`;
+        loadSignatureToCanvas();
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            isDrawing = true;
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+            canvas.classList.add('active');
         });
-        container.innerHTML = html;
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            draw(canvas, lastX, lastY, x, y);
+            lastX = x; lastY = y;
+        });
+        canvas.addEventListener('mouseup', () => { isDrawing = false; canvas.classList.remove('active'); saveSignatureImage(canvas); });
+        canvas.addEventListener('mouseleave', () => { if (isDrawing) { isDrawing = false; canvas.classList.remove('active'); saveSignatureImage(canvas); } });
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            isDrawing = true;
+            lastX = touch.clientX - rect.left;
+            lastY = touch.clientY - rect.top;
+            canvas.classList.add('active');
+        }, { passive: false });
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            draw(canvas, lastX, lastY, x, y);
+            lastX = x; lastY = y;
+        }, { passive: false });
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            isDrawing = false;
+            canvas.classList.remove('active');
+            saveSignatureImage(canvas);
+        }, { passive: false });
     }
+
+    function draw(canvas, x1, y1, x2, y2) {
+        const ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
+
+    function saveSignatureImage(canvas) {
+        const dataUrl = canvas.toDataURL('image/png');
+        localStorage.setItem(SIG_IMG_KEY, dataUrl);
+    }
+
+    function loadSignatureToCanvas() {
+        const canvas = document.getElementById('signatureCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const dataUrl = localStorage.getItem(SIG_IMG_KEY);
+        if (!dataUrl) {
+            ctx.fillStyle = '#0a0a18';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            return;
+        }
+        const img = new Image();
+        img.onload = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+        img.src = dataUrl;
+    }
+
+    document.getElementById('clearSignatureBtn')?.addEventListener('click', function() {
+        if (confirm('Clear your signature?')) {
+            localStorage.removeItem(SIG_IMG_KEY);
+            const canvas = document.getElementById('signatureCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#0a0a18';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            updateAllUI();
+        }
+    });
 
     // ----- PLEDGE LOGIC -----
     document.getElementById('pledgeTodayBtn')?.addEventListener('click', function() {
-        // Switch to pledge page
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-pledge').classList.add('active');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.querySelector('.nav-item[data-page="page-pledge"]').classList.add('active');
+        setTimeout(() => initCanvas(), 100);
     });
 
     document.getElementById('finalCommitBtn')?.addEventListener('click', function() {
-        const sig = document.getElementById('signatureInput').value.trim();
-        if (!sig) { alert('Please type your name as your digital signature.'); return; }
-        saveSignature(sig);
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const pixels = imageData.data;
+        let empty = true;
+        for (let i = 3; i < pixels.length; i += 4) {
+            if (pixels[i] !== 0) { empty = false; break; }
+        }
+        if (empty) {
+            alert('Please sign with your finger on the canvas above first!');
+            return;
+        }
+        
+        saveSignatureImage(canvas);
+        
         const today = new Date().toISOString().split('T')[0];
         savePledge(today);
-        alert(`🕊️ You have committed, ${sig}. Let's become the person we want to be.`);
-        // Switch back home
+        
+        const lastDate = getLastDate();
+        let current = getStreak();
+        if (lastDate === today) {
+            // Already done
+        } else if (lastDate) {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yStr = yesterday.toISOString().split('T')[0];
+            if (lastDate === yStr) { current += 1; } 
+            else { current = 1; }
+        } else { current = 1; }
+        saveStreak(current, today);
+
+        alert(`🕊️ You have committed! Your signature is saved.`);
+        
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-home').classList.add('active');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -460,40 +707,7 @@
         updateAllUI();
     });
 
-    // ----- CHECK-IN (Pledge + Streak) -----
-    // When you pledge, we also count it as a "clean day" automatically.
-    // Let's add a direct "I stayed clean" button functionality via a hidden method.
-    // For simplicity: Clicking "Pledge Today" also advances streak if not done today.
-    // We'll handle that in the pledge saving.
-
-    // Override savePledge to also advance streak
-    const originalSavePledge = savePledge;
-    savePledge = function(date) {
-        localStorage.setItem(PLEDGE_KEY, date);
-        // Advance streak
-        const lastDate = getLastDate();
-        const today = new Date().toISOString().split('T')[0];
-        let current = getStreak();
-        
-        if (lastDate === today) {
-            // Already checked in today
-        } else if (lastDate) {
-            const yesterday = new Date();
-            yesterday.setDate(yesterday.getDate() - 1);
-            const yStr = yesterday.toISOString().split('T')[0];
-            if (lastDate === yStr) {
-                current += 1;
-            } else {
-                current = 1; // missed days, reset to 1
-            }
-        } else {
-            current = 1;
-        }
-        saveStreak(current, today);
-        updateAllUI();
-    };
-
-    // ----- PANIC BUTTON (Breathing) -----
+    // ----- ENHANCED PANIC BUTTON (Breathing) -----
     document.getElementById('panicBtn')?.addEventListener('click', function() {
         document.getElementById('panicOverlay').classList.add('active');
         startBreathing();
@@ -502,41 +716,71 @@
     document.getElementById('closePanicBtn')?.addEventListener('click', function() {
         document.getElementById('panicOverlay').classList.remove('active');
         clearInterval(window.breathInterval);
-        document.getElementById('breathCircle').className = 'breath-circle';
-        document.getElementById('breathText').innerText = 'Breathe In';
+        clearTimeout(window.breathTimeout);
+        const circle = document.getElementById('breathCircle');
+        circle.className = 'breath-circle';
+        document.getElementById('phaseText').innerText = 'Breathe';
+        document.getElementById('countdownText').innerText = '4';
     });
 
     function startBreathing() {
         const circle = document.getElementById('breathCircle');
-        const text = document.getElementById('breathText');
-        let step = 0; // 0:inhale, 1:hold, 2:exhale
+        const phaseText = document.getElementById('phaseText');
+        const countdownText = document.getElementById('countdownText');
+        let step = 0;
+        let timer = null;
+        let countdown = 4;
+
         clearInterval(window.breathInterval);
-        
+        clearTimeout(window.breathTimeout);
+
+        function updateCountdown(value, text) {
+            phaseText.innerText = text;
+            countdownText.innerText = value;
+        }
+
         function doStep() {
             if (step === 0) {
                 circle.className = 'breath-circle inhale';
-                text.innerText = 'Breathe In (4s)';
-                setTimeout(() => { step = 1; }, 4000);
+                countdown = 4;
+                updateCountdown(4, 'Inhale');
+                timer = setInterval(() => {
+                    countdown -= 1;
+                    if (countdown <= 0) { clearInterval(timer); return; }
+                    countdownText.innerText = countdown;
+                }, 1000);
+                window.breathTimeout = setTimeout(() => { step = 1; doStep(); }, 4000);
             } else if (step === 1) {
                 circle.className = 'breath-circle';
-                text.innerText = 'Hold (7s)';
-                setTimeout(() => { step = 2; }, 7000);
+                countdown = 7;
+                updateCountdown(7, 'Hold');
+                timer = setInterval(() => {
+                    countdown -= 1;
+                    if (countdown <= 0) { clearInterval(timer); return; }
+                    countdownText.innerText = countdown;
+                }, 1000);
+                window.breathTimeout = setTimeout(() => { step = 2; doStep(); }, 7000);
             } else if (step === 2) {
                 circle.className = 'breath-circle exhale';
-                text.innerText = 'Exhale (8s)';
-                setTimeout(() => { step = 0; }, 8000);
+                countdown = 8;
+                updateCountdown(8, 'Exhale');
+                timer = setInterval(() => {
+                    countdown -= 1;
+                    if (countdown <= 0) { clearInterval(timer); return; }
+                    countdownText.innerText = countdown;
+                }, 1000);
+                window.breathTimeout = setTimeout(() => { step = 0; doStep(); }, 8000);
             }
         }
         doStep();
-        window.breathInterval = setInterval(doStep, 19000); // 4+7+8 = 19s
     }
 
     // ----- RELAPSE -----
     document.getElementById('relapseBtn')?.addEventListener('click', function() {
-        if (confirm('⚠️ Are you sure you want to reset your streak to 0? This is a relapse.')) {
+        if (confirm('⚠️ Are you sure you want to reset your streak to 0?')) {
             const today = new Date().toISOString().split('T')[0];
             saveStreak(0, today);
-            alert('💪 It happens. Day 1 starts now. You are stronger than this.');
+            alert('💪 Day 1 starts now.');
             updateAllUI();
         }
     });
@@ -547,12 +791,40 @@
         if (!isNaN(val) && val >= 0) {
             localStorage.setItem(DAILY_MIN_KEY, val.toString());
             updateAllUI();
-        } else {
-            alert('Please enter a valid number.');
-        }
+        } else { alert('Enter a valid number.'); }
     });
 
-    // ----- SAVE QUICK JOURNAL -----
+    // ----- JOURNAL -----
+    function getJournals() {
+        try { return JSON.parse(localStorage.getItem(JOURNAL_KEY)) || []; } catch(e) { return []; }
+    }
+    function saveJournalEntry(text) {
+        const entries = getJournals();
+        entries.push({ date: new Date().toLocaleString(), text: text });
+        localStorage.setItem(JOURNAL_KEY, JSON.stringify(entries));
+        updateAllUI();
+    }
+    function renderJournalPreviews() {
+        const entries = getJournals();
+        const preview = document.getElementById('journalPreview');
+        if (entries.length === 0) { preview.innerText = 'No reflections yet. Write one above!'; return; }
+        const last = entries[entries.length - 1];
+        preview.innerText = `📌 Last: ${last.date} - "${last.text.substring(0, 40)}${last.text.length > 40 ? '...' : ''}"`;
+    }
+    function renderFullJournal() {
+        const entries = getJournals();
+        const container = document.getElementById('fullJournalList');
+        if (entries.length === 0) { container.innerHTML = '<div class="muted" style="padding:20px;text-align:center;">No memory logs yet.</div>'; return; }
+        let html = '';
+        entries.slice().reverse().forEach(e => {
+            html += `<div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:12px; margin-bottom:8px; border-left: 3px solid #fbbf24;">
+                        <div style="font-size:11px; color:#64748b;">${e.date}</div>
+                        <div style="font-size:14px; margin-top:4px;">${e.text}</div>
+                    </div>`;
+        });
+        container.innerHTML = html;
+    }
+
     document.getElementById('saveQuickJournal')?.addEventListener('click', function() {
         const text = document.getElementById('quickJournal').value.trim();
         if (!text) { alert('Write something!'); return; }
@@ -562,7 +834,7 @@
         updateAllUI();
     });
 
-    // ----- BOTTOM NAVIGATION -----
+    // ----- BOTTOM NAV -----
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', function() {
             const pageId = this.dataset.page;
@@ -570,18 +842,17 @@
             document.getElementById(pageId).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             this.classList.add('active');
+            if (pageId === 'page-pledge') setTimeout(() => initCanvas(), 100);
             if (pageId === 'page-stats') updateAllUI();
             if (pageId === 'page-journal') renderFullJournal();
         });
     });
 
     // ----- INIT -----
-    // Set default daily min input
     document.getElementById('dailyMinInput').value = getDailyMin();
     updateAllUI();
     renderFullJournal();
-
-    // Auto-pledge reminder: If signature exists but pledge not today, show reminder.
+    setTimeout(initCanvas, 500);
 </script>
 </body>
 </html>
