@@ -200,29 +200,120 @@
         .notif-card .notif-left input[type="time"] { background: rgba(0,0,0,0.4); border: 1px solid #334155; border-radius: 8px; padding: 4px 8px; color: #fbbf24; font-size: 14px; width: 80px; }
         .notif-card .notif-left input[type="checkbox"] { accent-color: #8b5cf6; width: 18px; height: 18px; cursor: pointer; }
 
-        /* ----- PLEDGE (Signature) ----- */
+        /* ==========================================================
+           PLEDGE SECTION (UPDATED)
+           ========================================================== */
         .pledge-box {
             background: rgba(251, 191, 36, 0.05);
             border: 1px solid rgba(251, 191, 36, 0.15);
             border-radius: 24px; padding: 24px;
             margin: 16px 0; text-align: center;
         }
-        .pledge-box h3 { font-size: 22px; color: #fbbf24; margin-bottom: 12px; }
-        .pledge-box ul { list-style: none; text-align: left; margin: 16px 0; }
-        .pledge-box ul li { padding: 6px 0; font-size: 15px; color: #cbd5e1; }
-        .pledge-box ul li::before { content: "▹ "; color: #fbbf24; }
-        .pledge-locked-badge { display: inline-block; background: rgba(45,212,191,0.15); color: #2dd4bf; padding: 4px 16px; border-radius: 40px; font-size: 13px; font-weight: 600; margin: 8px 0 12px; border: 1px solid rgba(45,212,191,0.2); }
+        .pledge-box h3 {
+            font-size: 22px;
+            color: #fbbf24;
+            margin-bottom: 12px;
+        }
+        .pledge-box ul {
+            list-style: none;
+            text-align: left;
+            margin: 16px 0;
+        }
+        .pledge-box ul li {
+            padding: 6px 0;
+            font-size: 15px;
+            color: #cbd5e1;
+        }
+        .pledge-box ul li::before {
+            content: "▹ ";
+            color: #fbbf24;
+        }
+
+        .pledge-locked-badge {
+            display: inline-block;
+            background: rgba(45, 212, 191, 0.15);
+            color: #2dd4bf;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 8px 0 12px;
+            border: 1px solid rgba(45, 212, 191, 0.2);
+        }
+
+        .pledge-unlocked-hint {
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 4px 0 8px;
+            border: 1px solid rgba(251, 191, 36, 0.15);
+        }
 
         /* Signature Canvas */
-        .signature-pad-wrapper { margin: 12px 0 8px; background: #0a0a18; border-radius: 16px; border: 2px dashed #334155; overflow: hidden; transition: border-color 0.3s; }
-        .signature-pad-wrapper.active { border-color: #fbbf24; border-style: solid; }
-        .signature-pad-wrapper.locked { border-color: #2dd4bf; border-style: solid; background: #0a0a18; }
-        #signatureCanvas { display: block; width: 100%; height: 200px; touch-action: none; cursor: crosshair; background: #0a0a18; }
-        #signatureCanvas.locked { cursor: default; touch-action: none; }
-        .sig-actions { display: flex; gap: 10px; justify-content: center; margin: 8px 0 4px; }
-        .sig-actions button { padding: 8px 24px; border-radius: 40px; border: none; font-weight: 600; font-size: 14px; background: #334155; color: #cbd5e1; cursor: pointer; }
-        .sig-actions button.clear-btn { background: #ef4444; color: white; }
-        .sig-actions button.clear-btn.hidden { display: none; }
+        .signature-pad-wrapper {
+            margin: 12px 0 8px;
+            background: #0a0a18;
+            border-radius: 16px;
+            border: 2px dashed #334155;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .signature-pad-wrapper.active {
+            border-color: #fbbf24;
+            border-style: solid;
+        }
+        .signature-pad-wrapper.locked {
+            border-color: #2dd4bf;
+            border-style: solid;
+            background: #0a0a18;
+            opacity: 0.9;
+        }
+        #signatureCanvas {
+            display: block;
+            width: 100%;
+            height: 200px;
+            touch-action: none;
+            cursor: crosshair;
+            background: #0a0a18;
+        }
+        #signatureCanvas.locked {
+            cursor: default;
+            touch-action: none;
+            opacity: 0.9;
+        }
+
+        .sig-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 8px 0 4px;
+        }
+        .sig-actions button {
+            padding: 8px 24px;
+            border-radius: 40px;
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            background: #334155;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .sig-actions button:active { transform: scale(0.95); }
+        .sig-actions button.clear-btn {
+            background: #ef4444;
+            color: white;
+        }
+        .sig-actions button.clear-btn:hover {
+            background: #dc2626;
+        }
+        .sig-actions button.clear-btn.hidden {
+            display: none;
+        }
 
         /* ----- CUSTOM MODAL ----- */
         .modal-overlay {
@@ -535,7 +626,7 @@
                 <div id="journalPreview" style="margin-top:8px; font-size:13px; color:#94a3b8;"></div>
             </div>
 
-            <!-- ===== PAGE 2: PLEDGE ===== -->
+            <!-- ===== PAGE 2: PLEDGE (UPDATED) ===== -->
             <div id="page-pledge" class="page">
                 <div class="pledge-box">
                     <h3>🕊️ Let's Commit.</h3>
@@ -546,20 +637,38 @@
                         <li>Letting go of my past self</li>
                         <li>Becoming the person I want to be</li>
                     </ul>
+
                     <div style="margin:12px 0 8px;">
-                        <label style="font-size:12px; color:#94a3b8; display:block; text-align:left; margin-bottom:4px;">✍️ SIGN WITH YOUR FINGER (One-time ceremony)</label>
+                        <label style="font-size:12px; color:#94a3b8; display:block; text-align:left; margin-bottom:4px;">
+                            ✍️ SIGN WITH YOUR FINGER
+                            <span style="font-weight:400; color:#64748b; font-size:11px;">
+                                (Draw clearly. You can clear and redraw before committing.)
+                            </span>
+                        </label>
+
+                        <!-- UNLOCKED HINT (visible before commitment) -->
+                        <div id="unlockedHintContainer" style="display:block;">
+                            <span class="pledge-unlocked-hint">✏️ You can clear and redraw until you commit</span>
+                        </div>
+
                         <div class="signature-pad-wrapper" id="sigWrapper">
                             <canvas id="signatureCanvas"></canvas>
                         </div>
-                        <div id="lockedBadgeContainer" style="display:none; margin-top:4px;">
-                            <span class="pledge-locked-badge">🔒 Lifetime Commitment Signed &amp; Locked</span>
+
+                        <!-- LOCKED BADGE (visible after commitment) -->
+                        <div id="lockedBadgeContainer" style="display:none;">
+                            <span class="pledge-locked-badge">🔒 Commitment Signed &amp; Locked</span>
                         </div>
+
                         <div class="sig-actions">
                             <button class="clear-btn" id="clearSignatureBtn">🗑️ Clear</button>
                         </div>
                     </div>
+
                     <button class="btn btn-success" id="finalCommitBtn">✅ I commit to myself (Forever)</button>
-                    <p style="font-size:11px; color:#64748b; margin-top:8px;">* This is a one-time agreement. Once signed, it cannot be cleared.</p>
+                    <p style="font-size:11px; color:#64748b; margin-top:8px;">
+                        * Once you commit, your signature is locked forever. You cannot clear it after this.
+                    </p>
                 </div>
             </div>
 
@@ -639,7 +748,7 @@
                         <div class="week-dots" id="weekDotsContainer" style="margin-top:8px;"></div>
                     </div>
 
-                    <!-- TRIGGER ANALYTICS (UPDATED) -->
+                    <!-- TRIGGER ANALYTICS -->
                     <div class="card">
                         <div class="card-title" style="color:#fbbf24;">🧠 Trigger Insights</div>
                         <div id="triggerAnalyticsContainer">
@@ -1459,7 +1568,7 @@
         }
 
         // ============================================================
-        // 12. PANIC BUTTON (UPDATED – Now logs trigger + intensity)
+        // 12. PANIC BUTTON
         // ============================================================
         const EMERGENCY_ACTIONS = [
             'Do 10 pushups right now',
@@ -1480,7 +1589,6 @@
                 return;
             }
 
-            // Build trigger + intensity selection
             const triggers = ['Stress', 'Boredom', 'Loneliness', 'Saw Content', 'Tired', 'Other'];
             let triggerHTML = '<div style="margin-bottom:12px;"><p style="font-size:13px; color:#94a3b8; margin-bottom:6px;">What triggered this urge?</p><div class="trigger-grid">';
             triggers.forEach(t => {
@@ -1508,7 +1616,6 @@
             ).then((confirmed) => {
                 if (!confirmed) return;
 
-                // Get selected trigger
                 const trigBtns = document.querySelectorAll('.trigger-btn');
                 let selectedTrigger = 'Other';
                 trigBtns.forEach(b => {
@@ -1517,7 +1624,6 @@
                     }
                 });
 
-                // Get selected intensity
                 const intBtns = document.querySelectorAll('.intensity-btn');
                 let selectedIntensity = 5;
                 intBtns.forEach(b => {
@@ -1527,12 +1633,9 @@
                 });
 
                 const today = new Date().toISOString().split('T')[0];
-
-                // Log resisted trigger + intensity
                 saveResistedTrigger(today, selectedTrigger, selectedIntensity);
                 saveUrgeIntensity(today, selectedIntensity);
 
-                // Start panic mode
                 emergencyCompleted = false;
                 document.getElementById('closePanicBtn').disabled = true;
                 document.getElementById('closePanicBtn').style.opacity = '0.5';
@@ -1548,7 +1651,6 @@
             });
         });
 
-        // Fix: Click handlers for dynamic buttons
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('intensity-btn')) {
                 document.querySelectorAll('.intensity-btn').forEach(b => b.classList.remove('selected'));
@@ -1630,7 +1732,7 @@
         }
 
         // ============================================================
-        // 13. SIGNATURE CANVAS
+        // 13. SIGNATURE CANVAS (UPDATED)
         // ============================================================
         let isDrawing = false;
         let lastX = 0,
@@ -1676,48 +1778,82 @@
             return { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
         }
 
-        function startDraw(e) { if (isCanvasLocked()) return;
-            isDrawing = true; const pos = getPos(e);
+        function startDraw(e) {
+            if (isCanvasLocked()) return;
+            isDrawing = true;
+            const pos = getPos(e);
             lastX = pos.x;
             lastY = pos.y;
-            document.getElementById('sigWrapper').classList.add('active'); }
+            document.getElementById('sigWrapper').classList.add('active');
+        }
 
-        function drawMove(e) { if (!isDrawing || isCanvasLocked()) return; const pos = getPos(e);
+        function drawMove(e) {
+            if (!isDrawing || isCanvasLocked()) return;
+            const pos = getPos(e);
             ctx.beginPath();
             ctx.moveTo(lastX, lastY);
             ctx.lineTo(pos.x, pos.y);
             ctx.stroke();
             lastX = pos.x;
-            lastY = pos.y; }
+            lastY = pos.y;
+        }
 
-        function endDraw() { if (isCanvasLocked()) return; if (isDrawing) { isDrawing = false;
+        function endDraw() {
+            if (isCanvasLocked()) return;
+            if (isDrawing) {
+                isDrawing = false;
                 document.getElementById('sigWrapper').classList.remove('active');
-                saveSignatureImage(); } }
+                saveSignatureImage();
+            }
+        }
 
-        function touchStart(e) { if (isCanvasLocked()) return;
-            e.preventDefault(); const touch = e.touches[0]; const mouseEvent = new MouseEvent('mousedown', { clientX: touch
-                    .clientX, clientY: touch.clientY });
-            canvas.dispatchEvent(mouseEvent); }
+        function touchStart(e) {
+            if (isCanvasLocked()) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent('mousedown', { clientX: touch.clientX, clientY: touch.clientY });
+            canvas.dispatchEvent(mouseEvent);
+        }
 
-        function touchMove(e) { if (isCanvasLocked()) return;
-            e.preventDefault(); const touch = e.touches[0]; const mouseEvent = new MouseEvent('mousemove', { clientX: touch
-                    .clientX, clientY: touch.clientY });
-            canvas.dispatchEvent(mouseEvent); }
+        function touchMove(e) {
+            if (isCanvasLocked()) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent('mousemove', { clientX: touch.clientX, clientY: touch.clientY });
+            canvas.dispatchEvent(mouseEvent);
+        }
 
-        function touchEnd(e) { if (isCanvasLocked()) return;
-            e.preventDefault(); const mouseEvent = new MouseEvent('mouseup', {});
-            canvas.dispatchEvent(mouseEvent); }
+        function touchEnd(e) {
+            if (isCanvasLocked()) return;
+            e.preventDefault();
+            const mouseEvent = new MouseEvent('mouseup', {});
+            canvas.dispatchEvent(mouseEvent);
+        }
 
-        function saveSignatureImage() { if (!canvas) return; const dataUrl = canvas.toDataURL('image/png');
+        function saveSignatureImage() {
+            if (!canvas) return;
+            const dataUrl = canvas.toDataURL('image/png');
             localStorage.setItem(SIG_IMG_KEY, dataUrl);
-            applyPledgeLockState(); }
+            applyPledgeLockState();
+        }
 
-        function loadSignatureToCanvas() { if (!canvas || !ctx) return; const dataUrl = localStorage.getItem(SIG_IMG_KEY);
+        function loadSignatureToCanvas() {
+            if (!canvas || !ctx) return;
+            const dataUrl = localStorage.getItem(SIG_IMG_KEY);
             ctx.fillStyle = '#0a0a18';
-            ctx.fillRect(0, 0, canvas.width, canvas.height); if (dataUrl) { const img = new Image();
-                img.onload = function() { ctx.drawImage(img, 0, 0, canvas.width, canvas.height); };
-                img.src = dataUrl; } }
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            if (dataUrl) {
+                const img = new Image();
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                };
+                img.src = dataUrl;
+            }
+        }
 
+        // ============================================================
+        // 14. PLEDGE LOCK STATE (UPDATED)
+        // ============================================================
         function applyPledgeLockState() {
             const hasSig = isSignatureSaved();
             const wrapper = document.getElementById('sigWrapper');
@@ -1725,27 +1861,40 @@
             const clearBtn = document.getElementById('clearSignatureBtn');
             const commitBtn = document.getElementById('finalCommitBtn');
             const lockedBadge = document.getElementById('lockedBadgeContainer');
+            const unlockedHint = document.getElementById('unlockedHintContainer');
 
             if (hasSig) {
+                // LOCKED STATE
                 wrapper.classList.add('locked');
                 wrapper.classList.remove('active');
-                if (canvasEl) { canvasEl.classList.add('locked');
+                if (canvasEl) {
+                    canvasEl.classList.add('locked');
                     canvasEl.style.pointerEvents = 'none';
-                    canvasEl.style.cursor = 'default'; }
+                    canvasEl.style.cursor = 'default';
+                }
                 if (clearBtn) clearBtn.classList.add('hidden');
                 if (lockedBadge) lockedBadge.style.display = 'block';
-                if (commitBtn) { commitBtn.innerText = '✅ Commitment Signed (Lifetime)';
-                    commitBtn.disabled = true; }
+                if (unlockedHint) unlockedHint.style.display = 'none';
+                if (commitBtn) {
+                    commitBtn.innerText = '✅ Commitment Signed (Lifetime)';
+                    commitBtn.disabled = true;
+                }
             } else {
+                // UNLOCKED STATE
                 wrapper.classList.remove('locked');
                 wrapper.classList.remove('active');
-                if (canvasEl) { canvasEl.classList.remove('locked');
+                if (canvasEl) {
+                    canvasEl.classList.remove('locked');
                     canvasEl.style.pointerEvents = 'auto';
-                    canvasEl.style.cursor = 'crosshair'; }
+                    canvasEl.style.cursor = 'crosshair';
+                }
                 if (clearBtn) clearBtn.classList.remove('hidden');
                 if (lockedBadge) lockedBadge.style.display = 'none';
-                if (commitBtn) { commitBtn.innerText = '✅ I commit to myself (Forever)';
-                    commitBtn.disabled = false; }
+                if (unlockedHint) unlockedHint.style.display = 'block';
+                if (commitBtn) {
+                    commitBtn.innerText = '✅ I commit to myself (Forever)';
+                    commitBtn.disabled = false;
+                }
             }
             updateYellowButtonText();
         }
@@ -1756,17 +1905,76 @@
                     null);
                 return;
             }
-            if (confirm('Clear your signature?')) {
-                localStorage.removeItem(SIG_IMG_KEY);
-                if (ctx) { ctx.fillStyle = '#0a0a18';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height); }
-                applyPledgeLockState();
-                updateAllUI();
+            // Clear the signature from canvas and localStorage
+            localStorage.removeItem(SIG_IMG_KEY);
+            if (ctx) {
+                ctx.fillStyle = '#0a0a18';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
+            applyPledgeLockState();
+            updateAllUI();
+        });
+
+        document.getElementById('finalCommitBtn')?.addEventListener('click', function() {
+            if (isSignatureSaved()) {
+                showModal('🔒', 'Already Committed', 'Your lifetime agreement is already signed and locked.', 'OK', '',
+                    null);
+                return;
+            }
+
+            // Check if canvas has any drawing
+            const canvas = document.getElementById('signatureCanvas');
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            let empty = true;
+            for (let i = 3; i < data.length; i += 4) {
+                if (data[i] !== 0) {
+                    empty = false;
+                    break;
+                }
+            }
+            if (empty) {
+                showModal('✍️', 'Sign First!', 'Please draw your signature on the canvas above.', 'OK', '', null);
+                return;
+            }
+
+            // Save the signature permanently
+            saveSignatureImage();
+
+            // Advance streak
+            const today = new Date().toISOString().split('T')[0];
+            const lastDate = getLastDate();
+            let current = getStreak();
+            if (lastDate === today) {
+                // already
+            } else if (lastDate) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yStr = yesterday.toISOString().split('T')[0];
+                if (lastDate === yStr) {
+                    current += 1;
+                } else {
+                    current = 1;
+                }
+            } else {
+                current = 1;
+            }
+            saveStreak(current, today);
+            savePledge(today);
+            saveDailyLog(today, 'clean');
+
+            showModal('🕊️', 'Lifetime Commitment Signed!',
+                `Your agreement is locked forever. Day ${current} begins now. You cannot clear this signature.`,
+                'I Understand', '', null);
+
+            updateAllUI();
+            applyPledgeLockState();
+            navigateToPage('page-home');
         });
 
         // ============================================================
-        // 14. BADGE SYSTEM
+        // 15. BADGE SYSTEM
         // ============================================================
         const BADGE_DEFS = [
             { days: 3, icon: '🌱', name: 'Sprout' },
@@ -1791,13 +1999,16 @@
             grid.innerHTML = html;
             let next = BADGE_DEFS.find(b => streak < b.days);
             const nextMsg = document.getElementById('badgeNextMilestone');
-            if (next) { nextMsg.innerText =
-                    `🏁 Next: "${next.name}" at ${next.days} days (${next.days - streak} to go)`; } else { nextMsg
-                    .innerText = '🎉 All badges unlocked!'; }
+            if (next) {
+                nextMsg.innerText =
+                    `🏁 Next: "${next.name}" at ${next.days} days (${next.days - streak} to go)`;
+            } else {
+                nextMsg.innerText = '🎉 All badges unlocked!';
+            }
         }
 
         // ============================================================
-        // 15. HEATMAP, CLEAN %, TRIGGER ANALYTICS (UPDATED)
+        // 16. HEATMAP, CLEAN %, TRIGGER ANALYTICS
         // ============================================================
         function renderHeatmap() {
             const grid = document.getElementById('heatmapGrid');
@@ -1855,15 +2066,16 @@
         }
 
         function renderTriggerAnalytics() {
-            const triggerLogs = getTriggerLogs(); // Relapse triggers
-            const resistedLogs = getResistedTriggers(); // Resisted triggers (from Panic)
+            const triggerLogs = getTriggerLogs();
+            const resistedLogs = getResistedTriggers();
             const container = document.getElementById('triggerAnalyticsContainer');
 
             const relapseKeys = Object.keys(triggerLogs);
             const resistedKeys = Object.keys(resistedLogs);
 
             if (relapseKeys.length === 0 && resistedKeys.length === 0) {
-                container.innerHTML = '<div style="font-size:14px; color:#94a3b8;">No data yet. Use the Panic Button or Reset to start tracking.</div>';
+                container.innerHTML =
+                    '<div style="font-size:14px; color:#94a3b8;">No data yet. Use the Panic Button or Reset to start tracking.</div>';
                 document.getElementById('urgeIntensitySummary').innerText = 'Avg urge intensity: --';
                 document.getElementById('resistedVsRelapsed').innerText = 'Resisted: 0 · Relapsed: 0';
                 return;
@@ -1871,7 +2083,7 @@
 
             let html = '';
 
-            // —— RESISTED TRIGGERS (from Panic Button) ——
+            // Resisted triggers (from Panic Button)
             if (resistedKeys.length > 0) {
                 const resistedCounts = {};
                 resistedKeys.forEach(date => {
@@ -1902,7 +2114,7 @@
                 html += '</div>';
             }
 
-            // —— RELAPSE TRIGGERS (from Reset) ——
+            // Relapse triggers (from Reset)
             if (relapseKeys.length > 0) {
                 const relapseCounts = {};
                 relapseKeys.forEach(date => {
@@ -1935,13 +2147,11 @@
 
             container.innerHTML = html;
 
-            // — Summary stats —
             const totalResisted = resistedKeys.length;
             const totalRelapses = relapseKeys.length;
             document.getElementById('resistedVsRelapsed').innerText =
                 `Resisted: ${totalResisted} · Relapsed: ${totalRelapses}`;
 
-            // — Urge intensity summary —
             const urgeLogs = getUrgeIntensity();
             const urgeKeys = Object.keys(urgeLogs);
             if (urgeKeys.length > 0) {
@@ -1956,7 +2166,7 @@
         }
 
         // ============================================================
-        // 16. DATA EXPORT / IMPORT
+        // 17. DATA EXPORT / IMPORT
         // ============================================================
         function exportData() {
             const data = {
@@ -2029,7 +2239,7 @@
         });
 
         // ============================================================
-        // 17. UI UPDATES
+        // 18. UI UPDATES
         // ============================================================
         function updateYellowButtonText() {
             const btn = document.getElementById('pledgeTodayBtn');
@@ -2173,7 +2383,7 @@
         }
 
         // ============================================================
-        // 18. NAVIGATION
+        // 19. NAVIGATION
         // ============================================================
         function navigateToPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -2188,7 +2398,7 @@
         }
 
         // ============================================================
-        // 19. BUTTON HANDLERS
+        // 20. BUTTON HANDLERS
         // ============================================================
         document.getElementById('pledgeTodayBtn')?.addEventListener('click', function() {
             if (isSignatureSaved()) {
@@ -2207,47 +2417,6 @@
             skipToday();
         });
 
-        document.getElementById('finalCommitBtn')?.addEventListener('click', function() {
-            if (isSignatureSaved()) {
-                showModal('🔒', 'Already Committed', 'Your lifetime agreement is already signed and locked.', 'OK', '',
-                    null);
-                return;
-            }
-            const canvas = document.getElementById('signatureCanvas');
-            const ctx = canvas.getContext('2d');
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imageData.data;
-            let empty = true;
-            for (let i = 3; i < data.length; i += 4) {
-                if (data[i] !== 0) { empty = false; break; }
-            }
-            if (empty) {
-                showModal('✍️', 'Sign First!', 'Please draw your signature on the canvas above.', 'OK', '', null);
-                return;
-            }
-
-            saveSignatureImage();
-            const today = new Date().toISOString().split('T')[0];
-            const lastDate = getLastDate();
-            let current = getStreak();
-            if (lastDate === today) { /* already */ } else if (lastDate) {
-                const yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
-                const yStr = yesterday.toISOString().split('T')[0];
-                if (lastDate === yStr) { current += 1; } else { current = 1; }
-            } else { current = 1; }
-            saveStreak(current, today);
-            savePledge(today);
-            saveDailyLog(today, 'clean');
-
-            showModal('🕊️', 'Lifetime Commitment Signed!',
-                `Your agreement is locked forever. Day ${current} begins now. You cannot clear this signature.`,
-                'I Understand', '', null);
-            updateAllUI();
-            applyPledgeLockState();
-            navigateToPage('page-home');
-        });
-
         document.getElementById('relapseBtn')?.addEventListener('click', function() {
             if (!isSignatureSaved()) {
                 showModal('📝', 'Sign First!', 'You need to sign the lifetime pledge before you can track relapses.', 'OK',
@@ -2262,11 +2431,13 @@
             if (!isNaN(val) && val >= 0) {
                 localStorage.setItem(DAILY_MIN_KEY, val.toString());
                 updateAllUI();
-            } else { showModal('❌', 'Invalid Input', 'Please enter a valid number of minutes.', 'OK', '', null); }
+            } else {
+                showModal('❌', 'Invalid Input', 'Please enter a valid number of minutes.', 'OK', '', null);
+            }
         });
 
         // ============================================================
-        // 20. JOURNAL
+        // 21. JOURNAL
         // ============================================================
         function getJournals() {
             try { return JSON.parse(localStorage.getItem(JOURNAL_KEY)) || []; } catch (e) { return []; }
@@ -2282,7 +2453,10 @@
         function renderJournalPreviews() {
             const entries = getJournals();
             const preview = document.getElementById('journalPreview');
-            if (entries.length === 0) { preview.innerText = 'No reflections yet. Write one above!'; return; }
+            if (entries.length === 0) {
+                preview.innerText = 'No reflections yet. Write one above!';
+                return;
+            }
             const last = entries[entries.length - 1];
             preview.innerText =
                 `📌 Last: ${last.date} - "${last.text.substring(0, 40)}${last.text.length > 40 ? '...' : ''}"`;
@@ -2308,7 +2482,10 @@
 
         document.getElementById('saveQuickJournal')?.addEventListener('click', function() {
             const text = document.getElementById('quickJournal').value.trim();
-            if (!text) { showModal('📝', 'Empty Entry', 'Please write something before saving.', 'OK', '', null); return; }
+            if (!text) {
+                showModal('📝', 'Empty Entry', 'Please write something before saving.', 'OK', '', null);
+                return;
+            }
             saveJournalEntry(text);
             document.getElementById('quickJournal').value = '';
             showModal('📖', 'Reflection Saved!', 'Your memory has been logged.', 'Great', '', null);
@@ -2316,7 +2493,7 @@
         });
 
         // ============================================================
-        // 21. BOTTOM NAV
+        // 22. BOTTOM NAV
         // ============================================================
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
@@ -2325,7 +2502,7 @@
         });
 
         // ============================================================
-        // 22. INIT
+        // 23. INIT
         // ============================================================
         document.getElementById('dailyMinInput').value = getDailyMin();
         updateAllUI();
