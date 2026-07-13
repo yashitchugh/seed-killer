@@ -217,6 +217,11 @@
             color: #0f172a;
             box-shadow: 0 8px 20px -8px rgba(251, 191, 36, 0.3);
         }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
         .btn-danger {
             background: #ef4444;
             color: white;
@@ -230,6 +235,11 @@
         .btn-success {
             background: #2dd4bf;
             color: #0f172a;
+        }
+        .btn-success:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
         }
         .btn-purple {
             background: #8b5cf6;
@@ -265,7 +275,19 @@
             color: #fbbf24;
         }
 
-        /* Signature Canvas – FIXED SIZING */
+        .pledge-locked-badge {
+            display: inline-block;
+            background: rgba(45, 212, 191, 0.15);
+            color: #2dd4bf;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 8px 0 12px;
+            border: 1px solid rgba(45, 212, 191, 0.2);
+        }
+
+        /* Signature Canvas */
         .signature-pad-wrapper {
             margin: 12px 0 8px;
             background: #0a0a18;
@@ -278,6 +300,11 @@
             border-color: #fbbf24;
             border-style: solid;
         }
+        .signature-pad-wrapper.locked {
+            border-color: #2dd4bf;
+            border-style: solid;
+            background: #0a0a18;
+        }
         #signatureCanvas {
             display: block;
             width: 100%;
@@ -285,6 +312,10 @@
             touch-action: none;
             cursor: crosshair;
             background: #0a0a18;
+        }
+        #signatureCanvas.locked {
+            cursor: default;
+            touch-action: none;
         }
 
         .sig-actions {
@@ -306,6 +337,9 @@
         .sig-actions button.clear-btn {
             background: #ef4444;
             color: white;
+        }
+        .sig-actions button.clear-btn.hidden {
+            display: none;
         }
 
         /* ----- PANIC OVERLAY (Breathing) ----- */
@@ -666,7 +700,6 @@
             display: none;
         }
 
-        /* Responsive tweaks */
         @media (max-width: 420px) {
             .badge-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -784,6 +817,10 @@
                         <label style="font-size:12px; color:#94a3b8; display:block; text-align:left; margin-bottom:4px;">✍️ SIGN WITH YOUR FINGER</label>
                         <div class="signature-pad-wrapper" id="sigWrapper">
                             <canvas id="signatureCanvas"></canvas>
+                        </div>
+                        <!-- Locked Badge (shown when signed) -->
+                        <div id="lockedBadgeContainer" style="display:none; margin-top:4px;">
+                            <span class="pledge-locked-badge">🔒 Commitment Signed &amp; Locked</span>
                         </div>
                         <div class="sig-actions">
                             <button class="clear-btn" id="clearSignatureBtn">🗑️ Clear</button>
@@ -933,8 +970,45 @@
             updateAllUI();
         }
 
+        function isSignatureSaved() {
+            return !!localStorage.getItem(SIG_IMG_KEY);
+        }
+
         // ============================================================
-        // SIGNATURE CANVAS – FIXED
+        // STREAK ADVANCEMENT (Reusable)
+        // ============================================================
+        function advanceStreak() {
+            const today = new Date().toISOString().split('T')[0];
+            const lastDate = getLastDate();
+            let current = getStreak();
+
+            if (lastDate === today) {
+                alert("✅ You've already pledged today! Come back tomorrow.");
+                return false;
+            }
+
+            if (lastDate) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yStr = yesterday.toISOString().split('T')[0];
+                if (lastDate === yStr) {
+                    current += 1;
+                } else {
+                    current = 1;
+                }
+            } else {
+                current = 1;
+            }
+
+            saveStreak(current, today);
+            savePledge(today);
+            alert(`🔥 Day ${current} locked in! Stay strong.`);
+            updateAllUI();
+            return true;
+        }
+
+        // ============================================================
+        // SIGNATURE CANVAS – FIXED & LOCKABLE
         // ============================================================
         let isDrawing = false;
         let lastX = 0,
@@ -945,7 +1019,7 @@
             canvas = document.getElementById('signatureCanvas');
             if (!canvas) return;
 
-            // Fixed internal resolution to avoid cut-off
+            // Fixed internal resolution
             canvas.width = 600;
             canvas.height = 200;
             ctx = canvas.getContext('2d');
@@ -957,21 +1031,33 @@
             // Load saved signature
             loadSignatureToCanvas();
 
+            // Apply lock state
+            applyPledgeLockState();
+
+            // Remove old listeners by cloning? We'll use named functions and add/remove.
+            // But simpler: just use flags in the event handlers.
+            // We will check a flag `isLocked` in the handlers.
+
             // Mouse
+            canvas.removeEventListener('mousedown', startDraw);
+            canvas.removeEventListener('mousemove', drawMove);
+            canvas.removeEventListener('mouseup', endDraw);
+            canvas.removeEventListener('mouseleave', endDraw);
+            canvas.removeEventListener('touchstart', touchStart);
+            canvas.removeEventListener('touchmove', touchMove);
+            canvas.removeEventListener('touchend', touchEnd);
+
             canvas.addEventListener('mousedown', startDraw);
             canvas.addEventListener('mousemove', drawMove);
             canvas.addEventListener('mouseup', endDraw);
             canvas.addEventListener('mouseleave', endDraw);
-
-            // Touch
             canvas.addEventListener('touchstart', touchStart, { passive: false });
             canvas.addEventListener('touchmove', touchMove, { passive: false });
             canvas.addEventListener('touchend', touchEnd, { passive: false });
+        }
 
-            // Resize observer to keep wrapper border active
-            const wrapper = document.getElementById('sigWrapper');
-            canvas.addEventListener('focus', () => wrapper.classList.add('active'));
-            canvas.addEventListener('blur', () => wrapper.classList.remove('active'));
+        function isCanvasLocked() {
+            return isSignatureSaved();
         }
 
         function getPos(e) {
@@ -985,6 +1071,7 @@
         }
 
         function startDraw(e) {
+            if (isCanvasLocked()) return;
             isDrawing = true;
             const pos = getPos(e);
             lastX = pos.x;
@@ -993,7 +1080,7 @@
         }
 
         function drawMove(e) {
-            if (!isDrawing) return;
+            if (!isDrawing || isCanvasLocked()) return;
             const pos = getPos(e);
             ctx.beginPath();
             ctx.moveTo(lastX, lastY);
@@ -1004,6 +1091,7 @@
         }
 
         function endDraw() {
+            if (isCanvasLocked()) return;
             if (isDrawing) {
                 isDrawing = false;
                 document.getElementById('sigWrapper').classList.remove('active');
@@ -1012,6 +1100,7 @@
         }
 
         function touchStart(e) {
+            if (isCanvasLocked()) return;
             e.preventDefault();
             const touch = e.touches[0];
             const mouseEvent = new MouseEvent('mousedown', {
@@ -1022,6 +1111,7 @@
         }
 
         function touchMove(e) {
+            if (isCanvasLocked()) return;
             e.preventDefault();
             const touch = e.touches[0];
             const mouseEvent = new MouseEvent('mousemove', {
@@ -1032,6 +1122,7 @@
         }
 
         function touchEnd(e) {
+            if (isCanvasLocked()) return;
             e.preventDefault();
             const mouseEvent = new MouseEvent('mouseup', {});
             canvas.dispatchEvent(mouseEvent);
@@ -1041,12 +1132,13 @@
             if (!canvas) return;
             const dataUrl = canvas.toDataURL('image/png');
             localStorage.setItem(SIG_IMG_KEY, dataUrl);
+            // Immediately lock the UI
+            applyPledgeLockState();
         }
 
         function loadSignatureToCanvas() {
             if (!canvas || !ctx) return;
             const dataUrl = localStorage.getItem(SIG_IMG_KEY);
-            // Clear with dark bg
             ctx.fillStyle = '#0a0a18';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             if (dataUrl) {
@@ -1058,13 +1150,62 @@
             }
         }
 
+        // ============================================================
+        // PLEDGE LOCK STATE UI
+        // ============================================================
+        function applyPledgeLockState() {
+            const hasSig = isSignatureSaved();
+            const wrapper = document.getElementById('sigWrapper');
+            const canvasEl = document.getElementById('signatureCanvas');
+            const clearBtn = document.getElementById('clearSignatureBtn');
+            const commitBtn = document.getElementById('finalCommitBtn');
+            const lockedBadge = document.getElementById('lockedBadgeContainer');
+
+            if (hasSig) {
+                wrapper.classList.add('locked');
+                wrapper.classList.remove('active');
+                if (canvasEl) {
+                    canvasEl.classList.add('locked');
+                    canvasEl.style.pointerEvents = 'none';
+                    canvasEl.style.cursor = 'default';
+                }
+                if (clearBtn) clearBtn.classList.add('hidden');
+                if (lockedBadge) lockedBadge.style.display = 'block';
+                if (commitBtn) {
+                    commitBtn.innerText = '✅ Commitment Signed';
+                    commitBtn.disabled = true;
+                    commitBtn.classList.add('btn-success');
+                }
+            } else {
+                wrapper.classList.remove('locked');
+                wrapper.classList.remove('active');
+                if (canvasEl) {
+                    canvasEl.classList.remove('locked');
+                    canvasEl.style.pointerEvents = 'auto';
+                    canvasEl.style.cursor = 'crosshair';
+                }
+                if (clearBtn) clearBtn.classList.remove('hidden');
+                if (lockedBadge) lockedBadge.style.display = 'none';
+                if (commitBtn) {
+                    commitBtn.innerText = '✅ I commit to myself';
+                    commitBtn.disabled = false;
+                }
+            }
+        }
+
+        // Clear button
         document.getElementById('clearSignatureBtn')?.addEventListener('click', function() {
+            if (isSignatureSaved()) {
+                alert('Your commitment is locked. You cannot clear it.');
+                return;
+            }
             if (confirm('Clear your signature?')) {
                 localStorage.removeItem(SIG_IMG_KEY);
                 if (ctx) {
                     ctx.fillStyle = '#0a0a18';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                 }
+                applyPledgeLockState();
                 updateAllUI();
             }
         });
@@ -1099,7 +1240,6 @@
             });
             grid.innerHTML = html;
 
-            // Next milestone
             let next = BADGE_DEFS.find(b => streak < b.days);
             const nextMsg = document.getElementById('badgeNextMilestone');
             if (next) {
@@ -1122,11 +1262,16 @@
 
             const today = new Date().toISOString().split('T')[0];
             const pledgeText = document.getElementById('pledgeText');
-            const hasSig = localStorage.getItem(SIG_IMG_KEY);
+            const hasSig = isSignatureSaved();
+
             if (pledgeDate === today) {
                 pledgeText.innerHTML = `✅ You pledged today! Stay strong.`;
             } else {
-                pledgeText.innerHTML = hasSig ? `⏳ Pledge again to lock in today.` : `⏳ Sign & pledge to start.`;
+                if (hasSig) {
+                    pledgeText.innerHTML = `⏳ Tap "Pledge Today" to lock in your daily streak.`;
+                } else {
+                    pledgeText.innerHTML = `⏳ Sign the pledge first, then commit daily.`;
+                }
             }
 
             let score = Math.max(0, 100 - (streak * 3));
@@ -1140,6 +1285,7 @@
             loadSignatureToCanvas();
             updateStatsPage();
             renderBadges(streak);
+            applyPledgeLockState(); // Ensure UI lock state matches data
         }
 
         function calculateStats(minutes) {
@@ -1227,17 +1373,43 @@
         }
 
         // ============================================================
-        // PLEDGE LOGIC
+        // NAVIGATION HELPER
         // ============================================================
-        document.getElementById('pledgeTodayBtn')?.addEventListener('click', function() {
+        function navigateToPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-pledge').classList.add('active');
+            document.getElementById(pageId).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector('.nav-item[data-page="page-pledge"]').classList.add('active');
-            setTimeout(initCanvas, 150);
+            document.querySelector(`.nav-item[data-page="${pageId}"]`)?.classList.add('active');
+            if (pageId === 'page-pledge') setTimeout(initCanvas, 150);
+            if (pageId === 'page-stats') { updateAllUI();
+                updateStatsPage(); }
+            if (pageId === 'page-journal') renderFullJournal();
+        }
+
+        // ============================================================
+        // PLEDGE LOGIC (Home Button & Commit Button)
+        // ============================================================
+
+        // Home "Pledge Today" button
+        document.getElementById('pledgeTodayBtn')?.addEventListener('click', function() {
+            if (isSignatureSaved()) {
+                // Agreement already signed. Just do daily check-in.
+                if (confirm("✅ You've already signed the commitment. Ready to lock in today's streak?")) {
+                    advanceStreak();
+                }
+            } else {
+                // First time: go to pledge page to sign.
+                navigateToPage('page-pledge');
+            }
         });
 
+        // Pledge page "I commit to myself" button
         document.getElementById('finalCommitBtn')?.addEventListener('click', function() {
+            if (isSignatureSaved()) {
+                alert("✅ Your commitment is already signed and locked.");
+                return;
+            }
+
             // Check if canvas has any drawing
             const canvas = document.getElementById('signatureCanvas');
             const ctx = canvas.getContext('2d');
@@ -1252,29 +1424,34 @@
                 return;
             }
 
+            // Save the signature permanently
             saveSignatureImage();
-            const today = new Date().toISOString().split('T')[0];
-            savePledge(today);
 
+            // Advance the streak for today (since they just signed)
+            const today = new Date().toISOString().split('T')[0];
             const lastDate = getLastDate();
             let current = getStreak();
+
             if (lastDate === today) {
-                // already done
+                // Should not happen, but just in case
             } else if (lastDate) {
                 const yesterday = new Date();
                 yesterday.setDate(yesterday.getDate() - 1);
                 const yStr = yesterday.toISOString().split('T')[0];
                 if (lastDate === yStr) { current += 1; } else { current = 1; }
             } else { current = 1; }
+
             saveStreak(current, today);
+            savePledge(today);
 
-            alert(`🕊️ You have committed! Your signature is saved.`);
+            alert(`🕊️ Commitment signed! Day ${current} locked in. You cannot clear your signature now.`);
 
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-home').classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector('.nav-item[data-page="page-home"]').classList.add('active');
+            // Update UI and lock everything
             updateAllUI();
+            applyPledgeLockState();
+
+            // Navigate back to home
+            navigateToPage('page-home');
         });
 
         // ============================================================
@@ -1429,14 +1606,7 @@
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
                 const pageId = this.dataset.page;
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                document.getElementById(pageId).classList.add('active');
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                this.classList.add('active');
-                if (pageId === 'page-pledge') setTimeout(initCanvas, 150);
-                if (pageId === 'page-stats') { updateAllUI();
-                    updateStatsPage(); }
-                if (pageId === 'page-journal') renderFullJournal();
+                navigateToPage(pageId);
             });
         });
 
