@@ -10,7 +10,7 @@
         body { background: #07070f; color: #e2e8f0; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 12px; }
         
         /* =============================================
-                   SPLASH SCREEN (Starter Page)
+                   SPLASH SCREEN
                    ============================================= */
         #splash-screen {
             position: fixed;
@@ -27,58 +27,23 @@
             opacity: 1;
             visibility: visible;
         }
-        #splash-screen.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        .splash-content {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-        .splash-logo {
-            font-size: 72px;
-            animation: pulse-logo 1.4s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.3));
-        }
-        @keyframes pulse-logo {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
-        .splash-title {
-            font-size: 36px;
-            font-weight: 800;
-            color: #fbbf24;
-            letter-spacing: 2px;
-            text-shadow: 0 0 40px rgba(251, 191, 36, 0.15);
-        }
-        .splash-sub {
-            font-size: 14px;
-            color: #64748b;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-top: -8px;
-        }
-        /* Spinning gradient ring (like a loading spinner) */
+        #splash-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .splash-content { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        .splash-logo { font-size: 72px; animation: pulse-logo 1.4s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.3)); }
+        @keyframes pulse-logo { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        .splash-title { font-size: 36px; font-weight: 800; color: #fbbf24; letter-spacing: 2px; text-shadow: 0 0 40px rgba(251, 191, 36, 0.15); }
+        .splash-sub { font-size: 14px; color: #64748b; letter-spacing: 4px; text-transform: uppercase; margin-top: -8px; }
         .splash-loader {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            padding: 4px;
+            width: 48px; height: 48px; border-radius: 50%; padding: 4px;
             background: conic-gradient(from 0deg, #fbbf24, #2dd4bf, #8b5cf6, #fbbf24);
             animation: spin-loader 1.2s linear infinite;
             mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px));
             -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px));
             margin-top: 8px;
         }
-        @keyframes spin-loader {
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin-loader { 100% { transform: rotate(360deg); } }
 
-        /* ----- MAIN APP WRAPPER (Glassmorphism) ----- */
+        /* ----- MAIN APP WRAPPER ----- */
         .app-wrapper {
             max-width: 420px;
             width: 100%;
@@ -126,7 +91,7 @@
             color: #2dd4bf;
         }
 
-        /* ----- STATS CARD ----- */
+        /* ----- STATS CARDS (New Enhanced) ----- */
         .stats-card {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 24px;
@@ -178,7 +143,7 @@
         .btn-outline { background: transparent; border: 1px solid #334155; color: #cbd5e1; }
         .btn-success { background: #2dd4bf; color: #0f172a; }
 
-        /* ----- PLEDGE SECTION (with Canvas Signature) ----- */
+        /* ----- PLEDGE SECTION (Canvas Signature) ----- */
         .pledge-box {
             background: rgba(251, 191, 36, 0.05);
             border: 1px solid rgba(251, 191, 36, 0.15);
@@ -191,8 +156,6 @@
         .pledge-box ul { list-style: none; text-align: left; margin: 16px 0; }
         .pledge-box ul li { padding: 6px 0; font-size: 15px; color: #cbd5e1; }
         .pledge-box ul li::before { content: "▹ "; color: #fbbf24; }
-
-        /* Canvas Signature Pad */
         .signature-pad {
             background: #0a0a18;
             border: 2px dashed #334155;
@@ -205,19 +168,10 @@
         }
         .signature-pad.active { border-color: #fbbf24; border-style: solid; }
         .sig-actions { display: flex; gap: 10px; justify-content: center; margin-bottom: 12px; }
-        .sig-actions button { 
-            padding: 8px 24px; 
-            border-radius: 40px; 
-            border: none; 
-            font-weight: 600; 
-            font-size: 14px;
-            background: #334155; 
-            color: #cbd5e1;
-            cursor: pointer;
-        }
+        .sig-actions button { padding: 8px 24px; border-radius: 40px; border: none; font-weight: 600; font-size: 14px; background: #334155; color: #cbd5e1; cursor: pointer; }
         .sig-actions button.clear-btn { background: #ef4444; color: white; }
 
-        /* ----- PANIC OVERLAY (Enhanced Breathing) ----- */
+        /* ----- PANIC OVERLAY (Breathing) ----- */
         .panic-overlay {
             display: none;
             position: fixed;
@@ -231,7 +185,6 @@
             padding: 20px;
         }
         .panic-overlay.active { display: flex; }
-        
         .breath-wrapper {
             position: relative;
             width: 220px;
@@ -243,22 +196,18 @@
         }
         .breath-ring {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             border-radius: 50%;
             padding: 6px;
             background: conic-gradient(from 0deg, #fbbf24, #ef4444, #8b5cf6, #2dd4bf, #fbbf24);
             animation: spin-ring 10s linear infinite;
             mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #fff calc(100% - 8px));
             -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #fff calc(100% - 8px));
-            transition: opacity 1s;
         }
         @keyframes spin-ring { 100% { transform: rotate(360deg); } }
-
         .breath-circle {
             position: relative;
-            width: 160px;
-            height: 160px;
+            width: 160px; height: 160px;
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #2dd4bf, #0f172a);
             box-shadow: 0 0 60px rgba(45, 212, 191, 0.2);
@@ -269,32 +218,151 @@
             flex-direction: column;
             z-index: 2;
         }
-        .breath-circle.inhale {
-            transform: scale(1.4);
-            box-shadow: 0 0 100px rgba(251, 191, 36, 0.5), inset 0 0 80px rgba(251, 191, 36, 0.1);
+        .breath-circle.inhale { transform: scale(1.4); box-shadow: 0 0 100px rgba(251, 191, 36, 0.5), inset 0 0 80px rgba(251, 191, 36, 0.1); }
+        .breath-circle.exhale { transform: scale(0.7); box-shadow: 0 0 20px rgba(239, 68, 68, 0.1), inset 0 0 40px rgba(239, 68, 68, 0.05); }
+        .breath-circle .phase-text { font-size: 28px; font-weight: 700; color: white; text-shadow: 0 0 20px rgba(255,255,255,0.3); letter-spacing: 2px; line-height: 1; }
+        .breath-circle .countdown-text { font-size: 48px; font-weight: 800; color: #fbbf24; text-shadow: 0 0 30px rgba(251, 191, 36, 0.4); line-height: 1; margin-top: 4px; }
+
+        /* =============================================
+                   NEW ENHANCED STATS PAGE STYLES
+                   ============================================= */
+        .stats-dashboard { display: flex; flex-direction: column; gap: 16px; }
+        
+        /* Hero Card */
+        .hero-stats {
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.08), rgba(45, 212, 191, 0.05));
+            border: 1px solid rgba(251, 191, 36, 0.15);
+            border-radius: 24px;
+            padding: 24px;
+            text-align: center;
         }
-        .breath-circle.exhale {
-            transform: scale(0.7);
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1), inset 0 0 40px rgba(239, 68, 68, 0.05);
-        }
-        .breath-circle .phase-text {
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 0 20px rgba(255,255,255,0.3);
-            letter-spacing: 2px;
-            line-height: 1;
-        }
-        .breath-circle .countdown-text {
+        .hero-stats .hero-number {
             font-size: 48px;
             font-weight: 800;
             color: #fbbf24;
-            text-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+            text-shadow: 0 0 40px rgba(251, 191, 36, 0.15);
             line-height: 1;
+        }
+        .hero-stats .hero-label {
+            color: #94a3b8;
+            font-size: 14px;
+            letter-spacing: 1px;
             margin-top: 4px;
         }
+        .hero-stats .hero-sub {
+            color: #2dd4bf;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
 
-        /* ----- TABS (Bottom Nav) ----- */
+        /* 4-Column Mini Stats */
+        .mini-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 8px;
+        }
+        .mini-stat {
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            padding: 12px 4px;
+            text-align: center;
+        }
+        .mini-stat .num {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fbbf24;
+        }
+        .mini-stat .lbl {
+            font-size: 9px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Milestone Progress */
+        .milestone-card {
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+        .milestone-item { margin-bottom: 12px; }
+        .milestone-item:last-child { margin-bottom: 0; }
+        .milestone-item .flex-between { margin-bottom: 4px; font-size: 13px; }
+        .milestone-item .flex-between span:first-child { color: #cbd5e1; }
+        .milestone-item .flex-between span:last-child { color: #fbbf24; font-weight: 600; }
+        .milestone-bar {
+            height: 6px;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .milestone-bar .fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #fbbf24, #2dd4bf);
+            transition: width 0.8s ease;
+        }
+
+        /* 7-Day Consistency Dots */
+        .week-card {
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.04);
+            text-align: center;
+        }
+        .week-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .week-dot {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #1e293b;
+            border: 2px solid #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+            transition: 0.3s;
+        }
+        .week-dot.active {
+            background: rgba(45, 212, 191, 0.2);
+            border-color: #2dd4bf;
+            color: #2dd4bf;
+            box-shadow: 0 0 20px rgba(45, 212, 191, 0.15);
+        }
+        .week-dot.today {
+            border-color: #fbbf24;
+            color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+        }
+
+        /* Equivalents Grid */
+        .equiv-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .equiv-item {
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            padding: 12px 4px;
+            text-align: center;
+        }
+        .equiv-item .icon { font-size: 24px; }
+        .equiv-item .val { font-size: 16px; font-weight: 700; color: #e2e8f0; }
+        .equiv-item .lbl { font-size: 10px; color: #94a3b8; }
+
+        /* ----- BOTTOM NAV ----- */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -328,9 +396,7 @@
 </head>
 <body>
 
-<!-- =============================================
-     SPLASH SCREEN (Starter Page)
-     ============================================= -->
+<!-- SPLASH SCREEN -->
 <div id="splash-screen">
     <div class="splash-content">
         <div class="splash-logo">⛰️</div>
@@ -340,24 +406,19 @@
     </div>
 </div>
 
-<!-- =============================================
-     MAIN APP
-     ============================================= -->
+<!-- MAIN APP -->
 <div class="app-wrapper">
     <div class="content">
 
-        <!-- ========== PAGE 1: HOME / DASHBOARD ========== -->
+        <!-- PAGE 1: HOME -->
         <div id="page-home" class="page active">
             <div class="flex-between header">
                 <h1>⛰️ Reclaim</h1>
                 <span class="streak-pill" id="streakDisplay">🔥 0 Days</span>
             </div>
-
             <div id="pledgeStatus" style="background:rgba(45,212,191,0.05); border-radius:16px; padding:12px; margin-bottom:16px; border-left:4px solid #2dd4bf;">
                 <span id="pledgeText">You haven't pledged today. 👋</span>
             </div>
-
-            <!-- STATS -->
             <div class="stats-card">
                 <div class="flex-between">
                     <span class="muted">⏳ Your Yearly Waste</span>
@@ -376,16 +437,13 @@
                     <div class="comparison-item"><span class="icon">💵</span> Min wage = <strong id="compMoney">$0</strong></div>
                 </div>
             </div>
-
             <div style="margin-bottom:16px;">
                 <div class="flex-between"><span class="muted">🧠 Dependency Score</span> <strong id="depScoreText">100%</strong></div>
                 <div class="gauge-container"><div class="gauge-fill" id="depGauge" style="width:100%;"></div></div>
             </div>
-
             <button class="btn btn-primary" id="pledgeTodayBtn">📝 Pledge Today (Commit)</button>
             <button class="btn btn-danger" id="panicBtn">⚡ Panic Button (Urge)</button>
             <button class="btn btn-outline" id="relapseBtn">↺ Relapse (Reset Streak)</button>
-            
             <div style="margin-top:16px; background:rgba(255,255,255,0.02); border-radius:16px; padding:12px;">
                 <span class="muted">📓 Quick Journal</span>
                 <textarea id="quickJournal" placeholder="How are you feeling right now?" rows="2" style="margin-top:6px; width:100%; background:rgba(0,0,0,0.4); border:1px solid #334155; border-radius:12px; padding:12px; color:white; resize:vertical; font-size:14px;"></textarea>
@@ -394,7 +452,7 @@
             <div id="journalPreview" style="margin-top:8px; font-size:13px; color:#94a3b8;"></div>
         </div>
 
-        <!-- ========== PAGE 2: THE PLEDGE (with Finger Signature) ========== -->
+        <!-- PAGE 2: PLEDGE -->
         <div id="page-pledge" class="page">
             <div class="pledge-box">
                 <h3>🕊️ Let's Commit.</h3>
@@ -405,8 +463,6 @@
                     <li>Letting go of my past self</li>
                     <li>Becoming the person I want to be</li>
                 </ul>
-                
-                <!-- Signature Canvas -->
                 <div style="margin: 12px 0 8px;">
                     <label style="font-size:12px; color:#94a3b8; display:block; text-align:left; margin-bottom:4px;">✍️ SIGN WITH YOUR FINGER</label>
                     <canvas id="signatureCanvas" class="signature-pad"></canvas>
@@ -414,33 +470,83 @@
                         <button class="clear-btn" id="clearSignatureBtn">🗑️ Clear</button>
                     </div>
                 </div>
-
                 <button class="btn btn-success" id="finalCommitBtn">✅ I commit to myself</button>
                 <p style="font-size:11px; color:#64748b; margin-top:8px;">* Your signature is stored only on your device.</p>
             </div>
         </div>
 
-        <!-- ========== PAGE 3: STATS ========== -->
+        <!-- =============================================
+             PAGE 3: ENHANCED STATS (REPLACED)
+             ============================================= -->
         <div id="page-stats" class="page">
-            <h2 style="font-size:22px; margin-bottom:8px;">📊 Your Impact</h2>
-            <p class="muted">Based on your current habits.</p>
-            <div style="margin-top:16px; background:rgba(255,255,255,0.02); padding:16px; border-radius:16px;">
-                <div class="flex-between"><span>Daily average</span> <strong id="detailDaily">15 min</strong></div>
-                <div class="flex-between"><span>Yearly total</span> <strong id="detailYearly">0 min</strong></div>
-                <div class="flex-between"><span>Books you could read</span> <strong id="detailBooks">0</strong></div>
-                <div class="flex-between"><span>Money earned (min wage)</span> <strong id="detailMoney">$0</strong></div>
-                <div class="flex-between"><span>Streak</span> <strong id="detailStreak">0 days</strong></div>
+            <h2 style="font-size:22px; margin-bottom:4px;">📊 Your Impact</h2>
+            <p class="muted" style="margin-bottom:16px;">What your progress really looks like.</p>
+
+            <div class="stats-dashboard">
+                <!-- Hero: Time Regained -->
+                <div class="hero-stats">
+                    <div class="hero-number" id="heroTimeRegained">0</div>
+                    <div class="hero-label">Hours Regained During This Streak</div>
+                    <div class="hero-sub" id="heroMotivation">Every minute counts. Keep going!</div>
+                </div>
+
+                <!-- Mini Stats Grid -->
+                <div class="mini-stats-grid">
+                    <div class="mini-stat"><div class="num" id="miniDaily">0</div><div class="lbl">Daily (min)</div></div>
+                    <div class="mini-stat"><div class="num" id="miniYearly">0</div><div class="lbl">Yearly (min)</div></div>
+                    <div class="mini-stat"><div class="num" id="miniBooks">0</div><div class="lbl">Books</div></div>
+                    <div class="mini-stat"><div class="num" id="miniMoney">$0</div><div class="lbl">Min Wage</div></div>
+                </div>
+
+                <!-- Milestone Tracker -->
+                <div class="milestone-card">
+                    <div style="font-weight:600; margin-bottom:8px; color:#cbd5e1;">🚀 Milestone Tracker</div>
+                    <div class="milestone-item">
+                        <div class="flex-between"><span>3 Day Streak</span><span id="milestone3">0 / 3</span></div>
+                        <div class="milestone-bar"><div class="fill" id="milestone3Bar" style="width:0%"></div></div>
+                    </div>
+                    <div class="milestone-item">
+                        <div class="flex-between"><span>7 Day Streak</span><span id="milestone7">0 / 7</span></div>
+                        <div class="milestone-bar"><div class="fill" id="milestone7Bar" style="width:0%"></div></div>
+                    </div>
+                    <div class="milestone-item">
+                        <div class="flex-between"><span>30 Day Streak</span><span id="milestone30">0 / 30</span></div>
+                        <div class="milestone-bar"><div class="fill" id="milestone30Bar" style="width:0%"></div></div>
+                    </div>
+                    <div class="milestone-item">
+                        <div class="flex-between"><span>90 Day Streak</span><span id="milestone90">0 / 90</span></div>
+                        <div class="milestone-bar"><div class="fill" id="milestone90Bar" style="width:0%"></div></div>
+                    </div>
+                </div>
+
+                <!-- Weekly Consistency -->
+                <div class="week-card">
+                    <div style="font-weight:600; color:#cbd5e1;">📅 Weekly Consistency</div>
+                    <div class="week-dots" id="weekDotsContainer">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <!-- Equivalents -->
+                <div class="milestone-card">
+                    <div style="font-weight:600; margin-bottom:8px; color:#cbd5e1;">🎯 What you could do with that time</div>
+                    <div class="equiv-grid">
+                        <div class="equiv-item"><div class="icon">🎬</div><div class="val" id="equivMovies">0</div><div class="lbl">Movies</div></div>
+                        <div class="equiv-item"><div class="icon">😴</div><div class="val" id="equivSleep">0</div><div class="lbl">Nights Sleep</div></div>
+                        <div class="equiv-item"><div class="icon">🏃</div><div class="val" id="equivRun">0</div><div class="lbl">Km Run</div></div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- ========== PAGE 4: JOURNAL ========== -->
+        <!-- PAGE 4: JOURNAL -->
         <div id="page-journal" class="page">
             <h2 style="font-size:22px; margin-bottom:8px;">📖 Memory Log</h2>
             <p class="muted">Your triggers and reflections.</p>
             <div id="fullJournalList" style="margin-top:16px; max-height:400px; overflow-y:auto;"></div>
         </div>
 
-        <!-- ========== BOTTOM NAV ========== -->
+        <!-- BOTTOM NAV -->
         <div class="bottom-nav">
             <button class="nav-item active" data-page="page-home"><span class="nav-icon">🏠</span> Home</button>
             <button class="nav-item" data-page="page-pledge"><span class="nav-icon">🕊️</span> Pledge</button>
@@ -450,7 +556,7 @@
     </div>
 </div>
 
-<!-- ========== PANIC OVERLAY (Enhanced Breathing) ========== -->
+<!-- PANIC OVERLAY -->
 <div class="panic-overlay" id="panicOverlay">
     <div class="breath-wrapper">
         <div class="breath-ring" id="breathRing"></div>
@@ -465,17 +571,16 @@
 
 <script>
     // =============================================
-    // SPLASH SCREEN LOGIC
+    // SPLASH SCREEN
     // =============================================
     window.addEventListener('load', function() {
-        // Wait 2 seconds, then fade out the splash
         setTimeout(function() {
             document.getElementById('splash-screen').classList.add('hide');
-        }, 1800); // 1.8 seconds feels premium and snappy
+        }, 1800);
     });
 
     // =============================================
-    // MAIN APP LOGIC
+    // DATA LAYER
     // =============================================
     const STREAK_KEY = 'reclaim_streak';
     const LAST_DATE_KEY = 'reclaim_last';
@@ -484,7 +589,6 @@
     const JOURNAL_KEY = 'reclaim_journal';
     const DAILY_MIN_KEY = 'reclaim_daily_min';
 
-    // ----- HELPERS -----
     function getStreak() { return parseInt(localStorage.getItem(STREAK_KEY)) || 0; }
     function getLastDate() { return localStorage.getItem(LAST_DATE_KEY) || null; }
     function getPledgeDate() { return localStorage.getItem(PLEDGE_KEY) || null; }
@@ -501,7 +605,82 @@
         updateAllUI();
     }
 
-    // ----- UI UPDATES -----
+    // =============================================
+    // ENHANCED STATS UPDATE FUNCTION
+    // =============================================
+    function updateStatsPage() {
+        const streak = getStreak();
+        const dailyMin = getDailyMin();
+        const yearlyMins = dailyMin * 365;
+        const totalMinsSaved = streak * dailyMin; // Time regained during this streak
+        const hoursSaved = (totalMinsSaved / 60).toFixed(1);
+
+        // 1. Hero
+        document.getElementById('heroTimeRegained').innerText = hoursSaved;
+        if (streak === 0) {
+            document.getElementById('heroMotivation').innerText = "Start your journey today!";
+        } else if (streak < 3) {
+            document.getElementById('heroMotivation').innerText = "Great start! Keep the momentum!";
+        } else if (streak < 7) {
+            document.getElementById('heroMotivation').innerText = "You're building a powerful habit!";
+        } else if (streak < 30) {
+            document.getElementById('heroMotivation').innerText = "Unstoppable! You're a warrior!";
+        } else {
+            document.getElementById('heroMotivation').innerText = "Legendary discipline! 🔥";
+        }
+
+        // 2. Mini Stats
+        document.getElementById('miniDaily').innerText = dailyMin;
+        document.getElementById('miniYearly').innerText = yearlyMins.toLocaleString();
+        document.getElementById('miniBooks').innerText = Math.round(yearlyMins / 240);
+        document.getElementById('miniMoney').innerText = '$' + (yearlyMins / 60 * 7.25).toFixed(0);
+
+        // 3. Milestones
+        const milestones = [3, 7, 30, 90];
+        milestones.forEach(target => {
+            const progress = Math.min(100, (streak / target) * 100);
+            document.getElementById(`milestone${target}`).innerText = `${Math.min(streak, target)} / ${target}`;
+            document.getElementById(`milestone${target}Bar`).style.width = `${progress}%`;
+        });
+
+        // 4. Week Consistency (7 days)
+        const container = document.getElementById('weekDotsContainer');
+        container.innerHTML = '';
+        const today = new Date();
+        const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+        for (let i = 6; i >= 0; i--) {
+            const dot = document.createElement('div');
+            dot.className = 'week-dot';
+            const d = new Date(today);
+            d.setDate(d.getDate() - i);
+            dot.innerText = dayNames[d.getDay() === 0 ? 6 : d.getDay() - 1]; // Adjust for Monday start
+            
+            // Check if this day falls within the streak
+            const dateStr = d.toISOString().split('T')[0];
+            const lastDate = getLastDate();
+            let isActive = false;
+            if (lastDate) {
+                const diffDays = Math.floor((new Date(lastDate) - new Date(dateStr)) / (1000 * 60 * 60 * 24));
+                if (diffDays >= 0 && diffDays < streak) {
+                    isActive = true;
+                }
+            }
+            if (isActive) dot.classList.add('active');
+            if (i === 0) dot.classList.add('today'); // Today
+            
+            container.appendChild(dot);
+        }
+
+        // 5. Equivalents
+        const totalHours = yearlyMins / 60;
+        document.getElementById('equivMovies').innerText = Math.round(totalHours / 2); // Avg movie 2hrs
+        document.getElementById('equivSleep').innerText = Math.round(totalHours / 8); // Avg sleep 8hrs
+        document.getElementById('equivRun').innerText = Math.round(totalHours * 10); // Avg 10km/h run
+    }
+
+    // =============================================
+    // EXISTING UI UPDATES (Merged)
+    // =============================================
     function updateAllUI() {
         const streak = getStreak();
         const last = getLastDate();
@@ -525,12 +704,12 @@
         document.getElementById('depGauge').style.width = `${score}%`;
 
         calculateStats(dailyMin);
-        document.getElementById('detailDaily').innerText = `${dailyMin} min`;
-        document.getElementById('detailStreak').innerText = `${streak} days`;
-
         renderJournalPreviews();
         renderFullJournal();
         loadSignatureToCanvas();
+
+        // Update the enhanced stats page whenever UI updates
+        updateStatsPage();
     }
 
     function calculateStats(minutes) {
@@ -546,19 +725,17 @@
         document.getElementById('statBooks').innerText = books.toLocaleString();
         document.getElementById('compInsta').innerText = `${Math.round((yearlyMins / instaMins) * 100)}% of`;
         document.getElementById('compMoney').innerText = `$${money}`;
-        document.getElementById('detailYearly').innerText = `${yearlyMins.toLocaleString()} min`;
-        document.getElementById('detailBooks').innerText = books.toLocaleString();
-        document.getElementById('detailMoney').innerText = `$${money}`;
     }
 
-    // ----- SIGNATURE CANVAS LOGIC -----
+    // =============================================
+    // SIGNATURE CANVAS LOGIC
+    // =============================================
     let isDrawing = false;
     let lastX = 0, lastY = 0;
 
     function initCanvas() {
         const canvas = document.getElementById('signatureCanvas');
         if (!canvas) return;
-        const rect = canvas.parentElement.getBoundingClientRect();
         canvas.width = canvas.clientWidth * 1.5;
         canvas.height = canvas.clientHeight * 1.5;
         const ctx = canvas.getContext('2d');
@@ -657,7 +834,9 @@
         }
     });
 
-    // ----- PLEDGE LOGIC -----
+    // =============================================
+    // PLEDGE LOGIC
+    // =============================================
     document.getElementById('pledgeTodayBtn')?.addEventListener('click', function() {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-pledge').classList.add('active');
@@ -681,7 +860,6 @@
         }
         
         saveSignatureImage(canvas);
-        
         const today = new Date().toISOString().split('T')[0];
         savePledge(today);
         
@@ -707,7 +885,9 @@
         updateAllUI();
     });
 
-    // ----- ENHANCED PANIC BUTTON (Breathing) -----
+    // =============================================
+    // PANIC BUTTON (Breathing)
+    // =============================================
     document.getElementById('panicBtn')?.addEventListener('click', function() {
         document.getElementById('panicOverlay').classList.add('active');
         startBreathing();
@@ -775,7 +955,9 @@
         doStep();
     }
 
-    // ----- RELAPSE -----
+    // =============================================
+    // RELAPSE
+    // =============================================
     document.getElementById('relapseBtn')?.addEventListener('click', function() {
         if (confirm('⚠️ Are you sure you want to reset your streak to 0?')) {
             const today = new Date().toISOString().split('T')[0];
@@ -785,7 +967,9 @@
         }
     });
 
-    // ----- CALCULATE STATS -----
+    // =============================================
+    // CALCULATE STATS
+    // =============================================
     document.getElementById('calcStatsBtn')?.addEventListener('click', function() {
         const val = parseInt(document.getElementById('dailyMinInput').value);
         if (!isNaN(val) && val >= 0) {
@@ -794,7 +978,9 @@
         } else { alert('Enter a valid number.'); }
     });
 
-    // ----- JOURNAL -----
+    // =============================================
+    // JOURNAL
+    // =============================================
     function getJournals() {
         try { return JSON.parse(localStorage.getItem(JOURNAL_KEY)) || []; } catch(e) { return []; }
     }
@@ -834,7 +1020,9 @@
         updateAllUI();
     });
 
-    // ----- BOTTOM NAV -----
+    // =============================================
+    // BOTTOM NAV
+    // =============================================
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', function() {
             const pageId = this.dataset.page;
@@ -843,12 +1031,14 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             this.classList.add('active');
             if (pageId === 'page-pledge') setTimeout(() => initCanvas(), 100);
-            if (pageId === 'page-stats') updateAllUI();
+            if (pageId === 'page-stats') { updateAllUI(); updateStatsPage(); }
             if (pageId === 'page-journal') renderFullJournal();
         });
     });
 
-    // ----- INIT -----
+    // =============================================
+    // INIT
+    // =============================================
     document.getElementById('dailyMinInput').value = getDailyMin();
     updateAllUI();
     renderFullJournal();
