@@ -261,6 +261,29 @@
             box-shadow: 0 8px 20px -8px rgba(245, 158, 11, 0.3);
         }
 
+        /* ----- DAILY QUOTE CARD (NEW) ----- */
+        .quote-card {
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.05), rgba(45, 212, 191, 0.02));
+            border: 1px solid rgba(251, 191, 36, 0.08);
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .quote-card .quote-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: #e2e8f0;
+            line-height: 1.6;
+            font-style: italic;
+        }
+        .quote-card .quote-author {
+            font-size: 12px;
+            color: #fbbf24;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
         /* ----- PLEDGE (Signature) ----- */
         .pledge-box {
             background: rgba(251, 191, 36, 0.05);
@@ -415,7 +438,39 @@
             color: #fbbf24;
         }
 
-        /* ----- PANIC OVERLAY (Breathing + Emergency Exit) ----- */
+        /* Intensity Grid (1-10) */
+        .intensity-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .intensity-btn {
+            padding: 12px 0;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            background: transparent;
+            color: #cbd5e1;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .intensity-btn:active { transform: scale(0.95); }
+        .intensity-btn.selected {
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+        }
+        .intensity-label {
+            font-size: 11px;
+            color: #64748b;
+            text-align: center;
+            margin-top: -8px;
+            margin-bottom: 12px;
+        }
+
+        /* ----- PANIC OVERLAY (Breathing) ----- */
         .panic-overlay {
             display: none;
             position: fixed;
@@ -493,6 +548,8 @@
             line-height: 1;
             margin-top: 4px;
         }
+
+        /* Emergency Exit (inside panic) */
         .panic-emergency-box {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
@@ -608,7 +665,7 @@
             transition: width 0.8s ease;
         }
 
-        /* ----- CALENDAR HEATMAP ----- */
+        /* ----- HEATMAP ----- */
         .heatmap-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -673,7 +730,7 @@
         .heatmap-legend .dot.yellow { background: #f59e0b; }
         .heatmap-legend .dot.grey { background: #1e293b; border: 1px solid #2d3748; }
 
-        /* Week dots (existing) */
+        /* Week dots */
         .week-card {
             background: rgba(255, 255, 255, 0.02);
             border-radius: 20px;
@@ -785,7 +842,7 @@
             color: #fbbf24;
         }
 
-        /* ----- WHY QUIT? (Now Explicitly Porn) ----- */
+        /* ----- WHY QUIT? ----- */
         .why-quit-card {
             background: rgba(239, 68, 68, 0.05);
             border: 1px solid rgba(239, 68, 68, 0.15);
@@ -820,6 +877,33 @@
             color: #2dd4bf;
             font-weight: 700;
         }
+
+        /* ----- DATA MANAGEMENT (Export/Import) ----- */
+        .data-mgmt-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .data-mgmt-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .data-mgmt-actions button:active { transform: scale(0.95); }
+        .btn-export {
+            background: #2dd4bf;
+            color: #0f172a;
+        }
+        .btn-import {
+            background: #8b5cf6;
+            color: white;
+        }
+        #fileInput { display: none; }
 
         /* ----- BOTTOM NAV ----- */
         .bottom-nav {
@@ -892,6 +976,12 @@
             .trigger-grid {
                 grid-template-columns: 1fr 1fr 1fr;
             }
+            .intensity-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            .data-mgmt-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -918,11 +1008,17 @@
                     <span class="streak-pill" id="streakDisplay">🔥 0 Days</span>
                 </div>
 
+                <!-- DAILY QUOTE (NEW) -->
+                <div class="quote-card" id="dailyQuoteCard">
+                    <div class="quote-text" id="quoteText">"Discipline is choosing between what you want now and what you want most."</div>
+                    <div class="quote-author" id="quoteAuthor">— Abraham Lincoln</div>
+                </div>
+
                 <div id="pledgeStatus" style="background:rgba(45,212,191,0.05); border-radius:16px; padding:12px; margin-bottom:16px; border-left:4px solid #2dd4bf;">
                     <span id="pledgeText">You haven't checked in today. 👋</span>
                 </div>
 
-                <!-- WHY QUIT? (Now explicitly porn) -->
+                <!-- WHY QUIT? -->
                 <div class="why-quit-card">
                     <h3>🔥 Why Quit Porn & Overstimulation?</h3>
                     <ul>
@@ -978,7 +1074,7 @@
                 <div id="journalPreview" style="margin-top:8px; font-size:13px; color:#94a3b8;"></div>
             </div>
 
-            <!-- ===== PAGE 2: PLEDGE (Lifetime Commitment) ===== -->
+            <!-- ===== PAGE 2: PLEDGE ===== -->
             <div id="page-pledge" class="page">
                 <div class="pledge-box">
                     <h3>🕊️ Let's Commit.</h3>
@@ -990,7 +1086,6 @@
                         <li>Becoming the person I want to be</li>
                     </ul>
 
-                    <!-- SIGNATURE PAD -->
                     <div style="margin:12px 0 8px;">
                         <label style="font-size:12px; color:#94a3b8; display:block; text-align:left; margin-bottom:4px;">✍️ SIGN WITH YOUR FINGER (One-time ceremony)</label>
                         <div class="signature-pad-wrapper" id="sigWrapper">
@@ -1009,7 +1104,7 @@
                 </div>
             </div>
 
-            <!-- ===== PAGE 3: STATS + BADGES + HEATMAP ===== -->
+            <!-- ===== PAGE 3: STATS + BADGES + HEATMAP + TRIGGER ANALYTICS + DATA MGMT ===== -->
             <div id="page-stats" class="page">
                 <h2 style="font-size:22px; margin-bottom:4px;">📊 Your Impact</h2>
                 <p class="muted" style="margin-bottom:16px;">What your progress really looks like.</p>
@@ -1022,13 +1117,22 @@
                         <div class="hero-sub" id="heroMotivation">Every minute counts. Keep going!</div>
                     </div>
 
-                    <!-- CLEAN PERCENTAGE (NEW) -->
+                    <!-- Clean Percentage -->
                     <div class="milestone-card" style="border-color: rgba(45,212,191,0.2);">
                         <div class="flex-between">
                             <span style="font-weight:600; color:#cbd5e1;">📈 30-Day Success Rate</span>
                             <span style="font-size:24px; font-weight:800; color:#2dd4bf;" id="cleanPercentage">0%</span>
                         </div>
                         <div style="font-size:12px; color:#94a3b8; margin-top:4px;" id="cleanPercentageDetail">0 clean days out of 0 logged</div>
+                    </div>
+
+                    <!-- TRIGGER ANALYTICS (NEW) -->
+                    <div class="milestone-card" style="border-color: rgba(251,191,36,0.15);">
+                        <div style="font-weight:600; margin-bottom:8px; color:#fbbf24;">🧠 Trigger Insights</div>
+                        <div id="triggerAnalyticsContainer">
+                            <div style="font-size:14px; color:#94a3b8;">No relapse data yet. Stay strong!</div>
+                        </div>
+                        <div style="margin-top:8px; font-size:12px; color:#64748b;" id="urgeIntensitySummary">Average urge intensity: --</div>
                     </div>
 
                     <!-- Mini Stats -->
@@ -1048,7 +1152,7 @@
                         <div class="milestone-item"><div class="flex-between"><span>90 Day Streak</span><span id="milestone90">0 / 90</span></div><div class="milestone-bar"><div class="fill" id="milestone90Bar" style="width:0%"></div></div></div>
                     </div>
 
-                    <!-- Weekly Consistency (with counter) -->
+                    <!-- Weekly -->
                     <div class="week-card">
                         <div class="flex-between">
                             <div style="font-weight:600; color:#cbd5e1;">📅 Weekly Consistency</div>
@@ -1057,7 +1161,7 @@
                         <div class="week-dots" id="weekDotsContainer"></div>
                     </div>
 
-                    <!-- MONTHLY HEATMAP (NEW) -->
+                    <!-- Heatmap -->
                     <div class="milestone-card">
                         <div style="font-weight:600; margin-bottom:4px; color:#cbd5e1;">📆 Monthly Heatmap</div>
                         <div style="font-size:11px; color:#64748b; margin-bottom:8px;" id="heatmapMonthLabel">January 2025</div>
@@ -1080,11 +1184,22 @@
                         </div>
                     </div>
 
-                    <!-- BADGE SYSTEM -->
+                    <!-- Badges -->
                     <div class="milestone-card">
                         <div style="font-weight:600; margin-bottom:8px; color:#fbbf24;">🎖️ Your Badges</div>
                         <div class="badge-grid" id="badgeGrid"></div>
                         <div style="margin-top:8px; font-size:12px; color:#64748b; text-align:center;" id="badgeNextMilestone">Next badge at 3 days</div>
+                    </div>
+
+                    <!-- DATA MANAGEMENT (Export / Import) - NEW -->
+                    <div class="milestone-card" style="border-color: rgba(139,92,246,0.2);">
+                        <div style="font-weight:600; margin-bottom:4px; color:#8b5cf6;">💾 Data Management</div>
+                        <div style="font-size:12px; color:#94a3b8; margin-bottom:8px;">Export your data as backup or import to restore.</div>
+                        <div class="data-mgmt-actions">
+                            <button class="btn-export" id="exportDataBtn">📤 Export Backup</button>
+                            <button class="btn-import" id="importDataBtn">📥 Import Backup</button>
+                        </div>
+                        <input type="file" id="fileInput" accept=".json" />
                     </div>
                 </div>
             </div>
@@ -1120,7 +1235,7 @@
         </div>
     </div>
 
-    <!-- ===== PANIC OVERLAY (With Emergency Exit) ===== -->
+    <!-- ===== PANIC OVERLAY ===== -->
     <div class="panic-overlay" id="panicOverlay">
         <div class="breath-wrapper">
             <div class="breath-ring"></div>
@@ -1131,7 +1246,6 @@
         </div>
         <p style="color:#94a3b8; text-align:center; max-width:300px; margin-bottom:8px;">Inhale 4s · Hold 7s · Exhale 8s</p>
 
-        <!-- EMERGENCY EXIT BOX -->
         <div class="panic-emergency-box" id="emergencyBox">
             <div class="label">🚨 Emergency Action</div>
             <div class="action" id="emergencyAction">Do 10 pushups</div>
@@ -1254,6 +1368,7 @@
         const DAILY_MIN_KEY = 'reclaim_daily_min';
         const DAILY_LOGS_KEY = 'reclaim_daily_logs';
         const TRIGGER_LOGS_KEY = 'reclaim_trigger_logs';
+        const URGE_INTENSITY_KEY = 'reclaim_urge_intensity';
 
         function getStreak() { return parseInt(localStorage.getItem(STREAK_KEY)) || 0; }
 
@@ -1271,6 +1386,10 @@
             try { return JSON.parse(localStorage.getItem(TRIGGER_LOGS_KEY)) || {}; } catch (e) { return {}; }
         }
 
+        function getUrgeIntensity() {
+            try { return JSON.parse(localStorage.getItem(URGE_INTENSITY_KEY)) || {}; } catch (e) { return {}; }
+        }
+
         function saveDailyLog(date, status) {
             const logs = getDailyLogs();
             logs[date] = status;
@@ -1281,6 +1400,12 @@
             const logs = getTriggerLogs();
             logs[date] = trigger;
             localStorage.setItem(TRIGGER_LOGS_KEY, JSON.stringify(logs));
+        }
+
+        function saveUrgeIntensity(date, intensity) {
+            const logs = getUrgeIntensity();
+            logs[date] = intensity;
+            localStorage.setItem(URGE_INTENSITY_KEY, JSON.stringify(logs));
         }
 
         function saveStreak(count, date) {
@@ -1297,7 +1422,56 @@
         function isSignatureSaved() { return !!localStorage.getItem(SIG_IMG_KEY); }
 
         // ============================================================
-        // 4. MODAL SYSTEM (Enhanced for Triggers)
+        // 4. DAILY QUOTES (NEW)
+        // ============================================================
+        const QUOTES = [
+            { text: "Discipline is choosing between what you want now and what you want most.", author: "Abraham Lincoln" },
+            { text: "The habit of resisting urges is like a muscle. It gets stronger with every rep.", author: "Unknown" },
+            { text: "You don't have to be extreme, just consistent.", author: "Unknown" },
+            { text: "Every urge you resist rewires your brain for freedom.", author: "Unknown" },
+            { text: "The best time to start was yesterday. The next best time is now.", author: "Unknown" },
+            { text: "Your brain is a garden. Your attention is the water. Water what you want to grow.", author: "Unknown" },
+            { text: "Recovery is not a race. You don't have to be perfect, just persistent.", author: "Unknown" },
+            { text: "The opposite of addiction is not sobriety. It is human connection.", author: "Johann Hari" },
+            { text: "You are stronger than your urges. You've proven it before.", author: "Unknown" },
+            { text: "Small daily improvements over time lead to stunning results.", author: "Robin Sharma" },
+            { text: "The chains of habit are too weak to be felt until they are too strong to be broken.", author: "Samuel Johnson" },
+            { text: "You can't go back and change the beginning, but you can start where you are and change the ending.", author: "C.S. Lewis" },
+            { text: "Your dopamine system is healing. Every day you say no, you reclaim a piece of your mind.", author: "Unknown" },
+            { text: "It's not about perfection. It's about progress.", author: "Unknown" },
+            { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
+            { text: "You are not your urges. You are the awareness that watches them.", author: "Unknown" },
+            { text: "Discipline is the bridge between goals and accomplishment.", author: "Jim Rohn" },
+            { text: "What you resist, persists. What you embrace, transforms.", author: "Carl Jung" },
+            { text: "The urge will pass. It always does. You just have to surf the wave.", author: "Unknown" },
+            { text: "You are the author of your own story. Write a page you're proud of today.", author: "Unknown" },
+            { text: "Every clean day is a victory. Celebrate them all.", author: "Unknown" },
+            { text: "He who conquers himself is the mightiest warrior.", author: "Confucius" },
+            { text: "Dopamine detox is not deprivation. It is liberation.", author: "Unknown" },
+            { text: "The pain of discipline weighs ounces. The pain of regret weighs tons.", author: "Unknown" },
+            { text: "You deserve the version of yourself that exists beyond this habit.", author: "Unknown" },
+        ];
+
+        function getDailyQuote() {
+            const today = new Date().toISOString().split('T')[0];
+            // Use the date as a seed to get a consistent quote for the day
+            let hash = 0;
+            for (let i = 0; i < today.length; i++) {
+                hash = (hash << 5) - hash + today.charCodeAt(i);
+                hash |= 0;
+            }
+            const idx = Math.abs(hash) % QUOTES.length;
+            return QUOTES[idx];
+        }
+
+        function renderDailyQuote() {
+            const quote = getDailyQuote();
+            document.getElementById('quoteText').innerText = `"${quote.text}"`;
+            document.getElementById('quoteAuthor').innerText = `— ${quote.author}`;
+        }
+
+        // ============================================================
+        // 5. MODAL SYSTEM
         // ============================================================
         let modalResolve = null;
 
@@ -1337,7 +1511,7 @@
         }
 
         // ============================================================
-        // 5. STREAK & LOGIC
+        // 6. STREAK, SKIP, RESET
         // ============================================================
         function advanceStreak() {
             const today = new Date().toISOString().split('T')[0];
@@ -1383,9 +1557,7 @@
                 return;
             }
 
-            // Skip: mark as skipped, but do NOT change streak.
             saveDailyLog(today, 'skip');
-            // If no pledge date, set it so the UI knows this day is handled.
             if (!getPledgeDate()) savePledge(today);
 
             showModal('⏭️', 'Day Skipped', 'Today is marked as neutral. Your streak stays at ' + getStreak() + ' days.', 'Got it',
@@ -1394,7 +1566,7 @@
         }
 
         // ============================================================
-        // 6. RESET WITH TRIGGER LOGGING
+        // 7. RESET WITH TRIGGER LOGGING
         // ============================================================
         async function handleReset() {
             const triggers = ['Stress', 'Boredom', 'Loneliness', 'Saw Content', 'Tired', 'Other'];
@@ -1418,7 +1590,6 @@
 
             if (!confirmed) return;
 
-            // Wait for trigger selection
             const selectedTrigger = await new Promise((resolve) => {
                 const btns = document.querySelectorAll('.trigger-btn');
                 btns.forEach(b => {
@@ -1428,7 +1599,6 @@
                         resolve(this.dataset.trigger);
                     };
                 });
-                // If they somehow close the modal without selecting, resolve 'Other'
                 const observer = new MutationObserver(() => {
                     if (!document.getElementById('customModal').classList.contains('active')) {
                         resolve('Other');
@@ -1451,7 +1621,7 @@
         }
 
         // ============================================================
-        // 7. PANIC + EMERGENCY EXIT
+        // 8. PANIC BUTTON - URGE INTENSITY (NEW) + EMERGENCY EXIT
         // ============================================================
         const EMERGENCY_ACTIONS = [
             'Do 10 pushups right now',
@@ -1464,20 +1634,66 @@
             'Write down 3 things you are grateful for'
         ];
         let emergencyCompleted = false;
+        let selectedIntensity = 0;
 
         document.getElementById('panicBtn')?.addEventListener('click', function() {
-            emergencyCompleted = false;
-            document.getElementById('closePanicBtn').disabled = true;
-            document.getElementById('closePanicBtn').style.opacity = '0.5';
-            document.getElementById('closePanicBtn').style.cursor = 'not-allowed';
-            document.getElementById('closePanicBtn').innerText = 'Complete action to close';
+            if (!isSignatureSaved()) {
+                showModal('📝', 'Sign First!', 'You need to sign the lifetime pledge before using the Panic Button.', 'OK',
+                    '', null);
+                return;
+            }
 
-            // Pick random action
-            const action = EMERGENCY_ACTIONS[Math.floor(Math.random() * EMERGENCY_ACTIONS.length)];
-            document.getElementById('emergencyAction').innerText = action;
+            // Show intensity selection modal first
+            let intensityHTML = '<div class="intensity-grid">';
+            for (let i = 1; i <= 10; i++) {
+                const label = i <= 3 ? 'Low' : i <= 6 ? 'Medium' : 'High';
+                intensityHTML +=
+                    `<button class="intensity-btn" data-intensity="${i}">${i}</button>`;
+            }
+            intensityHTML += '</div>';
+            intensityHTML += '<div class="intensity-label">1-3 = Low · 4-6 = Medium · 7-10 = High</div>';
 
-            document.getElementById('panicOverlay').classList.add('active');
-            startBreathing();
+            showModal(
+                '📈',
+                'How strong is the urge?',
+                'Rate the intensity of your urge from 1 (mild) to 10 (overwhelming). This helps track your progress.',
+                'Start Breathing',
+                'Cancel',
+                null,
+                intensityHTML
+            ).then((confirmed) => {
+                if (!confirmed) return;
+
+                // Get selected intensity
+                const btns = document.querySelectorAll('.intensity-btn');
+                let selected = 0;
+                btns.forEach(b => {
+                    if (b.classList.contains('selected')) {
+                        selected = parseInt(b.dataset.intensity);
+                    }
+                });
+                if (selected === 0) {
+                    // If none selected, default to 5
+                    selected = 5;
+                }
+
+                const today = new Date().toISOString().split('T')[0];
+                saveUrgeIntensity(today, selected);
+                selectedIntensity = selected;
+
+                // Now start the panic mode
+                emergencyCompleted = false;
+                document.getElementById('closePanicBtn').disabled = true;
+                document.getElementById('closePanicBtn').style.opacity = '0.5';
+                document.getElementById('closePanicBtn').style.cursor = 'not-allowed';
+                document.getElementById('closePanicBtn').innerText = 'Complete action to close';
+
+                const action = EMERGENCY_ACTIONS[Math.floor(Math.random() * EMERGENCY_ACTIONS.length)];
+                document.getElementById('emergencyAction').innerText = action;
+
+                document.getElementById('panicOverlay').classList.add('active');
+                startBreathing();
+            });
         });
 
         document.getElementById('emergencyDoneBtn')?.addEventListener('click', function() {
@@ -1488,7 +1704,6 @@
             document.getElementById('closePanicBtn').innerText = 'I feel calmer. Close';
             document.getElementById('emergencyBox').style.borderColor = '#2dd4bf';
             document.getElementById('emergencyBox').style.background = 'rgba(45,212,191,0.1)';
-            // Change action text to show completion
             document.getElementById('emergencyAction').innerHTML = '✅ Done! You are safe.';
         });
 
@@ -1501,7 +1716,6 @@
             circle.className = 'breath-circle';
             document.getElementById('phaseText').innerText = 'Breathe';
             document.getElementById('countdownText').innerText = '4';
-            // Reset emergency box
             document.getElementById('emergencyBox').style.borderColor = 'rgba(239, 68, 68, 0.3)';
             document.getElementById('emergencyBox').style.background = 'rgba(239, 68, 68, 0.1)';
         });
@@ -1552,7 +1766,7 @@
         }
 
         // ============================================================
-        // 8. SIGNATURE CANVAS
+        // 9. SIGNATURE CANVAS
         // ============================================================
         let isDrawing = false;
         let lastX = 0,
@@ -1688,7 +1902,7 @@
         });
 
         // ============================================================
-        // 9. BADGE SYSTEM
+        // 10. BADGE SYSTEM
         // ============================================================
         const BADGE_DEFS = [
             { days: 3, icon: '🌱', name: 'Sprout' },
@@ -1719,7 +1933,7 @@
         }
 
         // ============================================================
-        // 10. HEATMAP & CLEAN PERCENTAGE
+        // 11. HEATMAP, CLEAN %, TRIGGER ANALYTICS, URGE SUMMARY
         // ============================================================
         function renderHeatmap() {
             const grid = document.getElementById('heatmapGrid');
@@ -1727,7 +1941,7 @@
             const now = new Date();
             const year = now.getFullYear();
             const month = now.getMonth();
-            const firstDay = new Date(year, month, 1).getDay(); // 0=Sun
+            const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const todayStr = now.toISOString().split('T')[0];
             const logs = getDailyLogs();
@@ -1738,7 +1952,6 @@
             label.innerText = `${monthNames[month]} ${year}`;
 
             let html = '';
-            // Empty cells for first day offset
             for (let i = 0; i < firstDay; i++) {
                 html += `<div class="heatmap-day" style="background:transparent;border:none;"></div>`;
             }
@@ -1777,8 +1990,145 @@
             return { clean, total, pct };
         }
 
+        // TRIGGER ANALYTICS (NEW)
+        function renderTriggerAnalytics() {
+            const triggerLogs = getTriggerLogs();
+            const container = document.getElementById('triggerAnalyticsContainer');
+            const keys = Object.keys(triggerLogs);
+
+            if (keys.length === 0) {
+                container.innerHTML = '<div style="font-size:14px; color:#94a3b8;">No relapse data yet. Stay strong!</div>';
+                document.getElementById('urgeIntensitySummary').innerText = 'Average urge intensity: --';
+                return;
+            }
+
+            // Count triggers
+            const triggerCounts = {};
+            let totalRelapses = 0;
+            keys.forEach(date => {
+                const trigger = triggerLogs[date];
+                if (trigger) {
+                    triggerCounts[trigger] = (triggerCounts[trigger] || 0) + 1;
+                    totalRelapses++;
+                }
+            });
+
+            // Sort triggers by count
+            const sorted = Object.entries(triggerCounts).sort((a, b) => b[1] - a[1]);
+            let html = '';
+            if (sorted.length > 0) {
+                html += '<div style="font-size:13px; color:#cbd5e1; margin-bottom:4px;">Top triggers this month:</div>';
+                sorted.forEach(([trigger, count], idx) => {
+                    const pct = Math.round((count / totalRelapses) * 100);
+                    const barWidth = Math.max(10, pct);
+                    html += `
+                                <div style="display:flex; align-items:center; gap:8px; margin:4px 0;">
+                                    <span style="font-size:13px; color:#94a3b8; min-width:50px;">${trigger}</span>
+                                    <div style="flex:1; height:6px; background:#1e293b; border-radius:10px; overflow:hidden;">
+                                        <div style="height:100%; width:${barWidth}%; background: linear-gradient(90deg, #fbbf24, #ef4444); border-radius:10px;"></div>
+                                    </div>
+                                    <span style="font-size:12px; color:#fbbf24; font-weight:600;">${count}x</span>
+                                </div>
+                            `;
+                });
+                html +=
+                    `<div style="font-size:12px; color:#64748b; margin-top:6px;">Total relapses: ${totalRelapses}</div>`;
+            } else {
+                html += '<div style="font-size:14px; color:#94a3b8;">No trigger data logged.</div>';
+            }
+            container.innerHTML = html;
+
+            // Urge intensity summary
+            const urgeLogs = getUrgeIntensity();
+            const urgeKeys = Object.keys(urgeLogs);
+            if (urgeKeys.length > 0) {
+                let sum = 0;
+                urgeKeys.forEach(date => {
+                    sum += parseInt(urgeLogs[date]) || 0;
+                });
+                const avg = (sum / urgeKeys.length).toFixed(1);
+                document.getElementById('urgeIntensitySummary').innerText =
+                    `Average urge intensity: ${avg}/10 (${urgeKeys.length} logged)`;
+            } else {
+                document.getElementById('urgeIntensitySummary').innerText = 'Average urge intensity: --';
+            }
+        }
+
         // ============================================================
-        // 11. UI UPDATES
+        // 12. DATA EXPORT / IMPORT (NEW)
+        // ============================================================
+        function exportData() {
+            const data = {
+                version: '1.0',
+                exportedAt: new Date().toISOString(),
+                streak: localStorage.getItem(STREAK_KEY),
+                lastDate: localStorage.getItem(LAST_DATE_KEY),
+                pledgeDate: localStorage.getItem(PLEDGE_KEY),
+                signature: localStorage.getItem(SIG_IMG_KEY),
+                journal: localStorage.getItem(JOURNAL_KEY),
+                dailyMin: localStorage.getItem(DAILY_MIN_KEY),
+                dailyLogs: localStorage.getItem(DAILY_LOGS_KEY),
+                triggerLogs: localStorage.getItem(TRIGGER_LOGS_KEY),
+                urgeIntensity: localStorage.getItem(URGE_INTENSITY_KEY),
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `reclaim_backup_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showModal('💾', 'Export Successful!', 'Your data has been downloaded as a backup file. Keep it safe.', 'Great',
+                '', null);
+        }
+
+        function importData(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (!data.version) {
+                        showModal('❌', 'Invalid File', 'This does not appear to be a valid backup file.', 'OK', '',
+                        null);
+                        return;
+                    }
+
+                    // Restore all data
+                    if (data.streak) localStorage.setItem(STREAK_KEY, data.streak);
+                    if (data.lastDate) localStorage.setItem(LAST_DATE_KEY, data.lastDate);
+                    if (data.pledgeDate) localStorage.setItem(PLEDGE_KEY, data.pledgeDate);
+                    if (data.signature) localStorage.setItem(SIG_IMG_KEY, data.signature);
+                    if (data.journal) localStorage.setItem(JOURNAL_KEY, data.journal);
+                    if (data.dailyMin) localStorage.setItem(DAILY_MIN_KEY, data.dailyMin);
+                    if (data.dailyLogs) localStorage.setItem(DAILY_LOGS_KEY, data.dailyLogs);
+                    if (data.triggerLogs) localStorage.setItem(TRIGGER_LOGS_KEY, data.triggerLogs);
+                    if (data.urgeIntensity) localStorage.setItem(URGE_INTENSITY_KEY, data.urgeIntensity);
+
+                    showModal('✅', 'Import Successful!', 'Your backup has been restored. All data is back.', 'Awesome',
+                        '', null);
+                    updateAllUI();
+                } catch (err) {
+                    showModal('❌', 'Import Failed', 'The file is corrupted or invalid. Please try again.', 'OK', '',
+                    null);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        document.getElementById('exportDataBtn')?.addEventListener('click', exportData);
+        document.getElementById('importDataBtn')?.addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
+        document.getElementById('fileInput')?.addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                importData(this.files[0]);
+            }
+            this.value = '';
+        });
+
+        // ============================================================
+        // 13. UI UPDATES
         // ============================================================
         function updateYellowButtonText() {
             const btn = document.getElementById('pledgeTodayBtn');
@@ -1827,7 +2177,9 @@
             renderBadges(streak);
             renderHeatmap();
             calculateCleanPercentage();
+            renderTriggerAnalytics();
             applyPledgeLockState();
+            renderDailyQuote();
         }
 
         function calculateStats(minutes) {
@@ -1845,7 +2197,7 @@
         }
 
         // ============================================================
-        // 12. STATS PAGE (Detailed)
+        // 14. STATS PAGE (Detailed)
         // ============================================================
         function updateStatsPage() {
             const streak = getStreak();
@@ -1914,7 +2266,7 @@
         }
 
         // ============================================================
-        // 13. NAVIGATION
+        // 15. NAVIGATION
         // ============================================================
         function navigateToPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1923,25 +2275,21 @@
             document.querySelector(`.nav-item[data-page="${pageId}"]`)?.classList.add('active');
             if (pageId === 'page-pledge') setTimeout(initCanvas, 150);
             if (pageId === 'page-stats') { updateAllUI();
-                updateStatsPage(); }
+                updateStatsPage();
+                renderTriggerAnalytics(); }
             if (pageId === 'page-journal') renderFullJournal();
         }
 
         // ============================================================
-        // 14. BUTTON HANDLERS
+        // 16. BUTTON HANDLERS
         // ============================================================
         document.getElementById('pledgeTodayBtn')?.addEventListener('click', function() {
             if (isSignatureSaved()) {
-                dailyCheckIn();
+                advanceStreak();
             } else {
                 navigateToPage('page-pledge');
             }
         });
-
-        // Alias for dailyCheckIn function (used above)
-        function dailyCheckIn() {
-            advanceStreak();
-        }
 
         document.getElementById('skipTodayBtn')?.addEventListener('click', function() {
             if (!isSignatureSaved()) {
@@ -1993,7 +2341,6 @@
             navigateToPage('page-home');
         });
 
-        // Reset Streak (now with trigger logging)
         document.getElementById('relapseBtn')?.addEventListener('click', function() {
             if (!isSignatureSaved()) {
                 showModal('📝', 'Sign First!', 'You need to sign the lifetime pledge before you can track relapses.', 'OK',
@@ -2003,7 +2350,6 @@
             handleReset();
         });
 
-        // Calculate Stats
         document.getElementById('calcStatsBtn')?.addEventListener('click', function() {
             const val = parseInt(document.getElementById('dailyMinInput').value);
             if (!isNaN(val) && val >= 0) {
@@ -2013,7 +2359,7 @@
         });
 
         // ============================================================
-        // 15. JOURNAL
+        // 17. JOURNAL
         // ============================================================
         function getJournals() {
             try { return JSON.parse(localStorage.getItem(JOURNAL_KEY)) || []; } catch (e) { return []; }
@@ -2063,7 +2409,7 @@
         });
 
         // ============================================================
-        // 16. BOTTOM NAV
+        // 18. BOTTOM NAV
         // ============================================================
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
@@ -2072,7 +2418,7 @@
         });
 
         // ============================================================
-        // 17. INIT
+        // 19. INIT
         // ============================================================
         document.getElementById('dailyMinInput').value = getDailyMin();
         updateAllUI();
