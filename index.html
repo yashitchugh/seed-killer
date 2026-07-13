@@ -135,6 +135,7 @@
         .muted { color: #94a3b8; font-size: 14px; }
         .flex { display: flex; align-items: center; gap: 8px; }
         .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .flex-center { display: flex; justify-content: center; align-items: center; }
 
         /* ----- HEADER / STREAK ----- */
         .header { margin-bottom: 24px; }
@@ -260,8 +261,14 @@
             color: #0f172a;
             box-shadow: 0 8px 20px -8px rgba(245, 158, 11, 0.3);
         }
+        .btn-sm {
+            padding: 10px 16px;
+            font-size: 14px;
+            width: auto;
+            margin-bottom: 0;
+        }
 
-        /* ----- DAILY QUOTE CARD (NEW) ----- */
+        /* ----- DAILY QUOTE CARD ----- */
         .quote-card {
             background: linear-gradient(145deg, rgba(251, 191, 36, 0.05), rgba(45, 212, 191, 0.02));
             border: 1px solid rgba(251, 191, 36, 0.08);
@@ -282,6 +289,42 @@
             color: #fbbf24;
             margin-top: 6px;
             font-weight: 600;
+        }
+
+        /* ----- NOTIFICATION SETTINGS (New) ----- */
+        .notif-card {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            border-radius: 20px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .notif-card .notif-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+        .notif-card .notif-left input[type="time"] {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 4px 8px;
+            color: #fbbf24;
+            font-size: 14px;
+            width: 80px;
+        }
+        .notif-card .notif-left input[type="checkbox"] {
+            accent-color: #8b5cf6;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
 
         /* ----- PLEDGE (Signature) ----- */
@@ -380,7 +423,7 @@
             display: none;
         }
 
-        /* ----- CUSTOM MODAL (Reset & Messages) ----- */
+        /* ----- CUSTOM MODAL ----- */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -549,7 +592,6 @@
             margin-top: 4px;
         }
 
-        /* Emergency Exit (inside panic) */
         .panic-emergency-box {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
@@ -577,38 +619,70 @@
             color: #94a3b8;
         }
 
-        /* ----- ENHANCED STATS PAGE ----- */
+        /* ==========================================================
+               RESTRUCTURED STATS PAGE – GROUPED & CLEAN
+               ========================================================== */
         .stats-dashboard {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
-        .hero-stats {
+
+        /* Hero row: Time regained + Clean % */
+        .hero-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .hero-card {
             background: linear-gradient(145deg, rgba(251, 191, 36, 0.08), rgba(45, 212, 191, 0.05));
             border: 1px solid rgba(251, 191, 36, 0.15);
             border-radius: 24px;
-            padding: 24px;
+            padding: 20px 16px;
             text-align: center;
         }
-        .hero-stats .hero-number {
-            font-size: 48px;
+        .hero-card .number {
+            font-size: 36px;
             font-weight: 800;
             color: #fbbf24;
-            text-shadow: 0 0 40px rgba(251, 191, 36, 0.15);
             line-height: 1;
         }
-        .hero-stats .hero-label {
+        .hero-card .label {
+            font-size: 12px;
             color: #94a3b8;
-            font-size: 14px;
-            letter-spacing: 1px;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+        .hero-card .sub {
+            font-size: 12px;
+            color: #2dd4bf;
             margin-top: 4px;
         }
-        .hero-stats .hero-sub {
-            color: #2dd4bf;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 8px;
+        .clean-card {
+            background: rgba(45, 212, 191, 0.05);
+            border: 1px solid rgba(45, 212, 191, 0.15);
+            border-radius: 24px;
+            padding: 20px 16px;
+            text-align: center;
         }
+        .clean-card .number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #2dd4bf;
+            line-height: 1;
+        }
+        .clean-card .label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+        .clean-card .sub {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        /* Mini stats – 4 column grid */
         .mini-stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -631,29 +705,45 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .milestone-card {
+
+        /* Group: Milestones + Badges side-by-side on larger screens, but mobile stacks */
+        .group-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .group-row .full-width { grid-column: 1 / -1; }
+
+        /* Common card style */
+        .card {
             background: rgba(255, 255, 255, 0.02);
             border-radius: 20px;
             padding: 16px;
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
+        .card-title {
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
         .milestone-item {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .milestone-item:last-child { margin-bottom: 0; }
         .milestone-item .flex-between {
-            margin-bottom: 4px;
-            font-size: 13px;
+            margin-bottom: 3px;
+            font-size: 12px;
         }
         .milestone-item .flex-between span:first-child {
-            color: #cbd5e1;
+            color: #94a3b8;
         }
         .milestone-item .flex-between span:last-child {
             color: #fbbf24;
             font-weight: 600;
         }
         .milestone-bar {
-            height: 6px;
+            height: 5px;
             background: #1e293b;
             border-radius: 10px;
             overflow: hidden;
@@ -665,12 +755,45 @@
             transition: width 0.8s ease;
         }
 
-        /* ----- HEATMAP ----- */
+        /* Badge grid inside card */
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+        .badge-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 10px 4px;
+            text-align: center;
+            border: 2px solid #1e293b;
+            transition: 0.3s;
+            opacity: 0.4;
+            filter: grayscale(1);
+        }
+        .badge-item.unlocked {
+            border-color: #fbbf24;
+            opacity: 1;
+            filter: grayscale(0);
+            background: rgba(251, 191, 36, 0.05);
+        }
+        .badge-item .badge-icon { font-size: 24px; display: block; }
+        .badge-item .badge-name { font-size: 10px; font-weight: 600; color: #cbd5e1; margin-top: 2px; }
+        .badge-item .badge-days { font-size: 9px; color: #64748b; }
+        .badge-item.unlocked .badge-name { color: #fbbf24; }
+
+        /* Heatmap + Week together */
+        .heatmap-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
         .heatmap-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 4px;
-            margin-top: 8px;
+            margin-top: 6px;
         }
         .heatmap-day {
             aspect-ratio: 1;
@@ -684,163 +807,91 @@
             color: #64748b;
             transition: 0.2s;
         }
-        .heatmap-day.clean {
-            background: #2dd4bf;
-            border-color: #2dd4bf;
-            color: #0f172a;
-            font-weight: 700;
-        }
-        .heatmap-day.relapse {
-            background: #ef4444;
-            border-color: #ef4444;
-            color: white;
-            font-weight: 700;
-        }
-        .heatmap-day.skip {
-            background: #f59e0b;
-            border-color: #f59e0b;
-            color: #0f172a;
-            font-weight: 700;
-        }
-        .heatmap-day.today {
-            border-color: #fbbf24;
-            border-width: 2px;
-        }
+        .heatmap-day.clean { background: #2dd4bf; border-color: #2dd4bf; color: #0f172a; font-weight: 700; }
+        .heatmap-day.relapse { background: #ef4444; border-color: #ef4444; color: white; font-weight: 700; }
+        .heatmap-day.skip { background: #f59e0b; border-color: #f59e0b; color: #0f172a; font-weight: 700; }
+        .heatmap-day.today { border-color: #fbbf24; border-width: 2px; }
         .heatmap-legend {
             display: flex;
             gap: 12px;
             justify-content: center;
-            margin-top: 8px;
-            font-size: 11px;
+            margin-top: 6px;
+            font-size: 10px;
             color: #94a3b8;
         }
-        .heatmap-legend span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .heatmap-legend .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-            display: inline-block;
-        }
+        .heatmap-legend span { display: flex; align-items: center; gap: 4px; }
+        .heatmap-legend .dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
         .heatmap-legend .dot.green { background: #2dd4bf; }
         .heatmap-legend .dot.red { background: #ef4444; }
         .heatmap-legend .dot.yellow { background: #f59e0b; }
         .heatmap-legend .dot.grey { background: #1e293b; border: 1px solid #2d3748; }
 
-        /* Week dots */
-        .week-card {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            text-align: center;
-        }
         .week-dots {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-top: 8px;
+            gap: 10px;
+            margin-top: 6px;
         }
         .week-dot {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: #1e293b;
             border: 2px solid #334155;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             color: #64748b;
             transition: 0.3s;
         }
-        .week-dot.active {
-            background: rgba(45, 212, 191, 0.2);
-            border-color: #2dd4bf;
-            color: #2dd4bf;
-            box-shadow: 0 0 20px rgba(45, 212, 191, 0.15);
-        }
-        .week-dot.today {
-            border-color: #fbbf24;
-            color: #fbbf24;
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
-        }
-        .week-dot.skipped {
-            background: rgba(245, 158, 11, 0.15);
-            border-color: #f59e0b;
-            color: #f59e0b;
-        }
+        .week-dot.active { background: rgba(45, 212, 191, 0.2); border-color: #2dd4bf; color: #2dd4bf; }
+        .week-dot.today { border-color: #fbbf24; color: #fbbf24; }
+        .week-dot.skipped { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; color: #f59e0b; }
 
+        /* Trigger Analytics & Equivalents – side by side */
+        .group-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
         .equiv-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin-top: 8px;
+            gap: 6px;
+            margin-top: 4px;
         }
         .equiv-item {
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
-            padding: 12px 4px;
+            border-radius: 12px;
+            padding: 8px 4px;
             text-align: center;
         }
-        .equiv-item .icon {
-            font-size: 24px;
-        }
-        .equiv-item .val {
-            font-size: 16px;
-            font-weight: 700;
-            color: #e2e8f0;
-        }
-        .equiv-item .lbl {
-            font-size: 10px;
-            color: #94a3b8;
-        }
+        .equiv-item .icon { font-size: 20px; }
+        .equiv-item .val { font-size: 14px; font-weight: 700; color: #e2e8f0; }
+        .equiv-item .lbl { font-size: 9px; color: #94a3b8; }
 
-        /* ----- BADGE SYSTEM ----- */
-        .badge-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+        /* Data Management card */
+        .data-mgmt-actions {
+            display: flex;
             gap: 10px;
             margin-top: 8px;
         }
-        .badge-item {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
-            padding: 14px 6px;
-            text-align: center;
-            border: 2px solid #1e293b;
-            transition: 0.3s;
-            opacity: 0.4;
-            filter: grayscale(1);
-        }
-        .badge-item.unlocked {
-            border-color: #fbbf24;
-            opacity: 1;
-            filter: grayscale(0);
-            background: rgba(251, 191, 36, 0.05);
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.05);
-        }
-        .badge-item .badge-icon {
-            font-size: 32px;
-            display: block;
-        }
-        .badge-item .badge-name {
-            font-size: 11px;
+        .data-mgmt-actions button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            border: none;
             font-weight: 600;
-            color: #cbd5e1;
-            margin-top: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
         }
-        .badge-item .badge-days {
-            font-size: 10px;
-            color: #64748b;
-        }
-        .badge-item.unlocked .badge-name {
-            color: #fbbf24;
-        }
+        .data-mgmt-actions button:active { transform: scale(0.95); }
+        .btn-export { background: #2dd4bf; color: #0f172a; }
+        .btn-import { background: #8b5cf6; color: white; }
+        #fileInput { display: none; }
 
         /* ----- WHY QUIT? ----- */
         .why-quit-card {
@@ -877,33 +928,6 @@
             color: #2dd4bf;
             font-weight: 700;
         }
-
-        /* ----- DATA MANAGEMENT (Export/Import) ----- */
-        .data-mgmt-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 8px;
-        }
-        .data-mgmt-actions button {
-            flex: 1;
-            padding: 12px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .data-mgmt-actions button:active { transform: scale(0.95); }
-        .btn-export {
-            background: #2dd4bf;
-            color: #0f172a;
-        }
-        .btn-import {
-            background: #8b5cf6;
-            color: white;
-        }
-        #fileInput { display: none; }
 
         /* ----- BOTTOM NAV ----- */
         .bottom-nav {
@@ -942,46 +966,22 @@
             display: block;
         }
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        ::-webkit-scrollbar {
-            display: none;
-        }
+        ::-webkit-scrollbar { display: none; }
 
         @media (max-width: 420px) {
-            .badge-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 6px;
-            }
-            .badge-item {
-                padding: 10px 4px;
-            }
-            .badge-item .badge-icon {
-                font-size: 24px;
-            }
-            .why-quit-card ul {
-                grid-template-columns: 1fr;
-            }
-            .mini-stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .trigger-grid {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-            .intensity-grid {
-                grid-template-columns: repeat(5, 1fr);
-            }
-            .data-mgmt-actions {
-                flex-direction: column;
-            }
+            .hero-row { grid-template-columns: 1fr; }
+            .group-row { grid-template-columns: 1fr; }
+            .group-row-2 { grid-template-columns: 1fr; }
+            .mini-stats-grid { grid-template-columns: 1fr 1fr; }
+            .trigger-grid { grid-template-columns: 1fr 1fr 1fr; }
+            .intensity-grid { grid-template-columns: repeat(5, 1fr); }
+            .data-mgmt-actions { flex-direction: column; }
+            .why-quit-card ul { grid-template-columns: 1fr; }
+            .notif-card { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
@@ -1008,10 +1008,23 @@
                     <span class="streak-pill" id="streakDisplay">🔥 0 Days</span>
                 </div>
 
-                <!-- DAILY QUOTE (NEW) -->
+                <!-- DAILY QUOTE -->
                 <div class="quote-card" id="dailyQuoteCard">
                     <div class="quote-text" id="quoteText">"Discipline is choosing between what you want now and what you want most."</div>
                     <div class="quote-author" id="quoteAuthor">— Abraham Lincoln</div>
+                </div>
+
+                <!-- NOTIFICATION SETTINGS (NEW) -->
+                <div class="notif-card" id="notifCard">
+                    <div class="notif-left">
+                        <span>🔔</span>
+                        <span style="font-weight:600;">Reminder</span>
+                        <input type="time" id="reminderTime" value="09:00" />
+                        <label>
+                            <input type="checkbox" id="reminderToggle" /> Enable
+                        </label>
+                    </div>
+                    <button class="btn btn-sm btn-purple" id="testNotifBtn" style="margin:0;">Test</button>
                 </div>
 
                 <div id="pledgeStatus" style="background:rgba(45,212,191,0.05); border-radius:16px; padding:12px; margin-bottom:16px; border-left:4px solid #2dd4bf;">
@@ -1031,7 +1044,7 @@
                     </ul>
                 </div>
 
-                <!-- STATS CARD -->
+                <!-- STATS CARD (Yearly waste) -->
                 <div class="stats-card">
                     <div class="flex-between">
                         <span class="muted">⏳ Your Yearly Waste</span>
@@ -1104,38 +1117,28 @@
                 </div>
             </div>
 
-            <!-- ===== PAGE 3: STATS + BADGES + HEATMAP + TRIGGER ANALYTICS + DATA MGMT ===== -->
+            <!-- ===== PAGE 3: STATS (RESTRUCTURED) ===== -->
             <div id="page-stats" class="page">
                 <h2 style="font-size:22px; margin-bottom:4px;">📊 Your Impact</h2>
-                <p class="muted" style="margin-bottom:16px;">What your progress really looks like.</p>
+                <p class="muted" style="margin-bottom:16px;">Your progress at a glance.</p>
 
                 <div class="stats-dashboard">
-                    <!-- Hero -->
-                    <div class="hero-stats">
-                        <div class="hero-number" id="heroTimeRegained">0</div>
-                        <div class="hero-label">Hours Regained During This Streak</div>
-                        <div class="hero-sub" id="heroMotivation">Every minute counts. Keep going!</div>
-                    </div>
 
-                    <!-- Clean Percentage -->
-                    <div class="milestone-card" style="border-color: rgba(45,212,191,0.2);">
-                        <div class="flex-between">
-                            <span style="font-weight:600; color:#cbd5e1;">📈 30-Day Success Rate</span>
-                            <span style="font-size:24px; font-weight:800; color:#2dd4bf;" id="cleanPercentage">0%</span>
+                    <!-- HERO ROW: Time Regained + Clean % -->
+                    <div class="hero-row">
+                        <div class="hero-card">
+                            <div class="number" id="heroTimeRegained">0</div>
+                            <div class="label">Hours Regained</div>
+                            <div class="sub" id="heroMotivation">Keep going!</div>
                         </div>
-                        <div style="font-size:12px; color:#94a3b8; margin-top:4px;" id="cleanPercentageDetail">0 clean days out of 0 logged</div>
-                    </div>
-
-                    <!-- TRIGGER ANALYTICS (NEW) -->
-                    <div class="milestone-card" style="border-color: rgba(251,191,36,0.15);">
-                        <div style="font-weight:600; margin-bottom:8px; color:#fbbf24;">🧠 Trigger Insights</div>
-                        <div id="triggerAnalyticsContainer">
-                            <div style="font-size:14px; color:#94a3b8;">No relapse data yet. Stay strong!</div>
+                        <div class="clean-card">
+                            <div class="number" id="cleanPercentage">0%</div>
+                            <div class="label">30-Day Success Rate</div>
+                            <div class="sub" id="cleanPercentageDetail">0 / 0 logged</div>
                         </div>
-                        <div style="margin-top:8px; font-size:12px; color:#64748b;" id="urgeIntensitySummary">Average urge intensity: --</div>
                     </div>
 
-                    <!-- Mini Stats -->
+                    <!-- MINI STATS -->
                     <div class="mini-stats-grid">
                         <div class="mini-stat"><div class="num" id="miniDaily">0</div><div class="lbl">Daily (min)</div></div>
                         <div class="mini-stat"><div class="num" id="miniYearly">0</div><div class="lbl">Yearly (min)</div></div>
@@ -1143,28 +1146,29 @@
                         <div class="mini-stat"><div class="num" id="miniMoney">$0</div><div class="lbl">Min Wage</div></div>
                     </div>
 
-                    <!-- Milestones -->
-                    <div class="milestone-card">
-                        <div style="font-weight:600; margin-bottom:8px; color:#cbd5e1;">🚀 Milestone Tracker</div>
-                        <div class="milestone-item"><div class="flex-between"><span>3 Day Streak</span><span id="milestone3">0 / 3</span></div><div class="milestone-bar"><div class="fill" id="milestone3Bar" style="width:0%"></div></div></div>
-                        <div class="milestone-item"><div class="flex-between"><span>7 Day Streak</span><span id="milestone7">0 / 7</span></div><div class="milestone-bar"><div class="fill" id="milestone7Bar" style="width:0%"></div></div></div>
-                        <div class="milestone-item"><div class="flex-between"><span>30 Day Streak</span><span id="milestone30">0 / 30</span></div><div class="milestone-bar"><div class="fill" id="milestone30Bar" style="width:0%"></div></div></div>
-                        <div class="milestone-item"><div class="flex-between"><span>90 Day Streak</span><span id="milestone90">0 / 90</span></div><div class="milestone-bar"><div class="fill" id="milestone90Bar" style="width:0%"></div></div></div>
+                    <!-- GROUP: Milestones + Badges -->
+                    <div class="group-row">
+                        <div class="card">
+                            <div class="card-title">🚀 Milestones</div>
+                            <div class="milestone-item"><div class="flex-between"><span>3 Day</span><span id="milestone3">0/3</span></div><div class="milestone-bar"><div class="fill" id="milestone3Bar" style="width:0%"></div></div></div>
+                            <div class="milestone-item"><div class="flex-between"><span>7 Day</span><span id="milestone7">0/7</span></div><div class="milestone-bar"><div class="fill" id="milestone7Bar" style="width:0%"></div></div></div>
+                            <div class="milestone-item"><div class="flex-between"><span>30 Day</span><span id="milestone30">0/30</span></div><div class="milestone-bar"><div class="fill" id="milestone30Bar" style="width:0%"></div></div></div>
+                            <div class="milestone-item"><div class="flex-between"><span>90 Day</span><span id="milestone90">0/90</span></div><div class="milestone-bar"><div class="fill" id="milestone90Bar" style="width:0%"></div></div></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">🎖️ Badges</div>
+                            <div class="badge-grid" id="badgeGrid"></div>
+                            <div style="font-size:11px; color:#64748b; margin-top:6px; text-align:center;" id="badgeNextMilestone">Next: 3 days</div>
+                        </div>
                     </div>
 
-                    <!-- Weekly -->
-                    <div class="week-card">
+                    <!-- HEATMAP + WEEKLY CONSISTENCY -->
+                    <div class="heatmap-card">
                         <div class="flex-between">
-                            <div style="font-weight:600; color:#cbd5e1;">📅 Weekly Consistency</div>
+                            <span style="font-weight:600; color:#cbd5e1;">📆 Monthly Heatmap</span>
                             <span style="font-size:13px; color:#fbbf24;" id="weeklyCounter">0/7 clean</span>
                         </div>
-                        <div class="week-dots" id="weekDotsContainer"></div>
-                    </div>
-
-                    <!-- Heatmap -->
-                    <div class="milestone-card">
-                        <div style="font-weight:600; margin-bottom:4px; color:#cbd5e1;">📆 Monthly Heatmap</div>
-                        <div style="font-size:11px; color:#64748b; margin-bottom:8px;" id="heatmapMonthLabel">January 2025</div>
+                        <div style="font-size:11px; color:#64748b; margin-top:2px;" id="heatmapMonthLabel">January 2025</div>
                         <div class="heatmap-grid" id="heatmapGrid"></div>
                         <div class="heatmap-legend">
                             <span><span class="dot green"></span> Clean</span>
@@ -1172,32 +1176,35 @@
                             <span><span class="dot yellow"></span> Skipped</span>
                             <span><span class="dot grey"></span> Not logged</span>
                         </div>
+                        <div class="week-dots" id="weekDotsContainer" style="margin-top:8px;"></div>
                     </div>
 
-                    <!-- Equivalents -->
-                    <div class="milestone-card">
-                        <div style="font-weight:600; margin-bottom:8px; color:#cbd5e1;">🎯 What you could do with that time</div>
-                        <div class="equiv-grid">
-                            <div class="equiv-item"><div class="icon">🎬</div><div class="val" id="equivMovies">0</div><div class="lbl">Movies</div></div>
-                            <div class="equiv-item"><div class="icon">😴</div><div class="val" id="equivSleep">0</div><div class="lbl">Nights Sleep</div></div>
-                            <div class="equiv-item"><div class="icon">🏃</div><div class="val" id="equivRun">0</div><div class="lbl">Km Run</div></div>
+                    <!-- TRIGGER ANALYTICS + EQUIVALENTS -->
+                    <div class="group-row-2">
+                        <div class="card">
+                            <div class="card-title">🧠 Trigger Insights</div>
+                            <div id="triggerAnalyticsContainer">
+                                <div style="font-size:14px; color:#94a3b8;">No relapse data yet.</div>
+                            </div>
+                            <div style="margin-top:6px; font-size:12px; color:#64748b;" id="urgeIntensitySummary">Avg urge: --</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">🎯 Time Equivalents</div>
+                            <div class="equiv-grid">
+                                <div class="equiv-item"><div class="icon">🎬</div><div class="val" id="equivMovies">0</div><div class="lbl">Movies</div></div>
+                                <div class="equiv-item"><div class="icon">😴</div><div class="val" id="equivSleep">0</div><div class="lbl">Nights</div></div>
+                                <div class="equiv-item"><div class="icon">🏃</div><div class="val" id="equivRun">0</div><div class="lbl">Km Run</div></div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Badges -->
-                    <div class="milestone-card">
-                        <div style="font-weight:600; margin-bottom:8px; color:#fbbf24;">🎖️ Your Badges</div>
-                        <div class="badge-grid" id="badgeGrid"></div>
-                        <div style="margin-top:8px; font-size:12px; color:#64748b; text-align:center;" id="badgeNextMilestone">Next badge at 3 days</div>
-                    </div>
-
-                    <!-- DATA MANAGEMENT (Export / Import) - NEW -->
-                    <div class="milestone-card" style="border-color: rgba(139,92,246,0.2);">
-                        <div style="font-weight:600; margin-bottom:4px; color:#8b5cf6;">💾 Data Management</div>
-                        <div style="font-size:12px; color:#94a3b8; margin-bottom:8px;">Export your data as backup or import to restore.</div>
+                    <!-- DATA MANAGEMENT -->
+                    <div class="card" style="border-color: rgba(139,92,246,0.2);">
+                        <div class="card-title" style="color:#8b5cf6;">💾 Data Management</div>
+                        <div style="font-size:12px; color:#94a3b8; margin-bottom:8px;">Backup & restore your data</div>
                         <div class="data-mgmt-actions">
-                            <button class="btn-export" id="exportDataBtn">📤 Export Backup</button>
-                            <button class="btn-import" id="importDataBtn">📥 Import Backup</button>
+                            <button class="btn-export" id="exportDataBtn">📤 Export</button>
+                            <button class="btn-import" id="importDataBtn">📥 Import</button>
                         </div>
                         <input type="file" id="fileInput" accept=".json" />
                     </div>
@@ -1232,6 +1239,21 @@
                 <button class="btn btn-outline" id="modalCancelBtn">Go Back</button>
                 <button class="btn btn-danger" id="modalConfirmBtn">Yes, Proceed</button>
             </div>
+        </div>
+    </div>
+
+    <!-- ===== ONBOARDING OVERLAY ===== -->
+    <div class="modal-overlay" id="onboardingOverlay" style="z-index: 99999;">
+        <div class="modal-card" style="max-width: 340px;">
+            <div class="modal-icon" id="onboardingIcon">👋</div>
+            <h3 id="onboardingTitle">Welcome to Reclaim</h3>
+            <p id="onboardingDesc">Let's get you started on your journey.</p>
+            <div id="onboardingContent"></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="onboardingSkipBtn" style="flex:1;">Skip</button>
+                <button class="btn btn-primary" id="onboardingNextBtn" style="flex:2;">Next</button>
+            </div>
+            <div style="margin-top:12px; display:flex; gap:6px; justify-content:center;" id="onboardingDots"></div>
         </div>
     </div>
 
@@ -1355,6 +1377,12 @@
         // ============================================================
         window.addEventListener('load', function() {
             setTimeout(function() { document.getElementById('splash-screen').classList.add('hide'); }, 1800);
+            // Check onboarding
+            if (!localStorage.getItem('reclaim_onboarding_done')) {
+                setTimeout(showOnboarding, 500);
+            }
+            // Setup notification checker
+            setupNotificationChecker();
         });
 
         // ============================================================
@@ -1369,6 +1397,7 @@
         const DAILY_LOGS_KEY = 'reclaim_daily_logs';
         const TRIGGER_LOGS_KEY = 'reclaim_trigger_logs';
         const URGE_INTENSITY_KEY = 'reclaim_urge_intensity';
+        const LAST_SKIP_WEEK_KEY = 'reclaim_last_skip_week';
 
         function getStreak() { return parseInt(localStorage.getItem(STREAK_KEY)) || 0; }
 
@@ -1388,6 +1417,10 @@
 
         function getUrgeIntensity() {
             try { return JSON.parse(localStorage.getItem(URGE_INTENSITY_KEY)) || {}; } catch (e) { return {}; }
+        }
+
+        function getLastSkipWeek() {
+            return parseInt(localStorage.getItem(LAST_SKIP_WEEK_KEY)) || 0;
         }
 
         function saveDailyLog(date, status) {
@@ -1422,7 +1455,7 @@
         function isSignatureSaved() { return !!localStorage.getItem(SIG_IMG_KEY); }
 
         // ============================================================
-        // 4. DAILY QUOTES (NEW)
+        // 4. DAILY QUOTES
         // ============================================================
         const QUOTES = [
             { text: "Discipline is choosing between what you want now and what you want most.", author: "Abraham Lincoln" },
@@ -1454,7 +1487,6 @@
 
         function getDailyQuote() {
             const today = new Date().toISOString().split('T')[0];
-            // Use the date as a seed to get a consistent quote for the day
             let hash = 0;
             for (let i = 0; i < today.length; i++) {
                 hash = (hash << 5) - hash + today.charCodeAt(i);
@@ -1471,10 +1503,208 @@
         }
 
         // ============================================================
-        // 5. MODAL SYSTEM
+        // 5. ONBOARDING (NEW)
         // ============================================================
-        let modalResolve = null;
+        let onboardingStep = 0;
+        const onboardingSteps = [{
+            icon: '📝',
+            title: 'Sign Your Commitment',
+            desc: 'Draw your signature once. This locks your promise forever. You cannot clear it later.'
+        }, {
+            icon: '✅',
+            title: 'Check-in Daily',
+            desc: 'Tap "Daily Check-in" every morning to lock in your streak. Consistency builds freedom.'
+        }, {
+            icon: '⚡',
+            title: 'Use the Panic Button',
+            desc: 'When urges strike, tap the Panic Button. Breathe, then complete the Emergency Action to reset your mind.'
+        }, ];
 
+        function showOnboarding() {
+            const overlay = document.getElementById('onboardingOverlay');
+            overlay.classList.add('active');
+            onboardingStep = 0;
+            renderOnboardingStep();
+        }
+
+        function renderOnboardingStep() {
+            const step = onboardingSteps[onboardingStep];
+            document.getElementById('onboardingIcon').innerText = step.icon;
+            document.getElementById('onboardingTitle').innerText = step.title;
+            document.getElementById('onboardingDesc').innerText = step.desc;
+
+            const nextBtn = document.getElementById('onboardingNextBtn');
+            if (onboardingStep === onboardingSteps.length - 1) {
+                nextBtn.innerText = 'Get Started';
+            } else {
+                nextBtn.innerText = 'Next';
+            }
+
+            // Dots
+            const dotsContainer = document.getElementById('onboardingDots');
+            dotsContainer.innerHTML = '';
+            onboardingSteps.forEach((_, idx) => {
+                const dot = document.createElement('span');
+                dot.style.cssText =
+                    `display:inline-block; width:8px; height:8px; border-radius:50%; background:${idx === onboardingStep ? '#fbbf24' : '#334155'}; transition:0.3s;`;
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        document.getElementById('onboardingNextBtn').addEventListener('click', function() {
+            if (onboardingStep < onboardingSteps.length - 1) {
+                onboardingStep++;
+                renderOnboardingStep();
+            } else {
+                // Finish onboarding
+                localStorage.setItem('reclaim_onboarding_done', 'true');
+                document.getElementById('onboardingOverlay').classList.remove('active');
+            }
+        });
+
+        document.getElementById('onboardingSkipBtn').addEventListener('click', function() {
+            localStorage.setItem('reclaim_onboarding_done', 'true');
+            document.getElementById('onboardingOverlay').classList.remove('active');
+        });
+
+        // ============================================================
+        // 6. NOTIFICATIONS (NEW)
+        // ============================================================
+        let reminderInterval = null;
+
+        function setupNotificationChecker() {
+            // Load saved settings
+            const savedTime = localStorage.getItem('reclaim_reminder_time') || '09:00';
+            const savedToggle = localStorage.getItem('reclaim_reminder_enabled') === 'true';
+            document.getElementById('reminderTime').value = savedTime;
+            document.getElementById('reminderToggle').checked = savedToggle;
+
+            // Start checking every minute
+            if (savedToggle) {
+                startReminderChecker();
+            }
+
+            // Save changes
+            document.getElementById('reminderTime').addEventListener('change', function() {
+                localStorage.setItem('reclaim_reminder_time', this.value);
+                if (document.getElementById('reminderToggle').checked) {
+                    startReminderChecker();
+                }
+            });
+            document.getElementById('reminderToggle').addEventListener('change', function() {
+                localStorage.setItem('reclaim_reminder_enabled', this.checked);
+                if (this.checked) {
+                    startReminderChecker();
+                    // Request permission
+                    if ('Notification' in window && Notification.permission === 'default') {
+                        Notification.requestPermission();
+                    }
+                } else {
+                    clearInterval(reminderInterval);
+                }
+            });
+        }
+
+        function startReminderChecker() {
+            clearInterval(reminderInterval);
+            reminderInterval = setInterval(checkReminder, 60000); // every minute
+            checkReminder(); // check immediately
+        }
+
+        function checkReminder() {
+            const enabled = document.getElementById('reminderToggle').checked;
+            if (!enabled) return;
+            const timeStr = document.getElementById('reminderTime').value;
+            if (!timeStr) return;
+            const now = new Date();
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const target = new Date(now);
+            target.setHours(hours, minutes, 0, 0);
+
+            // If target is in the past today, schedule for tomorrow
+            if (target < now) {
+                // We'll check again next minute, but we don't want to spam.
+                return;
+            }
+
+            // If within 1 minute of target, send notification
+            const diff = target - now;
+            if (diff < 60000 && diff > -60000) {
+                // Check if user already checked in today
+                const today = new Date().toISOString().split('T')[0];
+                const logs = getDailyLogs();
+                if (logs[today] === 'clean') {
+                    // Already checked in, skip
+                    return;
+                }
+                // Send notification
+                sendReminderNotification();
+            }
+        }
+
+        function sendReminderNotification() {
+            if (!('Notification' in window) || Notification.permission !== 'granted') return;
+            const streak = getStreak();
+            const body = streak > 0 ?
+                `You have a ${streak}-day streak! Tap to check in and keep it alive. 🔥` :
+                'Start your day with a commitment. You\'ve got this! 💪';
+            new Notification('⛰️ Reclaim – Good Morning!', {
+                body: body,
+                icon: generateAppLogo(),
+                vibrate: [200, 100, 200],
+                requireInteraction: true,
+            });
+        }
+
+        document.getElementById('testNotifBtn').addEventListener('click', function() {
+            if (!('Notification' in window)) {
+                alert('Notifications not supported in this browser.');
+                return;
+            }
+            if (Notification.permission === 'denied') {
+                alert('Notifications are blocked. Please enable in browser settings.');
+                return;
+            }
+            if (Notification.permission === 'default') {
+                Notification.requestPermission().then(perm => {
+                    if (perm === 'granted') {
+                        sendReminderNotification();
+                    } else {
+                        alert('Please allow notifications to receive reminders.');
+                    }
+                });
+                return;
+            }
+            sendReminderNotification();
+        });
+
+        // ============================================================
+        // 7. STREAK FREEZE (1 skip per week)
+        // ============================================================
+        function canSkipThisWeek() {
+            const now = new Date();
+            const currentWeek = getWeekNumber(now);
+            const lastSkipWeek = getLastSkipWeek();
+            return currentWeek !== lastSkipWeek;
+        }
+
+        function getWeekNumber(date) {
+            const d = new Date(date);
+            d.setHours(0, 0, 0, 0);
+            d.setDate(d.getDate() + 3 - (d.getDay() + 6) % 7);
+            const week1 = new Date(d.getFullYear(), 0, 4);
+            return 1 + Math.round(((d - week1) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+        }
+
+        function recordSkip() {
+            const now = new Date();
+            const week = getWeekNumber(now);
+            localStorage.setItem(LAST_SKIP_WEEK_KEY, week.toString());
+        }
+
+        // ============================================================
+        // 8. MODAL SYSTEM
+        // ============================================================
         function showModal(icon, title, desc, confirmText, cancelText, onConfirm, dynamicHTML = '') {
             return new Promise((resolve) => {
                 const modal = document.getElementById('customModal');
@@ -1511,7 +1741,7 @@
         }
 
         // ============================================================
-        // 6. STREAK, SKIP, RESET
+        // 9. STREAK, SKIP (with freeze), RESET
         // ============================================================
         function advanceStreak() {
             const today = new Date().toISOString().split('T')[0];
@@ -1557,16 +1787,26 @@
                 return;
             }
 
+            // Check if skip is allowed this week
+            if (!canSkipThisWeek()) {
+                showModal('⏭️', 'Skip Used This Week',
+                    'You\'ve already used your one weekly skip. You can check-in or reset your streak.', 'OK', '', null);
+                return;
+            }
+
+            // Allow skip
             saveDailyLog(today, 'skip');
+            recordSkip(); // Record that we used a skip this week
             if (!getPledgeDate()) savePledge(today);
 
-            showModal('⏭️', 'Day Skipped', 'Today is marked as neutral. Your streak stays at ' + getStreak() + ' days.', 'Got it',
-                '', null);
+            showModal('⏭️', 'Day Skipped (Freeze Used)',
+                'Today is marked as neutral. Your streak stays at ' + getStreak() +
+                ' days. You have used your weekly skip.', 'Got it', '', null);
             updateAllUI();
         }
 
         // ============================================================
-        // 7. RESET WITH TRIGGER LOGGING
+        // 10. RESET WITH TRIGGER
         // ============================================================
         async function handleReset() {
             const triggers = ['Stress', 'Boredom', 'Loneliness', 'Saw Content', 'Tired', 'Other'];
@@ -1621,7 +1861,7 @@
         }
 
         // ============================================================
-        // 8. PANIC BUTTON - URGE INTENSITY (NEW) + EMERGENCY EXIT
+        // 11. PANIC + INTENSITY
         // ============================================================
         const EMERGENCY_ACTIONS = [
             'Do 10 pushups right now',
@@ -1643,10 +1883,8 @@
                 return;
             }
 
-            // Show intensity selection modal first
             let intensityHTML = '<div class="intensity-grid">';
             for (let i = 1; i <= 10; i++) {
-                const label = i <= 3 ? 'Low' : i <= 6 ? 'Medium' : 'High';
                 intensityHTML +=
                     `<button class="intensity-btn" data-intensity="${i}">${i}</button>`;
             }
@@ -1664,7 +1902,6 @@
             ).then((confirmed) => {
                 if (!confirmed) return;
 
-                // Get selected intensity
                 const btns = document.querySelectorAll('.intensity-btn');
                 let selected = 0;
                 btns.forEach(b => {
@@ -1672,16 +1909,12 @@
                         selected = parseInt(b.dataset.intensity);
                     }
                 });
-                if (selected === 0) {
-                    // If none selected, default to 5
-                    selected = 5;
-                }
+                if (selected === 0) selected = 5;
 
                 const today = new Date().toISOString().split('T')[0];
                 saveUrgeIntensity(today, selected);
                 selectedIntensity = selected;
 
-                // Now start the panic mode
                 emergencyCompleted = false;
                 document.getElementById('closePanicBtn').disabled = true;
                 document.getElementById('closePanicBtn').style.opacity = '0.5';
@@ -1766,7 +1999,7 @@
         }
 
         // ============================================================
-        // 9. SIGNATURE CANVAS
+        // 12. SIGNATURE CANVAS
         // ============================================================
         let isDrawing = false;
         let lastX = 0,
@@ -1902,7 +2135,7 @@
         });
 
         // ============================================================
-        // 10. BADGE SYSTEM
+        // 13. BADGE SYSTEM
         // ============================================================
         const BADGE_DEFS = [
             { days: 3, icon: '🌱', name: 'Sprout' },
@@ -1922,18 +2155,18 @@
             BADGE_DEFS.forEach(b => {
                 const unlocked = streak >= b.days;
                 html +=
-                    `<div class="badge-item ${unlocked ? 'unlocked' : ''}"><span class="badge-icon">${b.icon}</span><div class="badge-name">${b.name}</div><div class="badge-days">${b.days} days</div></div>`;
+                    `<div class="badge-item ${unlocked ? 'unlocked' : ''}"><span class="badge-icon">${b.icon}</span><div class="badge-name">${b.name}</div><div class="badge-days">${b.days}d</div></div>`;
             });
             grid.innerHTML = html;
             let next = BADGE_DEFS.find(b => streak < b.days);
             const nextMsg = document.getElementById('badgeNextMilestone');
             if (next) { nextMsg.innerText =
-                    `🏁 Next badge: "${next.name}" at ${next.days} days (${next.days - streak} more to go)`; } else { nextMsg
-                    .innerText = '🎉 You have unlocked ALL badges!'; }
+                    `🏁 Next: "${next.name}" at ${next.days} days (${next.days - streak} to go)`; } else { nextMsg
+                    .innerText = '🎉 All badges unlocked!'; }
         }
 
         // ============================================================
-        // 11. HEATMAP, CLEAN %, TRIGGER ANALYTICS, URGE SUMMARY
+        // 14. HEATMAP, CLEAN %, TRIGGER ANALYTICS, URGE SUMMARY
         // ============================================================
         function renderHeatmap() {
             const grid = document.getElementById('heatmapGrid');
@@ -1986,23 +2219,21 @@
             const pct = total === 0 ? 0 : Math.round((clean / total) * 100);
             document.getElementById('cleanPercentage').innerText = pct + '%';
             document.getElementById('cleanPercentageDetail').innerText =
-                `${clean} clean days out of ${total} logged (last 30 days)`;
+                `${clean} / ${total} logged (30d)`;
             return { clean, total, pct };
         }
 
-        // TRIGGER ANALYTICS (NEW)
         function renderTriggerAnalytics() {
             const triggerLogs = getTriggerLogs();
             const container = document.getElementById('triggerAnalyticsContainer');
             const keys = Object.keys(triggerLogs);
 
             if (keys.length === 0) {
-                container.innerHTML = '<div style="font-size:14px; color:#94a3b8;">No relapse data yet. Stay strong!</div>';
-                document.getElementById('urgeIntensitySummary').innerText = 'Average urge intensity: --';
+                container.innerHTML = '<div style="font-size:14px; color:#94a3b8;">No relapse data yet.</div>';
+                document.getElementById('urgeIntensitySummary').innerText = 'Avg urge: --';
                 return;
             }
 
-            // Count triggers
             const triggerCounts = {};
             let totalRelapses = 0;
             keys.forEach(date => {
@@ -2013,49 +2244,45 @@
                 }
             });
 
-            // Sort triggers by count
             const sorted = Object.entries(triggerCounts).sort((a, b) => b[1] - a[1]);
             let html = '';
             if (sorted.length > 0) {
-                html += '<div style="font-size:13px; color:#cbd5e1; margin-bottom:4px;">Top triggers this month:</div>';
-                sorted.forEach(([trigger, count], idx) => {
+                html += '<div style="font-size:13px; color:#cbd5e1; margin-bottom:4px;">Top triggers:</div>';
+                sorted.slice(0, 3).forEach(([trigger, count], idx) => {
                     const pct = Math.round((count / totalRelapses) * 100);
                     const barWidth = Math.max(10, pct);
                     html += `
-                                <div style="display:flex; align-items:center; gap:8px; margin:4px 0;">
-                                    <span style="font-size:13px; color:#94a3b8; min-width:50px;">${trigger}</span>
-                                    <div style="flex:1; height:6px; background:#1e293b; border-radius:10px; overflow:hidden;">
+                                <div style="display:flex; align-items:center; gap:6px; margin:3px 0;">
+                                    <span style="font-size:12px; color:#94a3b8; min-width:40px;">${trigger}</span>
+                                    <div style="flex:1; height:5px; background:#1e293b; border-radius:10px; overflow:hidden;">
                                         <div style="height:100%; width:${barWidth}%; background: linear-gradient(90deg, #fbbf24, #ef4444); border-radius:10px;"></div>
                                     </div>
-                                    <span style="font-size:12px; color:#fbbf24; font-weight:600;">${count}x</span>
+                                    <span style="font-size:11px; color:#fbbf24; font-weight:600;">${count}x</span>
                                 </div>
                             `;
                 });
                 html +=
-                    `<div style="font-size:12px; color:#64748b; margin-top:6px;">Total relapses: ${totalRelapses}</div>`;
+                    `<div style="font-size:11px; color:#64748b; margin-top:4px;">Total relapses: ${totalRelapses}</div>`;
             } else {
-                html += '<div style="font-size:14px; color:#94a3b8;">No trigger data logged.</div>';
+                html += '<div style="font-size:14px; color:#94a3b8;">No trigger data.</div>';
             }
             container.innerHTML = html;
 
-            // Urge intensity summary
             const urgeLogs = getUrgeIntensity();
             const urgeKeys = Object.keys(urgeLogs);
             if (urgeKeys.length > 0) {
                 let sum = 0;
-                urgeKeys.forEach(date => {
-                    sum += parseInt(urgeLogs[date]) || 0;
-                });
+                urgeKeys.forEach(date => { sum += parseInt(urgeLogs[date]) || 0; });
                 const avg = (sum / urgeKeys.length).toFixed(1);
                 document.getElementById('urgeIntensitySummary').innerText =
-                    `Average urge intensity: ${avg}/10 (${urgeKeys.length} logged)`;
+                    `Avg urge intensity: ${avg}/10 (${urgeKeys.length} logged)`;
             } else {
-                document.getElementById('urgeIntensitySummary').innerText = 'Average urge intensity: --';
+                document.getElementById('urgeIntensitySummary').innerText = 'Avg urge: --';
             }
         }
 
         // ============================================================
-        // 12. DATA EXPORT / IMPORT (NEW)
+        // 15. DATA EXPORT / IMPORT
         // ============================================================
         function exportData() {
             const data = {
@@ -2070,6 +2297,7 @@
                 dailyLogs: localStorage.getItem(DAILY_LOGS_KEY),
                 triggerLogs: localStorage.getItem(TRIGGER_LOGS_KEY),
                 urgeIntensity: localStorage.getItem(URGE_INTENSITY_KEY),
+                lastSkipWeek: localStorage.getItem(LAST_SKIP_WEEK_KEY),
             };
 
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -2079,8 +2307,7 @@
             a.download = `reclaim_backup_${new Date().toISOString().split('T')[0]}.json`;
             a.click();
             URL.revokeObjectURL(url);
-            showModal('💾', 'Export Successful!', 'Your data has been downloaded as a backup file. Keep it safe.', 'Great',
-                '', null);
+            showModal('💾', 'Export Successful!', 'Your data has been downloaded.', 'Great', '', null);
         }
 
         function importData(file) {
@@ -2089,12 +2316,9 @@
                 try {
                     const data = JSON.parse(e.target.result);
                     if (!data.version) {
-                        showModal('❌', 'Invalid File', 'This does not appear to be a valid backup file.', 'OK', '',
-                        null);
+                        showModal('❌', 'Invalid File', 'This is not a valid backup file.', 'OK', '', null);
                         return;
                     }
-
-                    // Restore all data
                     if (data.streak) localStorage.setItem(STREAK_KEY, data.streak);
                     if (data.lastDate) localStorage.setItem(LAST_DATE_KEY, data.lastDate);
                     if (data.pledgeDate) localStorage.setItem(PLEDGE_KEY, data.pledgeDate);
@@ -2104,13 +2328,12 @@
                     if (data.dailyLogs) localStorage.setItem(DAILY_LOGS_KEY, data.dailyLogs);
                     if (data.triggerLogs) localStorage.setItem(TRIGGER_LOGS_KEY, data.triggerLogs);
                     if (data.urgeIntensity) localStorage.setItem(URGE_INTENSITY_KEY, data.urgeIntensity);
+                    if (data.lastSkipWeek) localStorage.setItem(LAST_SKIP_WEEK_KEY, data.lastSkipWeek);
 
-                    showModal('✅', 'Import Successful!', 'Your backup has been restored. All data is back.', 'Awesome',
-                        '', null);
+                    showModal('✅', 'Import Successful!', 'Your backup has been restored.', 'Awesome', '', null);
                     updateAllUI();
                 } catch (err) {
-                    showModal('❌', 'Import Failed', 'The file is corrupted or invalid. Please try again.', 'OK', '',
-                    null);
+                    showModal('❌', 'Import Failed', 'The file is corrupted or invalid.', 'OK', '', null);
                 }
             };
             reader.readAsText(file);
@@ -2128,7 +2351,7 @@
         });
 
         // ============================================================
-        // 13. UI UPDATES
+        // 16. UI UPDATES
         // ============================================================
         function updateYellowButtonText() {
             const btn = document.getElementById('pledgeTodayBtn');
@@ -2180,6 +2403,16 @@
             renderTriggerAnalytics();
             applyPledgeLockState();
             renderDailyQuote();
+
+            // Update skip button state
+            const skipBtn = document.getElementById('skipTodayBtn');
+            if (canSkipThisWeek()) {
+                skipBtn.innerText = '⏭️ Skip Today (Free)';
+                skipBtn.style.opacity = '1';
+            } else {
+                skipBtn.innerText = '⏭️ Skip Used';
+                skipBtn.style.opacity = '0.5';
+            }
         }
 
         function calculateStats(minutes) {
@@ -2196,9 +2429,6 @@
             document.getElementById('compMoney').innerText = `$${money}`;
         }
 
-        // ============================================================
-        // 14. STATS PAGE (Detailed)
-        // ============================================================
         function updateStatsPage() {
             const streak = getStreak();
             const dailyMin = getDailyMin();
@@ -2208,15 +2438,15 @@
 
             document.getElementById('heroTimeRegained').innerText = hoursSaved;
             if (streak === 0) {
-                document.getElementById('heroMotivation').innerText = "Start your journey today!";
+                document.getElementById('heroMotivation').innerText = "Start today!";
             } else if (streak < 3) {
-                document.getElementById('heroMotivation').innerText = "Great start! Keep the momentum!";
+                document.getElementById('heroMotivation').innerText = "Great start!";
             } else if (streak < 7) {
-                document.getElementById('heroMotivation').innerText = "You're building a powerful habit!";
+                document.getElementById('heroMotivation').innerText = "Building momentum!";
             } else if (streak < 30) {
-                document.getElementById('heroMotivation').innerText = "Unstoppable! You're a warrior!";
+                document.getElementById('heroMotivation').innerText = "Unstoppable!";
             } else {
-                document.getElementById('heroMotivation').innerText = "Legendary discipline! 🔥";
+                document.getElementById('heroMotivation').innerText = "Legendary! 🔥";
             }
             document.getElementById('miniDaily').innerText = dailyMin;
             document.getElementById('miniYearly').innerText = yearlyMins.toLocaleString();
@@ -2226,11 +2456,11 @@
             const milestones = [3, 7, 30, 90];
             milestones.forEach(target => {
                 const progress = Math.min(100, (streak / target) * 100);
-                document.getElementById(`milestone${target}`).innerText = `${Math.min(streak, target)} / ${target}`;
+                document.getElementById(`milestone${target}`).innerText = `${Math.min(streak, target)}/${target}`;
                 document.getElementById(`milestone${target}Bar`).style.width = `${progress}%`;
             });
 
-            // Weekly dots with counter
+            // Week dots
             const container = document.getElementById('weekDotsContainer');
             container.innerHTML = '';
             const today = new Date();
@@ -2247,8 +2477,8 @@
                 const dateStr = d.toISOString().split('T')[0];
                 const logs = getDailyLogs();
                 const status = logs[dateStr];
-                let isActive = false;
-                let isSkipped = false;
+                let isActive = false,
+                    isSkipped = false;
                 if (status === 'clean') { isActive = true;
                     cleanCount++; }
                 if (status === 'skip') isSkipped = true;
@@ -2266,7 +2496,7 @@
         }
 
         // ============================================================
-        // 15. NAVIGATION
+        // 17. NAVIGATION
         // ============================================================
         function navigateToPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -2281,7 +2511,7 @@
         }
 
         // ============================================================
-        // 16. BUTTON HANDLERS
+        // 18. BUTTON HANDLERS
         // ============================================================
         document.getElementById('pledgeTodayBtn')?.addEventListener('click', function() {
             if (isSignatureSaved()) {
@@ -2359,7 +2589,7 @@
         });
 
         // ============================================================
-        // 17. JOURNAL
+        // 19. JOURNAL
         // ============================================================
         function getJournals() {
             try { return JSON.parse(localStorage.getItem(JOURNAL_KEY)) || []; } catch (e) { return []; }
@@ -2409,7 +2639,7 @@
         });
 
         // ============================================================
-        // 18. BOTTOM NAV
+        // 20. BOTTOM NAV
         // ============================================================
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
@@ -2418,7 +2648,7 @@
         });
 
         // ============================================================
-        // 19. INIT
+        // 21. INIT
         // ============================================================
         document.getElementById('dailyMinInput').value = getDailyMin();
         updateAllUI();
