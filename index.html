@@ -15,119 +15,45 @@
 
     <style>
         /* ----- RESET & ROOT ----- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        body {
-            background: #07070f;
-            color: #e2e8f0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 12px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { background: #07070f; color: #e2e8f0; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 12px; }
 
         /* ----- SPLASH SCREEN ----- */
         #splash-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: #07070f;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
             z-index: 99999;
             transition: opacity 0.6s ease, visibility 0.6s ease;
-            opacity: 1;
-            visibility: visible;
+            opacity: 1; visibility: visible;
         }
-        #splash-screen.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        .splash-content {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-        .splash-logo {
-            font-size: 72px;
-            animation: pulse-logo 1.4s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.3));
-        }
-        @keyframes pulse-logo {
-            0%,
-            100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
-        .splash-title {
-            font-size: 36px;
-            font-weight: 800;
-            color: #fbbf24;
-            letter-spacing: 2px;
-            text-shadow: 0 0 40px rgba(251, 191, 36, 0.15);
-        }
-        .splash-sub {
-            font-size: 14px;
-            color: #64748b;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-top: -8px;
-        }
-        .splash-loader {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            padding: 4px;
-            background: conic-gradient(from 0deg, #fbbf24, #2dd4bf, #8b5cf6, #fbbf24);
-            animation: spin-loader 1.2s linear infinite;
-            mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px));
-            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px));
-            margin-top: 8px;
-        }
-        @keyframes spin-loader {
-            100% { transform: rotate(360deg); }
-        }
+        #splash-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .splash-content { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        .splash-logo { font-size: 72px; animation: pulse-logo 1.4s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.3)); }
+        @keyframes pulse-logo { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        .splash-title { font-size: 36px; font-weight: 800; color: #fbbf24; letter-spacing: 2px; text-shadow: 0 0 40px rgba(251, 191, 36, 0.15); }
+        .splash-sub { font-size: 14px; color: #64748b; letter-spacing: 4px; text-transform: uppercase; margin-top: -8px; }
+        .splash-loader { width: 48px; height: 48px; border-radius: 50%; padding: 4px; background: conic-gradient(from 0deg, #fbbf24, #2dd4bf, #8b5cf6, #fbbf24); animation: spin-loader 1.2s linear infinite; mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px)); -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px)); margin-top: 8px; }
+        @keyframes spin-loader { 100% { transform: rotate(360deg); } }
 
         /* ----- MAIN APP WRAPPER ----- */
         .app-wrapper {
-            max-width: 420px;
-            width: 100%;
+            max-width: 420px; width: 100%;
             background: rgba(18, 18, 40, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 48px;
-            padding: 24px 20px 30px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px; padding: 24px 20px 30px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
         .app-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
+            content: ''; position: absolute; top: -100px; right: -100px;
+            width: 300px; height: 300px;
             background: radial-gradient(circle, rgba(251, 191, 36, 0.15), transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
+            border-radius: 50%; pointer-events: none; z-index: 0;
         }
-        .content {
-            position: relative;
-            z-index: 1;
-        }
+        .content { position: relative; z-index: 1; }
 
         /* ----- TYPOGRAPHY ----- */
         .gold-text { color: #fbbf24; }
@@ -136,6 +62,7 @@
         .flex { display: flex; align-items: center; gap: 8px; }
         .flex-between { display: flex; justify-content: space-between; align-items: center; }
         .flex-center { display: flex; justify-content: center; align-items: center; }
+        .text-center { text-align: center; }
 
         /* ----- HEADER / STREAK ----- */
         .header { margin-bottom: 24px; }
@@ -144,310 +71,176 @@
         .streak-pill {
             background: rgba(45, 212, 191, 0.1);
             border: 1px solid rgba(45, 212, 191, 0.2);
-            padding: 6px 16px;
-            border-radius: 40px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #2dd4bf;
+            padding: 6px 16px; border-radius: 40px;
+            font-size: 14px; font-weight: 600; color: #2dd4bf;
         }
 
         /* ----- CARDS ----- */
         .stats-card {
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 24px;
-            padding: 20px;
+            border-radius: 24px; padding: 20px;
             margin-bottom: 24px;
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
         .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 12px;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 12px; margin-top: 12px;
         }
-        .stat-item {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 12px;
-            border-radius: 16px;
-            text-align: center;
-        }
-        .stat-item .number {
-            font-size: 24px;
-            font-weight: 700;
-            color: #fbbf24;
-        }
-        .stat-item .label {
-            font-size: 11px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        .stat-item { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 16px; text-align: center; }
+        .stat-item .number { font-size: 24px; font-weight: 700; color: #fbbf24; }
+        .stat-item .label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
         .comparison-list { margin-top: 16px; }
-        .comparison-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            font-size: 14px;
-        }
+        .comparison-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 14px; }
         .comparison-item .icon { font-size: 18px; width: 30px; }
 
         /* ----- GAUGE ----- */
-        .gauge-container {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 60px;
-            height: 8px;
-            margin: 12px 0 4px;
-            overflow: hidden;
-        }
-        .gauge-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #ef4444, #fbbf24, #2dd4bf);
-            border-radius: 60px;
-            transition: width 0.8s ease;
-        }
+        .gauge-container { background: rgba(0,0,0,0.4); border-radius: 60px; height: 8px; margin: 12px 0 4px; overflow: hidden; }
+        .gauge-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #ef4444, #fbbf24, #2dd4bf); border-radius: 60px; transition: width 0.8s ease; }
 
         /* ----- BUTTONS ----- */
         .btn {
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 17px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            margin-bottom: 10px;
-            letter-spacing: 0.3px;
+            width: 100%; padding: 16px; border: none;
+            border-radius: 60px; font-weight: 700; font-size: 17px;
+            cursor: pointer; transition: all 0.15s ease;
+            margin-bottom: 10px; letter-spacing: 0.3px;
         }
         .btn:active { transform: scale(0.96); }
-        .btn-primary {
-            background: #fbbf24;
-            color: #0f172a;
-            box-shadow: 0 8px 20px -8px rgba(251, 191, 36, 0.3);
+        .btn-primary { background: #fbbf24; color: #0f172a; box-shadow: 0 8px 20px -8px rgba(251, 191, 36, 0.3); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+        .btn-danger { background: #ef4444; color: white; box-shadow: 0 8px 20px -8px rgba(239, 68, 68, 0.3); }
+        .btn-outline { background: transparent; border: 1px solid #334155; color: #cbd5e1; }
+        .btn-success { background: #2dd4bf; color: #0f172a; }
+        .btn-success:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+        .btn-purple { background: #8b5cf6; color: white; }
+        .btn-skip { background: #f59e0b; color: #0f172a; box-shadow: 0 8px 20px -8px rgba(245, 158, 11, 0.3); }
+        .btn-sm { padding: 10px 16px; font-size: 14px; width: auto; margin-bottom: 0; }
+        .btn-timer { background: #fbbf24; color: #0f172a; font-size: 15px; padding: 12px; }
+
+        /* ----- RECLAIM YOUR TIME (NEW) ----- */
+        .reclaim-card {
+            background: linear-gradient(145deg, rgba(45, 212, 191, 0.05), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(45, 212, 191, 0.15);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 16px;
         }
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            box-shadow: none;
+        .reclaim-card .title {
+            font-size: 18px; font-weight: 700; color: #2dd4bf;
+            display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
         }
-        .btn-danger {
-            background: #ef4444;
-            color: white;
-            box-shadow: 0 8px 20px -8px rgba(239, 68, 68, 0.3);
+        .reclaim-card .title .icon { font-size: 24px; }
+        .reclaim-card .subtitle {
+            font-size: 13px; color: #94a3b8; margin-bottom: 12px;
         }
-        .btn-outline {
-            background: transparent;
+        .activity-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 8px; margin: 12px 0;
+        }
+        .activity-btn {
+            padding: 12px 8px;
+            border-radius: 16px;
             border: 1px solid #334155;
+            background: rgba(0,0,0,0.3);
             color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+            line-height: 1.3;
         }
-        .btn-success {
-            background: #2dd4bf;
-            color: #0f172a;
+        .activity-btn:active { transform: scale(0.95); }
+        .activity-btn .emoji { font-size: 20px; display: block; margin-bottom: 4px; }
+        .activity-btn.selected {
+            border-color: #2dd4bf;
+            background: rgba(45, 212, 191, 0.1);
+            color: #2dd4bf;
         }
-        .btn-success:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            box-shadow: none;
+        .activity-btn.completed {
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
         }
-        .btn-purple {
-            background: #8b5cf6;
-            color: white;
+
+        .timer-display {
+            font-size: 48px;
+            font-weight: 800;
+            color: #fbbf24;
+            text-align: center;
+            padding: 12px 0;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 2px;
         }
-        .btn-skip {
-            background: #f59e0b;
-            color: #0f172a;
-            box-shadow: 0 8px 20px -8px rgba(245, 158, 11, 0.3);
+        .timer-controls {
+            display: flex; gap: 12px; justify-content: center;
+            margin: 8px 0 4px;
         }
-        .btn-sm {
-            padding: 10px 16px;
-            font-size: 14px;
-            width: auto;
-            margin-bottom: 0;
-        }
+        .timer-controls .btn { width: auto; padding: 10px 24px; font-size: 14px; margin-bottom: 0; }
 
         /* ----- DAILY QUOTE CARD ----- */
         .quote-card {
             background: linear-gradient(145deg, rgba(251, 191, 36, 0.05), rgba(45, 212, 191, 0.02));
             border: 1px solid rgba(251, 191, 36, 0.08);
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 16px;
-            text-align: center;
+            border-radius: 20px; padding: 16px;
+            margin-bottom: 16px; text-align: center;
         }
-        .quote-card .quote-text {
-            font-size: 15px;
-            font-weight: 500;
-            color: #e2e8f0;
-            line-height: 1.6;
-            font-style: italic;
-        }
-        .quote-card .quote-author {
-            font-size: 12px;
-            color: #fbbf24;
-            margin-top: 6px;
-            font-weight: 600;
-        }
+        .quote-card .quote-text { font-size: 15px; font-weight: 500; color: #e2e8f0; line-height: 1.6; font-style: italic; }
+        .quote-card .quote-author { font-size: 12px; color: #fbbf24; margin-top: 6px; font-weight: 600; }
 
-        /* ----- NOTIFICATION SETTINGS (New) ----- */
+        /* ----- NOTIFICATION SETTINGS ----- */
         .notif-card {
             background: rgba(139, 92, 246, 0.05);
             border: 1px solid rgba(139, 92, 246, 0.15);
-            border-radius: 20px;
-            padding: 14px 16px;
+            border-radius: 20px; padding: 14px 16px;
             margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 8px;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 8px;
         }
-        .notif-card .notif-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #cbd5e1;
-        }
-        .notif-card .notif-left input[type="time"] {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 4px 8px;
-            color: #fbbf24;
-            font-size: 14px;
-            width: 80px;
-        }
-        .notif-card .notif-left input[type="checkbox"] {
-            accent-color: #8b5cf6;
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
+        .notif-card .notif-left { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #cbd5e1; flex-wrap: wrap; }
+        .notif-card .notif-left input[type="time"] { background: rgba(0,0,0,0.4); border: 1px solid #334155; border-radius: 8px; padding: 4px 8px; color: #fbbf24; font-size: 14px; width: 80px; }
+        .notif-card .notif-left input[type="checkbox"] { accent-color: #8b5cf6; width: 18px; height: 18px; cursor: pointer; }
 
         /* ----- PLEDGE (Signature) ----- */
         .pledge-box {
             background: rgba(251, 191, 36, 0.05);
             border: 1px solid rgba(251, 191, 36, 0.15);
-            border-radius: 24px;
-            padding: 24px;
-            margin: 16px 0;
-            text-align: center;
+            border-radius: 24px; padding: 24px;
+            margin: 16px 0; text-align: center;
         }
-        .pledge-box h3 {
-            font-size: 22px;
-            color: #fbbf24;
-            margin-bottom: 12px;
-        }
-        .pledge-box ul {
-            list-style: none;
-            text-align: left;
-            margin: 16px 0;
-        }
-        .pledge-box ul li {
-            padding: 6px 0;
-            font-size: 15px;
-            color: #cbd5e1;
-        }
-        .pledge-box ul li::before {
-            content: "▹ ";
-            color: #fbbf24;
-        }
+        .pledge-box h3 { font-size: 22px; color: #fbbf24; margin-bottom: 12px; }
+        .pledge-box ul { list-style: none; text-align: left; margin: 16px 0; }
+        .pledge-box ul li { padding: 6px 0; font-size: 15px; color: #cbd5e1; }
+        .pledge-box ul li::before { content: "▹ "; color: #fbbf24; }
+        .pledge-locked-badge { display: inline-block; background: rgba(45,212,191,0.15); color: #2dd4bf; padding: 4px 16px; border-radius: 40px; font-size: 13px; font-weight: 600; margin: 8px 0 12px; border: 1px solid rgba(45,212,191,0.2); }
 
-        .pledge-locked-badge {
-            display: inline-block;
-            background: rgba(45, 212, 191, 0.15);
-            color: #2dd4bf;
-            padding: 4px 16px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 600;
-            margin: 8px 0 12px;
-            border: 1px solid rgba(45, 212, 191, 0.2);
-        }
-
-        /* Signature Canvas - FIXED HEIGHT 200px */
-        .signature-pad-wrapper {
-            margin: 12px 0 8px;
-            background: #0a0a18;
-            border-radius: 16px;
-            border: 2px dashed #334155;
-            overflow: hidden;
-            transition: border-color 0.3s;
-        }
-        .signature-pad-wrapper.active {
-            border-color: #fbbf24;
-            border-style: solid;
-        }
-        .signature-pad-wrapper.locked {
-            border-color: #2dd4bf;
-            border-style: solid;
-            background: #0a0a18;
-        }
-        #signatureCanvas {
-            display: block;
-            width: 100%;
-            height: 200px;
-            touch-action: none;
-            cursor: crosshair;
-            background: #0a0a18;
-        }
-        #signatureCanvas.locked {
-            cursor: default;
-            touch-action: none;
-        }
-
-        .sig-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 8px 0 4px;
-        }
-        .sig-actions button {
-            padding: 8px 24px;
-            border-radius: 40px;
-            border: none;
-            font-weight: 600;
-            font-size: 14px;
-            background: #334155;
-            color: #cbd5e1;
-            cursor: pointer;
-        }
-        .sig-actions button.clear-btn {
-            background: #ef4444;
-            color: white;
-        }
-        .sig-actions button.clear-btn.hidden {
-            display: none;
-        }
+        /* Signature Canvas */
+        .signature-pad-wrapper { margin: 12px 0 8px; background: #0a0a18; border-radius: 16px; border: 2px dashed #334155; overflow: hidden; transition: border-color 0.3s; }
+        .signature-pad-wrapper.active { border-color: #fbbf24; border-style: solid; }
+        .signature-pad-wrapper.locked { border-color: #2dd4bf; border-style: solid; background: #0a0a18; }
+        #signatureCanvas { display: block; width: 100%; height: 200px; touch-action: none; cursor: crosshair; background: #0a0a18; }
+        #signatureCanvas.locked { cursor: default; touch-action: none; }
+        .sig-actions { display: flex; gap: 10px; justify-content: center; margin: 8px 0 4px; }
+        .sig-actions button { padding: 8px 24px; border-radius: 40px; border: none; font-weight: 600; font-size: 14px; background: #334155; color: #cbd5e1; cursor: pointer; }
+        .sig-actions button.clear-btn { background: #ef4444; color: white; }
+        .sig-actions button.clear-btn.hidden { display: none; }
 
         /* ----- CUSTOM MODAL ----- */
         .modal-overlay {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(7, 7, 15, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             z-index: 9999;
-            justify-content: center;
-            align-items: center;
+            justify-content: center; align-items: center;
             padding: 20px;
         }
         .modal-overlay.active { display: flex; }
         .modal-card {
-            max-width: 340px;
-            width: 100%;
+            max-width: 340px; width: 100%;
             background: #1e293b;
-            border-radius: 32px;
-            padding: 28px 24px 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            border-radius: 32px; padding: 28px 24px 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
             text-align: center;
         }
         .modal-card .modal-icon { font-size: 48px; margin-bottom: 12px; }
@@ -457,368 +250,87 @@
         .modal-actions .btn { margin-bottom: 0; flex: 1; min-width: 100px; padding: 14px; font-size: 15px; }
 
         /* Trigger Buttons */
-        .trigger-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .trigger-btn {
-            padding: 10px 4px;
-            border-radius: 12px;
-            border: 1px solid #334155;
-            background: transparent;
-            color: #cbd5e1;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+        .trigger-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+        .trigger-btn { padding: 10px 4px; border-radius: 12px; border: 1px solid #334155; background: transparent; color: #cbd5e1; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .trigger-btn:active { transform: scale(0.95); }
-        .trigger-btn.selected {
-            border-color: #fbbf24;
-            background: rgba(251, 191, 36, 0.1);
-            color: #fbbf24;
-        }
+        .trigger-btn.selected { border-color: #fbbf24; background: rgba(251,191,36,0.1); color: #fbbf24; }
 
-        /* Intensity Grid (1-10) */
-        .intensity-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .intensity-btn {
-            padding: 12px 0;
-            border-radius: 12px;
-            border: 1px solid #334155;
-            background: transparent;
-            color: #cbd5e1;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+        /* Intensity Grid */
+        .intensity-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 16px; }
+        .intensity-btn { padding: 12px 0; border-radius: 12px; border: 1px solid #334155; background: transparent; color: #cbd5e1; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; }
         .intensity-btn:active { transform: scale(0.95); }
-        .intensity-btn.selected {
-            border-color: #fbbf24;
-            background: rgba(251, 191, 36, 0.1);
-            color: #fbbf24;
-        }
-        .intensity-label {
-            font-size: 11px;
-            color: #64748b;
-            text-align: center;
-            margin-top: -8px;
-            margin-bottom: 12px;
-        }
+        .intensity-btn.selected { border-color: #fbbf24; background: rgba(251,191,36,0.1); color: #fbbf24; }
+        .intensity-label { font-size: 11px; color: #64748b; text-align: center; margin-top: -8px; margin-bottom: 12px; }
 
-        /* ----- PANIC OVERLAY (Breathing) ----- */
+        /* ----- PANIC OVERLAY ----- */
         .panic-overlay {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(7, 7, 15, 0.96);
             backdrop-filter: blur(16px);
             z-index: 999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 20px;
+            justify-content: center; align-items: center;
+            flex-direction: column; padding: 20px;
         }
         .panic-overlay.active { display: flex; }
-        .breath-wrapper {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .breath-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            padding: 6px;
-            background: conic-gradient(from 0deg, #fbbf24, #ef4444, #8b5cf6, #2dd4bf, #fbbf24);
-            animation: spin-ring 10s linear infinite;
-            mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #fff calc(100% - 8px));
-            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #fff calc(100% - 8px));
-        }
-        @keyframes spin-ring {
-            100% { transform: rotate(360deg); }
-        }
-        .breath-circle {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #2dd4bf, #0f172a);
-            box-shadow: 0 0 60px rgba(45, 212, 191, 0.2);
-            transition: transform 4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 4s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            z-index: 2;
-        }
-        .breath-circle.inhale {
-            transform: scale(1.4);
-            box-shadow: 0 0 100px rgba(251, 191, 36, 0.5), inset 0 0 80px rgba(251, 191, 36, 0.1);
-        }
-        .breath-circle.exhale {
-            transform: scale(0.7);
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1), inset 0 0 40px rgba(239, 68, 68, 0.05);
-        }
-        .breath-circle .phase-text {
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            letter-spacing: 2px;
-            line-height: 1;
-        }
-        .breath-circle .countdown-text {
-            font-size: 40px;
-            font-weight: 800;
-            color: #fbbf24;
-            text-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
-            line-height: 1;
-            margin-top: 4px;
-        }
+        .breath-wrapper { position: relative; width: 200px; height: 200px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; }
+        .breath-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; padding: 6px; background: conic-gradient(from 0deg, #fbbf24, #ef4444, #8b5cf6, #2dd4bf, #fbbf24); animation: spin-ring 10s linear infinite; mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #fff calc(100% - 8px)); -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #fff calc(100% - 8px)); }
+        @keyframes spin-ring { 100% { transform: rotate(360deg); } }
+        .breath-circle { position: relative; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #2dd4bf, #0f172a); box-shadow: 0 0 60px rgba(45,212,191,0.2); transition: transform 4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 4s ease; display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 2; }
+        .breath-circle.inhale { transform: scale(1.4); box-shadow: 0 0 100px rgba(251,191,36,0.5), inset 0 0 80px rgba(251,191,36,0.1); }
+        .breath-circle.exhale { transform: scale(0.7); box-shadow: 0 0 20px rgba(239,68,68,0.1), inset 0 0 40px rgba(239,68,68,0.05); }
+        .breath-circle .phase-text { font-size: 24px; font-weight: 700; color: white; text-shadow: 0 0 20px rgba(255,255,255,0.3); letter-spacing: 2px; line-height: 1; }
+        .breath-circle .countdown-text { font-size: 40px; font-weight: 800; color: #fbbf24; text-shadow: 0 0 30px rgba(251,191,36,0.4); line-height: 1; margin-top: 4px; }
+        .panic-emergency-box { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 20px; padding: 16px 20px; margin: 12px 0 16px; text-align: center; max-width: 320px; width: 100%; }
+        .panic-emergency-box .label { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; }
+        .panic-emergency-box .action { font-size: 22px; font-weight: 700; color: #fbbf24; margin: 6px 0; }
+        .panic-emergency-box .sub { font-size: 13px; color: #94a3b8; }
 
-        .panic-emergency-box {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 20px;
-            padding: 16px 20px;
-            margin: 12px 0 16px;
-            text-align: center;
-            max-width: 320px;
-            width: 100%;
-        }
-        .panic-emergency-box .label {
-            font-size: 12px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .panic-emergency-box .action {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fbbf24;
-            margin: 6px 0;
-        }
-        .panic-emergency-box .sub {
-            font-size: 13px;
-            color: #94a3b8;
-        }
+        /* ----- STATS PAGE ----- */
+        .stats-dashboard { display: flex; flex-direction: column; gap: 16px; }
+        .hero-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .hero-card { background: linear-gradient(145deg, rgba(251,191,36,0.08), rgba(45,212,191,0.05)); border: 1px solid rgba(251,191,36,0.15); border-radius: 24px; padding: 20px 16px; text-align: center; }
+        .hero-card .number { font-size: 36px; font-weight: 800; color: #fbbf24; line-height: 1; }
+        .hero-card .label { font-size: 12px; color: #94a3b8; margin-top: 4px; letter-spacing: 0.5px; }
+        .hero-card .sub { font-size: 12px; color: #2dd4bf; margin-top: 4px; }
+        .clean-card { background: rgba(45,212,191,0.05); border: 1px solid rgba(45,212,191,0.15); border-radius: 24px; padding: 20px 16px; text-align: center; }
+        .clean-card .number { font-size: 36px; font-weight: 800; color: #2dd4bf; line-height: 1; }
+        .clean-card .label { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+        .clean-card .sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
 
-        /* ==========================================================
-               RESTRUCTURED STATS PAGE – GROUPED & CLEAN
-               ========================================================== */
-        .stats-dashboard {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        .mini-stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+        .mini-stat { background: rgba(0,0,0,0.3); border-radius: 16px; padding: 12px 4px; text-align: center; }
+        .mini-stat .num { font-size: 18px; font-weight: 700; color: #fbbf24; }
+        .mini-stat .lbl { font-size: 9px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* Hero row: Time regained + Clean % */
-        .hero-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .hero-card {
-            background: linear-gradient(145deg, rgba(251, 191, 36, 0.08), rgba(45, 212, 191, 0.05));
-            border: 1px solid rgba(251, 191, 36, 0.15);
-            border-radius: 24px;
-            padding: 20px 16px;
-            text-align: center;
-        }
-        .hero-card .number {
-            font-size: 36px;
-            font-weight: 800;
-            color: #fbbf24;
-            line-height: 1;
-        }
-        .hero-card .label {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 4px;
-            letter-spacing: 0.5px;
-        }
-        .hero-card .sub {
-            font-size: 12px;
-            color: #2dd4bf;
-            margin-top: 4px;
-        }
-        .clean-card {
-            background: rgba(45, 212, 191, 0.05);
-            border: 1px solid rgba(45, 212, 191, 0.15);
-            border-radius: 24px;
-            padding: 20px 16px;
-            text-align: center;
-        }
-        .clean-card .number {
-            font-size: 36px;
-            font-weight: 800;
-            color: #2dd4bf;
-            line-height: 1;
-        }
-        .clean-card .label {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 4px;
-        }
-        .clean-card .sub {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 2px;
-        }
+        .group-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background: rgba(255,255,255,0.02); border-radius: 20px; padding: 16px; border: 1px solid rgba(255,255,255,0.04); }
+        .card-title { font-weight: 600; color: #cbd5e1; margin-bottom: 8px; font-size: 14px; }
 
-        /* Mini stats – 4 column grid */
-        .mini-stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 8px;
-        }
-        .mini-stat {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
-            padding: 12px 4px;
-            text-align: center;
-        }
-        .mini-stat .num {
-            font-size: 18px;
-            font-weight: 700;
-            color: #fbbf24;
-        }
-        .mini-stat .lbl {
-            font-size: 9px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Group: Milestones + Badges side-by-side on larger screens, but mobile stacks */
-        .group-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .group-row .full-width { grid-column: 1 / -1; }
-
-        /* Common card style */
-        .card {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .card-title {
-            font-weight: 600;
-            color: #cbd5e1;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        .milestone-item {
-            margin-bottom: 10px;
-        }
+        .milestone-item { margin-bottom: 10px; }
         .milestone-item:last-child { margin-bottom: 0; }
-        .milestone-item .flex-between {
-            margin-bottom: 3px;
-            font-size: 12px;
-        }
-        .milestone-item .flex-between span:first-child {
-            color: #94a3b8;
-        }
-        .milestone-item .flex-between span:last-child {
-            color: #fbbf24;
-            font-weight: 600;
-        }
-        .milestone-bar {
-            height: 5px;
-            background: #1e293b;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .milestone-bar .fill {
-            height: 100%;
-            border-radius: 10px;
-            background: linear-gradient(90deg, #fbbf24, #2dd4bf);
-            transition: width 0.8s ease;
-        }
+        .milestone-item .flex-between { margin-bottom: 3px; font-size: 12px; }
+        .milestone-item .flex-between span:first-child { color: #94a3b8; }
+        .milestone-item .flex-between span:last-child { color: #fbbf24; font-weight: 600; }
+        .milestone-bar { height: 5px; background: #1e293b; border-radius: 10px; overflow: hidden; }
+        .milestone-bar .fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #fbbf24, #2dd4bf); transition: width 0.8s ease; }
 
-        /* Badge grid inside card */
-        .badge-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-        }
-        .badge-item {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 10px 4px;
-            text-align: center;
-            border: 2px solid #1e293b;
-            transition: 0.3s;
-            opacity: 0.4;
-            filter: grayscale(1);
-        }
-        .badge-item.unlocked {
-            border-color: #fbbf24;
-            opacity: 1;
-            filter: grayscale(0);
-            background: rgba(251, 191, 36, 0.05);
-        }
+        .badge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .badge-item { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 10px 4px; text-align: center; border: 2px solid #1e293b; transition: 0.3s; opacity: 0.4; filter: grayscale(1); }
+        .badge-item.unlocked { border-color: #fbbf24; opacity: 1; filter: grayscale(0); background: rgba(251,191,36,0.05); }
         .badge-item .badge-icon { font-size: 24px; display: block; }
         .badge-item .badge-name { font-size: 10px; font-weight: 600; color: #cbd5e1; margin-top: 2px; }
         .badge-item .badge-days { font-size: 9px; color: #64748b; }
         .badge-item.unlocked .badge-name { color: #fbbf24; }
 
-        /* Heatmap + Week together */
-        .heatmap-card {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .heatmap-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            margin-top: 6px;
-        }
-        .heatmap-day {
-            aspect-ratio: 1;
-            border-radius: 4px;
-            background: #1e293b;
-            border: 1px solid #2d3748;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 9px;
-            color: #64748b;
-            transition: 0.2s;
-        }
+        .heatmap-card { background: rgba(255,255,255,0.02); border-radius: 20px; padding: 16px; border: 1px solid rgba(255,255,255,0.04); }
+        .heatmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 6px; }
+        .heatmap-day { aspect-ratio: 1; border-radius: 4px; background: #1e293b; border: 1px solid #2d3748; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #64748b; transition: 0.2s; }
         .heatmap-day.clean { background: #2dd4bf; border-color: #2dd4bf; color: #0f172a; font-weight: 700; }
         .heatmap-day.relapse { background: #ef4444; border-color: #ef4444; color: white; font-weight: 700; }
         .heatmap-day.skip { background: #f59e0b; border-color: #f59e0b; color: #0f172a; font-weight: 700; }
         .heatmap-day.today { border-color: #fbbf24; border-width: 2px; }
-        .heatmap-legend {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 6px;
-            font-size: 10px;
-            color: #94a3b8;
-        }
+        .heatmap-legend { display: flex; gap: 12px; justify-content: center; margin-top: 6px; font-size: 10px; color: #94a3b8; }
         .heatmap-legend span { display: flex; align-items: center; gap: 4px; }
         .heatmap-legend .dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
         .heatmap-legend .dot.green { background: #2dd4bf; }
@@ -826,68 +338,21 @@
         .heatmap-legend .dot.yellow { background: #f59e0b; }
         .heatmap-legend .dot.grey { background: #1e293b; border: 1px solid #2d3748; }
 
-        .week-dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 6px;
-        }
-        .week-dot {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #1e293b;
-            border: 2px solid #334155;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
-            color: #64748b;
-            transition: 0.3s;
-        }
-        .week-dot.active { background: rgba(45, 212, 191, 0.2); border-color: #2dd4bf; color: #2dd4bf; }
+        .week-dots { display: flex; justify-content: center; gap: 10px; margin-top: 6px; }
+        .week-dot { width: 32px; height: 32px; border-radius: 50%; background: #1e293b; border: 2px solid #334155; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #64748b; transition: 0.3s; }
+        .week-dot.active { background: rgba(45,212,191,0.2); border-color: #2dd4bf; color: #2dd4bf; }
         .week-dot.today { border-color: #fbbf24; color: #fbbf24; }
-        .week-dot.skipped { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; color: #f59e0b; }
+        .week-dot.skipped { background: rgba(245,158,11,0.15); border-color: #f59e0b; color: #f59e0b; }
 
-        /* Trigger Analytics & Equivalents – side by side */
-        .group-row-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .equiv-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
-            margin-top: 4px;
-        }
-        .equiv-item {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 8px 4px;
-            text-align: center;
-        }
+        .group-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .equiv-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 4px; }
+        .equiv-item { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 8px 4px; text-align: center; }
         .equiv-item .icon { font-size: 20px; }
         .equiv-item .val { font-size: 14px; font-weight: 700; color: #e2e8f0; }
         .equiv-item .lbl { font-size: 9px; color: #94a3b8; }
 
-        /* Data Management card */
-        .data-mgmt-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 8px;
-        }
-        .data-mgmt-actions button {
-            flex: 1;
-            padding: 10px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+        .data-mgmt-actions { display: flex; gap: 10px; margin-top: 8px; }
+        .data-mgmt-actions button { flex: 1; padding: 10px; border-radius: 12px; border: none; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s; }
         .data-mgmt-actions button:active { transform: scale(0.95); }
         .btn-export { background: #2dd4bf; color: #0f172a; }
         .btn-import { background: #8b5cf6; color: white; }
@@ -897,78 +362,32 @@
         .why-quit-card {
             background: rgba(239, 68, 68, 0.05);
             border: 1px solid rgba(239, 68, 68, 0.15);
-            border-radius: 20px;
-            padding: 16px;
+            border-radius: 20px; padding: 16px;
             margin-bottom: 16px;
         }
-        .why-quit-card h3 {
-            color: #ef4444;
-            font-size: 16px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .why-quit-card ul {
-            list-style: none;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px 12px;
-        }
-        .why-quit-card ul li {
-            font-size: 13px;
-            color: #cbd5e1;
-            padding: 4px 0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .why-quit-card ul li::before {
-            content: "✓";
-            color: #2dd4bf;
-            font-weight: 700;
-        }
+        .why-quit-card h3 { color: #ef4444; font-size: 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .why-quit-card ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; }
+        .why-quit-card ul li { font-size: 13px; color: #cbd5e1; padding: 4px 0; display: flex; align-items: center; gap: 6px; }
+        .why-quit-card ul li::before { content: "✓"; color: #2dd4bf; font-weight: 700; }
 
         /* ----- BOTTOM NAV ----- */
         .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; justify-content: space-around;
+            margin-top: 24px; padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
         .nav-item {
-            background: none;
-            border: none;
-            color: #64748b;
-            font-size: 12px;
-            font-weight: 600;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            transition: 0.2s;
-            padding: 4px 12px;
+            background: none; border: none;
+            color: #64748b; font-size: 12px; font-weight: 600;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            cursor: pointer; transition: 0.2s; padding: 4px 12px;
         }
-        .nav-item.active {
-            color: #fbbf24;
-        }
-        .nav-item .nav-icon {
-            font-size: 22px;
-        }
+        .nav-item.active { color: #fbbf24; }
+        .nav-item .nav-icon { font-size: 22px; }
 
-        .page {
-            display: none;
-            animation: fadeUp 0.3s ease;
-        }
-        .page.active {
-            display: block;
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .page { display: none; animation: fadeUp 0.3s ease; }
+        .page.active { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         ::-webkit-scrollbar { display: none; }
 
@@ -982,6 +401,7 @@
             .data-mgmt-actions { flex-direction: column; }
             .why-quit-card ul { grid-template-columns: 1fr; }
             .notif-card { flex-direction: column; align-items: stretch; }
+            .activity-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -1014,15 +434,50 @@
                     <div class="quote-author" id="quoteAuthor">— Abraham Lincoln</div>
                 </div>
 
-                <!-- NOTIFICATION SETTINGS (NEW) -->
+                <!-- ==========================================================
+                     RECLAIM YOUR TIME – NEW SECTION (INSTEAD OF DISTRACTIONS)
+                     ========================================================== -->
+                <div class="reclaim-card" id="reclaimCard">
+                    <div class="title">
+                        <span class="icon">⏳</span> Reclaim Your Time
+                    </div>
+                    <div class="subtitle">
+                        Instead of scrolling, do something that actually moves you forward.
+                        <span style="display:block; font-size:12px; color:#64748b; margin-top:4px;">
+                            🎯 You've reclaimed <strong id="productivityMinutesDisplay" style="color:#fbbf24;">0</strong> minutes of productive time!
+                        </span>
+                    </div>
+
+                    <!-- Activity Grid -->
+                    <div class="activity-grid" id="activityGrid">
+                        <!-- Generated by JS -->
+                    </div>
+
+                    <!-- Timer -->
+                    <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.05);">
+                        <div class="timer-display" id="timerDisplay">25:00</div>
+                        <div class="timer-controls">
+                            <button class="btn btn-timer" id="timerStartBtn" style="flex:2;">▶ Start Focus</button>
+                            <button class="btn btn-outline" id="timerResetBtn" style="flex:1; padding:10px; font-size:14px;">↺ Reset</button>
+                        </div>
+                        <div style="text-align:center; margin-top:6px; font-size:12px; color:#64748b;" id="timerStatus">
+                            Select an activity above, then start the timer.
+                        </div>
+                    </div>
+
+                    <!-- "I Did It!" Button -->
+                    <button class="btn btn-success" id="activityDoneBtn" style="margin-top:10px; margin-bottom:0; opacity:0.5; cursor:not-allowed;" disabled>
+                        ✅ I Did It! (Complete a session first)
+                    </button>
+                </div>
+
+                <!-- NOTIFICATION SETTINGS -->
                 <div class="notif-card" id="notifCard">
                     <div class="notif-left">
                         <span>🔔</span>
                         <span style="font-weight:600;">Reminder</span>
                         <input type="time" id="reminderTime" value="09:00" />
-                        <label>
-                            <input type="checkbox" id="reminderToggle" /> Enable
-                        </label>
+                        <label><input type="checkbox" id="reminderToggle" /> Enable</label>
                     </div>
                     <button class="btn btn-sm btn-purple" id="testNotifBtn" style="margin:0;">Test</button>
                 </div>
@@ -1098,7 +553,6 @@
                         <li>Letting go of my past self</li>
                         <li>Becoming the person I want to be</li>
                     </ul>
-
                     <div style="margin:12px 0 8px;">
                         <label style="font-size:12px; color:#94a3b8; display:block; text-align:left; margin-bottom:4px;">✍️ SIGN WITH YOUR FINGER (One-time ceremony)</label>
                         <div class="signature-pad-wrapper" id="sigWrapper">
@@ -1111,20 +565,18 @@
                             <button class="clear-btn" id="clearSignatureBtn">🗑️ Clear</button>
                         </div>
                     </div>
-
                     <button class="btn btn-success" id="finalCommitBtn">✅ I commit to myself (Forever)</button>
                     <p style="font-size:11px; color:#64748b; margin-top:8px;">* This is a one-time agreement. Once signed, it cannot be cleared.</p>
                 </div>
             </div>
 
-            <!-- ===== PAGE 3: STATS (RESTRUCTURED) ===== -->
+            <!-- ===== PAGE 3: STATS ===== -->
             <div id="page-stats" class="page">
                 <h2 style="font-size:22px; margin-bottom:4px;">📊 Your Impact</h2>
                 <p class="muted" style="margin-bottom:16px;">Your progress at a glance.</p>
 
                 <div class="stats-dashboard">
-
-                    <!-- HERO ROW: Time Regained + Clean % -->
+                    <!-- HERO ROW -->
                     <div class="hero-row">
                         <div class="hero-card">
                             <div class="number" id="heroTimeRegained">0</div>
@@ -1135,6 +587,21 @@
                             <div class="number" id="cleanPercentage">0%</div>
                             <div class="label">30-Day Success Rate</div>
                             <div class="sub" id="cleanPercentageDetail">0 / 0 logged</div>
+                        </div>
+                    </div>
+
+                    <!-- PRODUCTIVITY SESSIONS (NEW) -->
+                    <div class="card" style="border-color: rgba(45,212,191,0.2);">
+                        <div class="card-title" style="color:#2dd4bf;">📈 Productivity Sessions</div>
+                        <div style="display:flex; justify-content:space-around; padding:4px 0;">
+                            <div style="text-align:center;">
+                                <div style="font-size:28px; font-weight:800; color:#fbbf24;" id="totalSessions">0</div>
+                                <div style="font-size:11px; color:#94a3b8;">Total Sessions</div>
+                            </div>
+                            <div style="text-align:center;">
+                                <div style="font-size:28px; font-weight:800; color:#2dd4bf;" id="totalProductiveMins">0</div>
+                                <div style="font-size:11px; color:#94a3b8;">Minutes Productive</div>
+                            </div>
                         </div>
                     </div>
 
@@ -1162,7 +629,7 @@
                         </div>
                     </div>
 
-                    <!-- HEATMAP + WEEKLY CONSISTENCY -->
+                    <!-- HEATMAP + WEEKLY -->
                     <div class="heatmap-card">
                         <div class="flex-between">
                             <span style="font-weight:600; color:#cbd5e1;">📆 Monthly Heatmap</span>
@@ -1267,14 +734,12 @@
             </div>
         </div>
         <p style="color:#94a3b8; text-align:center; max-width:300px; margin-bottom:8px;">Inhale 4s · Hold 7s · Exhale 8s</p>
-
         <div class="panic-emergency-box" id="emergencyBox">
             <div class="label">🚨 Emergency Action</div>
             <div class="action" id="emergencyAction">Do 10 pushups</div>
             <div class="sub">You must complete this before closing</div>
             <button class="btn" style="background:#2dd4bf; color:#0f172a; padding:10px; margin-top:8px; font-size:14px; margin-bottom:0;" id="emergencyDoneBtn">✅ I did it!</button>
         </div>
-
         <button class="btn btn-primary" style="max-width:200px; background:#334155; color:white; margin-bottom:0; opacity:0.5; cursor:not-allowed;" id="closePanicBtn" disabled>Complete action to close</button>
     </div>
 
@@ -1373,16 +838,16 @@
         setupPWA();
 
         // ============================================================
-        // 2. SPLASH
+        // 2. SPLASH & ONBOARDING
         // ============================================================
         window.addEventListener('load', function() {
             setTimeout(function() { document.getElementById('splash-screen').classList.add('hide'); }, 1800);
-            // Check onboarding
             if (!localStorage.getItem('reclaim_onboarding_done')) {
                 setTimeout(showOnboarding, 500);
             }
-            // Setup notification checker
             setupNotificationChecker();
+            loadProductivityData();
+            renderActivities();
         });
 
         // ============================================================
@@ -1398,6 +863,7 @@
         const TRIGGER_LOGS_KEY = 'reclaim_trigger_logs';
         const URGE_INTENSITY_KEY = 'reclaim_urge_intensity';
         const LAST_SKIP_WEEK_KEY = 'reclaim_last_skip_week';
+        const PRODUCTIVITY_KEY = 'reclaim_productivity';
 
         function getStreak() { return parseInt(localStorage.getItem(STREAK_KEY)) || 0; }
 
@@ -1419,8 +885,15 @@
             try { return JSON.parse(localStorage.getItem(URGE_INTENSITY_KEY)) || {}; } catch (e) { return {}; }
         }
 
-        function getLastSkipWeek() {
-            return parseInt(localStorage.getItem(LAST_SKIP_WEEK_KEY)) || 0;
+        function getLastSkipWeek() { return parseInt(localStorage.getItem(LAST_SKIP_WEEK_KEY)) || 0; }
+
+        function getProductivityData() {
+            try { return JSON.parse(localStorage.getItem(PRODUCTIVITY_KEY)) || { sessions: [], totalMinutes: 0 }; } catch (
+            e) { return { sessions: [], totalMinutes: 0 }; }
+        }
+
+        function saveProductivityData(data) {
+            localStorage.setItem(PRODUCTIVITY_KEY, JSON.stringify(data));
         }
 
         function saveDailyLog(date, status) {
@@ -1503,7 +976,7 @@
         }
 
         // ============================================================
-        // 5. ONBOARDING (NEW)
+        // 5. ONBOARDING
         // ============================================================
         let onboardingStep = 0;
         const onboardingSteps = [{
@@ -1532,15 +1005,12 @@
             document.getElementById('onboardingIcon').innerText = step.icon;
             document.getElementById('onboardingTitle').innerText = step.title;
             document.getElementById('onboardingDesc').innerText = step.desc;
-
             const nextBtn = document.getElementById('onboardingNextBtn');
             if (onboardingStep === onboardingSteps.length - 1) {
                 nextBtn.innerText = 'Get Started';
             } else {
                 nextBtn.innerText = 'Next';
             }
-
-            // Dots
             const dotsContainer = document.getElementById('onboardingDots');
             dotsContainer.innerHTML = '';
             onboardingSteps.forEach((_, idx) => {
@@ -1556,7 +1026,6 @@
                 onboardingStep++;
                 renderOnboardingStep();
             } else {
-                // Finish onboarding
                 localStorage.setItem('reclaim_onboarding_done', 'true');
                 document.getElementById('onboardingOverlay').classList.remove('active');
             }
@@ -1568,34 +1037,24 @@
         });
 
         // ============================================================
-        // 6. NOTIFICATIONS (NEW)
+        // 6. NOTIFICATIONS
         // ============================================================
         let reminderInterval = null;
 
         function setupNotificationChecker() {
-            // Load saved settings
             const savedTime = localStorage.getItem('reclaim_reminder_time') || '09:00';
             const savedToggle = localStorage.getItem('reclaim_reminder_enabled') === 'true';
             document.getElementById('reminderTime').value = savedTime;
             document.getElementById('reminderToggle').checked = savedToggle;
-
-            // Start checking every minute
-            if (savedToggle) {
-                startReminderChecker();
-            }
-
-            // Save changes
+            if (savedToggle) { startReminderChecker(); }
             document.getElementById('reminderTime').addEventListener('change', function() {
                 localStorage.setItem('reclaim_reminder_time', this.value);
-                if (document.getElementById('reminderToggle').checked) {
-                    startReminderChecker();
-                }
+                if (document.getElementById('reminderToggle').checked) { startReminderChecker(); }
             });
             document.getElementById('reminderToggle').addEventListener('change', function() {
                 localStorage.setItem('reclaim_reminder_enabled', this.checked);
                 if (this.checked) {
                     startReminderChecker();
-                    // Request permission
                     if ('Notification' in window && Notification.permission === 'default') {
                         Notification.requestPermission();
                     }
@@ -1607,8 +1066,8 @@
 
         function startReminderChecker() {
             clearInterval(reminderInterval);
-            reminderInterval = setInterval(checkReminder, 60000); // every minute
-            checkReminder(); // check immediately
+            reminderInterval = setInterval(checkReminder, 60000);
+            checkReminder();
         }
 
         function checkReminder() {
@@ -1620,24 +1079,12 @@
             const [hours, minutes] = timeStr.split(':').map(Number);
             const target = new Date(now);
             target.setHours(hours, minutes, 0, 0);
-
-            // If target is in the past today, schedule for tomorrow
-            if (target < now) {
-                // We'll check again next minute, but we don't want to spam.
-                return;
-            }
-
-            // If within 1 minute of target, send notification
+            if (target < now) { return; }
             const diff = target - now;
             if (diff < 60000 && diff > -60000) {
-                // Check if user already checked in today
                 const today = new Date().toISOString().split('T')[0];
                 const logs = getDailyLogs();
-                if (logs[today] === 'clean') {
-                    // Already checked in, skip
-                    return;
-                }
-                // Send notification
+                if (logs[today] === 'clean') { return; }
                 sendReminderNotification();
             }
         }
@@ -1657,21 +1104,12 @@
         }
 
         document.getElementById('testNotifBtn').addEventListener('click', function() {
-            if (!('Notification' in window)) {
-                alert('Notifications not supported in this browser.');
-                return;
-            }
-            if (Notification.permission === 'denied') {
-                alert('Notifications are blocked. Please enable in browser settings.');
-                return;
-            }
+            if (!('Notification' in window)) { alert('Notifications not supported.'); return; }
+            if (Notification.permission === 'denied') { alert('Notifications blocked.'); return; }
             if (Notification.permission === 'default') {
                 Notification.requestPermission().then(perm => {
-                    if (perm === 'granted') {
-                        sendReminderNotification();
-                    } else {
-                        alert('Please allow notifications to receive reminders.');
-                    }
+                    if (perm === 'granted') { sendReminderNotification(); } else { alert(
+                        'Please allow notifications.'); }
                 });
                 return;
             }
@@ -1679,7 +1117,7 @@
         });
 
         // ============================================================
-        // 7. STREAK FREEZE (1 skip per week)
+        // 7. STREAK FREEZE
         // ============================================================
         function canSkipThisWeek() {
             const now = new Date();
@@ -1714,14 +1152,12 @@
                 document.getElementById('modalDynamicContent').innerHTML = dynamicHTML;
                 document.getElementById('modalConfirmBtn').innerText = confirmText || 'Yes';
                 document.getElementById('modalCancelBtn').innerText = cancelText || 'Go Back';
-
                 const confirmBtn = document.getElementById('modalConfirmBtn');
                 const cancelBtn = document.getElementById('modalCancelBtn');
                 const newConfirm = confirmBtn.cloneNode(true);
                 const newCancel = cancelBtn.cloneNode(true);
                 confirmBtn.parentNode.replaceChild(newConfirm, confirmBtn);
                 cancelBtn.parentNode.replaceChild(newCancel, cancelBtn);
-
                 newConfirm.addEventListener('click', function() {
                     modal.classList.remove('active');
                     if (onConfirm) onConfirm();
@@ -1735,13 +1171,183 @@
                     if (e.target === modal) { modal.classList.remove('active');
                         resolve(false); }
                 });
-
                 modal.classList.add('active');
             });
         }
 
         // ============================================================
-        // 9. STREAK, SKIP (with freeze), RESET
+        // 9. ACTIVITIES / PRODUCTIVITY (NEW)
+        // ============================================================
+        const ACTIVITIES = [
+            { emoji: '📚', label: 'Read Research Paper' },
+            { emoji: '🐍', label: 'Code ML Model' },
+            { emoji: '📊', label: 'Data Cleaning' },
+            { emoji: '🧠', label: 'LeetCode Problem' },
+            { emoji: '📝', label: 'Write Documentation' },
+            { emoji: '🎓', label: 'Watch ML Tutorial' },
+            { emoji: '📖', label: 'Read Book Chapter' },
+            { emoji: '✍️', label: 'Write Blog/Notes' },
+            { emoji: '📈', label: 'EDA / Visualization' },
+            { emoji: '🧪', label: 'Run Experiment' },
+            { emoji: '📋', label: 'Review Code PR' },
+            { emoji: '🎯', label: 'Deep Work Session' },
+            { emoji: '📰', label: 'Read AI Paper' },
+            { emoji: '💻', label: 'Build Side Project' },
+            { emoji: '📓', label: 'Journal / Reflect' },
+            { emoji: '🧘', label: 'Meditate (5 min)' },
+            { emoji: '🏋️', label: 'Quick Workout' },
+            { emoji: '📹', label: 'Record Learning Video' },
+            { emoji: '🤝', label: 'Network on LinkedIn' },
+            { emoji: '📊', label: 'Update Resume/Portfolio' },
+        ];
+
+        let selectedActivity = null;
+        let timerRunning = false;
+        let timerSeconds = 1500; // 25 minutes
+        let timerInterval = null;
+        let completedActivities = [];
+
+        function renderActivities() {
+            const grid = document.getElementById('activityGrid');
+            grid.innerHTML = '';
+            // Show 8 random activities
+            const shuffled = [...ACTIVITIES].sort(() => 0.5 - Math.random());
+            const display = shuffled.slice(0, 8);
+            display.forEach(act => {
+                const btn = document.createElement('button');
+                btn.className = 'activity-btn';
+                btn.innerHTML = `<span class="emoji">${act.emoji}</span> ${act.label}`;
+                btn.dataset.label = act.label;
+                btn.dataset.emoji = act.emoji;
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.activity-btn').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedActivity = this.dataset.label;
+                    document.getElementById('timerStatus').innerText =
+                    `🧠 Focus: "${selectedActivity}" — 25 min session`;
+                    document.getElementById('timerStatus').style.color = '#2dd4bf';
+                });
+                grid.appendChild(btn);
+            });
+        }
+
+        // Timer Logic
+        document.getElementById('timerStartBtn').addEventListener('click', function() {
+            if (!selectedActivity) {
+                document.getElementById('timerStatus').innerText = '⚠️ Select an activity first!';
+                document.getElementById('timerStatus').style.color = '#ef4444';
+                return;
+            }
+            if (timerRunning) {
+                // Pause
+                clearInterval(timerInterval);
+                timerRunning = false;
+                this.innerText = '▶ Resume';
+                document.getElementById('timerStatus').innerText = '⏸️ Paused';
+                document.getElementById('timerStatus').style.color = '#f59e0b';
+                return;
+            }
+            if (timerSeconds <= 0) {
+                timerSeconds = 1500;
+                updateTimerDisplay();
+            }
+            timerRunning = true;
+            this.innerText = '⏸️ Pause';
+            document.getElementById('timerStatus').innerText = `⏳ Focusing on "${selectedActivity}"...`;
+            document.getElementById('timerStatus').style.color = '#2dd4bf';
+
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                updateTimerDisplay();
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    timerRunning = false;
+                    document.getElementById('timerStartBtn').innerText = '▶ Start Focus';
+                    document.getElementById('timerStatus').innerText = '✅ Session Complete! Tap "I Did It!"';
+                    document.getElementById('timerStatus').style.color = '#2dd4bf';
+                    document.getElementById('activityDoneBtn').disabled = false;
+                    document.getElementById('activityDoneBtn').style.opacity = '1';
+                    document.getElementById('activityDoneBtn').innerText = '✅ I Did It! (25 min session!)';
+                    // Vibrate
+                    if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
+                }
+            }, 1000);
+        });
+
+        document.getElementById('timerResetBtn').addEventListener('click', function() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            timerSeconds = 1500;
+            updateTimerDisplay();
+            document.getElementById('timerStartBtn').innerText = '▶ Start Focus';
+            document.getElementById('timerStatus').innerText = '⏳ Timer reset. Select an activity.';
+            document.getElementById('timerStatus').style.color = '#64748b';
+            document.getElementById('activityDoneBtn').disabled = true;
+            document.getElementById('activityDoneBtn').style.opacity = '0.5';
+            document.getElementById('activityDoneBtn').innerText = '✅ I Did It! (Complete a session first)';
+        });
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById('timerDisplay').innerText =
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // "I Did It!" Button
+        document.getElementById('activityDoneBtn').addEventListener('click', function() {
+            if (this.disabled) return;
+            if (timerSeconds > 0) {
+                // Check if session was completed or not
+                if (timerSeconds > 10) {
+                    if (!confirm('Session not complete. Mark as done anyway?')) return;
+                }
+            }
+            // Log the productivity session
+            const data = getProductivityData();
+            const now = new Date();
+            const session = {
+                date: now.toISOString().split('T')[0],
+                time: now.toLocaleTimeString(),
+                activity: selectedActivity || 'Focused Work',
+                duration: Math.round((1500 - timerSeconds) / 60), // minutes completed
+            };
+            data.sessions.push(session);
+            data.totalMinutes = (data.totalMinutes || 0) + session.duration;
+            saveProductivityData(data);
+
+            // Reset timer
+            clearInterval(timerInterval);
+            timerRunning = false;
+            timerSeconds = 1500;
+            updateTimerDisplay();
+            document.getElementById('timerStartBtn').innerText = '▶ Start Focus';
+            document.getElementById('timerStatus').innerText = `✅ Logged ${session.duration} min of "${session.activity}"!`;
+            document.getElementById('timerStatus').style.color = '#fbbf24';
+            this.disabled = true;
+            this.style.opacity = '0.5';
+            this.innerText = '✅ I Did It! (Complete a session first)';
+
+            // Update UI
+            loadProductivityData();
+            updateAllUI();
+
+            // Show success
+            showModal('🎉', 'Productivity Logged!',
+                `You just spent ${session.duration} minutes on "${session.activity}". That's time well spent! 🚀`,
+                'Awesome', '', null);
+        });
+
+        function loadProductivityData() {
+            const data = getProductivityData();
+            const totalMins = data.totalMinutes || 0;
+            document.getElementById('productivityMinutesDisplay').innerText = totalMins;
+            document.getElementById('totalSessions').innerText = data.sessions.length || 0;
+            document.getElementById('totalProductiveMins').innerText = totalMins;
+        }
+
+        // ============================================================
+        // 10. STREAK, SKIP, RESET
         // ============================================================
         function advanceStreak() {
             const today = new Date().toISOString().split('T')[0];
@@ -1787,16 +1393,14 @@
                 return;
             }
 
-            // Check if skip is allowed this week
             if (!canSkipThisWeek()) {
                 showModal('⏭️', 'Skip Used This Week',
                     'You\'ve already used your one weekly skip. You can check-in or reset your streak.', 'OK', '', null);
                 return;
             }
 
-            // Allow skip
             saveDailyLog(today, 'skip');
-            recordSkip(); // Record that we used a skip this week
+            recordSkip();
             if (!getPledgeDate()) savePledge(today);
 
             showModal('⏭️', 'Day Skipped (Freeze Used)',
@@ -1806,7 +1410,7 @@
         }
 
         // ============================================================
-        // 10. RESET WITH TRIGGER
+        // 11. RESET WITH TRIGGER
         // ============================================================
         async function handleReset() {
             const triggers = ['Stress', 'Boredom', 'Loneliness', 'Saw Content', 'Tired', 'Other'];
@@ -1861,7 +1465,7 @@
         }
 
         // ============================================================
-        // 11. PANIC + INTENSITY
+        // 12. PANIC + INTENSITY (FIXED)
         // ============================================================
         const EMERGENCY_ACTIONS = [
             'Do 10 pushups right now',
@@ -1874,7 +1478,6 @@
             'Write down 3 things you are grateful for'
         ];
         let emergencyCompleted = false;
-        let selectedIntensity = 0;
 
         document.getElementById('panicBtn')?.addEventListener('click', function() {
             if (!isSignatureSaved()) {
@@ -1883,6 +1486,7 @@
                 return;
             }
 
+            // Build intensity grid
             let intensityHTML = '<div class="intensity-grid">';
             for (let i = 1; i <= 10; i++) {
                 intensityHTML +=
@@ -1890,6 +1494,8 @@
             }
             intensityHTML += '</div>';
             intensityHTML += '<div class="intensity-label">1-3 = Low · 4-6 = Medium · 7-10 = High</div>';
+            intensityHTML +=
+                '<p style="font-size:11px; color:#94a3b8; margin-top:-4px; margin-bottom:8px;">Tap a number to select</p>';
 
             showModal(
                 '📈',
@@ -1902,6 +1508,7 @@
             ).then((confirmed) => {
                 if (!confirmed) return;
 
+                // Get selected intensity
                 const btns = document.querySelectorAll('.intensity-btn');
                 let selected = 0;
                 btns.forEach(b => {
@@ -1913,8 +1520,8 @@
 
                 const today = new Date().toISOString().split('T')[0];
                 saveUrgeIntensity(today, selected);
-                selectedIntensity = selected;
 
+                // Start panic mode
                 emergencyCompleted = false;
                 document.getElementById('closePanicBtn').disabled = true;
                 document.getElementById('closePanicBtn').style.opacity = '0.5';
@@ -1927,6 +1534,18 @@
                 document.getElementById('panicOverlay').classList.add('active');
                 startBreathing();
             });
+        });
+
+        // Fix: Add click handlers to intensity buttons dynamically
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('intensity-btn')) {
+                document.querySelectorAll('.intensity-btn').forEach(b => b.classList.remove('selected'));
+                e.target.classList.add('selected');
+            }
+            if (e.target.classList.contains('trigger-btn')) {
+                document.querySelectorAll('.trigger-btn').forEach(b => b.classList.remove('selected'));
+                e.target.classList.add('selected');
+            }
         });
 
         document.getElementById('emergencyDoneBtn')?.addEventListener('click', function() {
@@ -1999,7 +1618,7 @@
         }
 
         // ============================================================
-        // 12. SIGNATURE CANVAS
+        // 13. SIGNATURE CANVAS
         // ============================================================
         let isDrawing = false;
         let lastX = 0,
@@ -2135,7 +1754,7 @@
         });
 
         // ============================================================
-        // 13. BADGE SYSTEM
+        // 14. BADGE SYSTEM
         // ============================================================
         const BADGE_DEFS = [
             { days: 3, icon: '🌱', name: 'Sprout' },
@@ -2166,7 +1785,7 @@
         }
 
         // ============================================================
-        // 14. HEATMAP, CLEAN %, TRIGGER ANALYTICS, URGE SUMMARY
+        // 15. HEATMAP, CLEAN %, TRIGGER ANALYTICS, URGE SUMMARY
         // ============================================================
         function renderHeatmap() {
             const grid = document.getElementById('heatmapGrid');
@@ -2282,7 +1901,7 @@
         }
 
         // ============================================================
-        // 15. DATA EXPORT / IMPORT
+        // 16. DATA EXPORT / IMPORT
         // ============================================================
         function exportData() {
             const data = {
@@ -2298,6 +1917,7 @@
                 triggerLogs: localStorage.getItem(TRIGGER_LOGS_KEY),
                 urgeIntensity: localStorage.getItem(URGE_INTENSITY_KEY),
                 lastSkipWeek: localStorage.getItem(LAST_SKIP_WEEK_KEY),
+                productivity: localStorage.getItem(PRODUCTIVITY_KEY),
             };
 
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -2329,6 +1949,7 @@
                     if (data.triggerLogs) localStorage.setItem(TRIGGER_LOGS_KEY, data.triggerLogs);
                     if (data.urgeIntensity) localStorage.setItem(URGE_INTENSITY_KEY, data.urgeIntensity);
                     if (data.lastSkipWeek) localStorage.setItem(LAST_SKIP_WEEK_KEY, data.lastSkipWeek);
+                    if (data.productivity) localStorage.setItem(PRODUCTIVITY_KEY, data.productivity);
 
                     showModal('✅', 'Import Successful!', 'Your backup has been restored.', 'Awesome', '', null);
                     updateAllUI();
@@ -2351,7 +1972,7 @@
         });
 
         // ============================================================
-        // 16. UI UPDATES
+        // 17. UI UPDATES
         // ============================================================
         function updateYellowButtonText() {
             const btn = document.getElementById('pledgeTodayBtn');
@@ -2403,8 +2024,8 @@
             renderTriggerAnalytics();
             applyPledgeLockState();
             renderDailyQuote();
+            loadProductivityData();
 
-            // Update skip button state
             const skipBtn = document.getElementById('skipTodayBtn');
             if (canSkipThisWeek()) {
                 skipBtn.innerText = '⏭️ Skip Today (Free)';
@@ -2460,7 +2081,6 @@
                 document.getElementById(`milestone${target}Bar`).style.width = `${progress}%`;
             });
 
-            // Week dots
             const container = document.getElementById('weekDotsContainer');
             container.innerHTML = '';
             const today = new Date();
@@ -2496,7 +2116,7 @@
         }
 
         // ============================================================
-        // 17. NAVIGATION
+        // 18. NAVIGATION
         // ============================================================
         function navigateToPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -2511,7 +2131,7 @@
         }
 
         // ============================================================
-        // 18. BUTTON HANDLERS
+        // 19. BUTTON HANDLERS
         // ============================================================
         document.getElementById('pledgeTodayBtn')?.addEventListener('click', function() {
             if (isSignatureSaved()) {
@@ -2589,7 +2209,7 @@
         });
 
         // ============================================================
-        // 19. JOURNAL
+        // 20. JOURNAL
         // ============================================================
         function getJournals() {
             try { return JSON.parse(localStorage.getItem(JOURNAL_KEY)) || []; } catch (e) { return []; }
@@ -2639,7 +2259,7 @@
         });
 
         // ============================================================
-        // 20. BOTTOM NAV
+        // 21. BOTTOM NAV
         // ============================================================
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
@@ -2648,7 +2268,7 @@
         });
 
         // ============================================================
-        // 21. INIT
+        // 22. INIT
         // ============================================================
         document.getElementById('dailyMinInput').value = getDailyMin();
         updateAllUI();
