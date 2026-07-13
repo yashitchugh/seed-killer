@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>Reclaim – Habit Breaker</title>
-    
-    <!-- PWA Meta Tags & Icons (will be injected dynamically via JS for logo) -->
+    <title>Reclaim – Dopamine Reset</title>
+
+    <!-- PWA Meta Tags & Icons -->
     <link rel="manifest" id="dynamicManifest">
     <link rel="icon" id="dynamicFavicon">
     <link rel="apple-touch-icon" id="dynamicAppleIcon">
@@ -138,7 +138,8 @@
 
         /* ----- HEADER / STREAK ----- */
         .header { margin-bottom: 24px; }
-        .header h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+        .header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: #fbbf24; }
+        .header h1 span { color: #e2e8f0; }
         .streak-pill {
             background: rgba(45, 212, 191, 0.1);
             border: 1px solid rgba(45, 212, 191, 0.2);
@@ -254,6 +255,11 @@
             background: #8b5cf6;
             color: white;
         }
+        .btn-skip {
+            background: #f59e0b;
+            color: #0f172a;
+            box-shadow: 0 8px 20px -8px rgba(245, 158, 11, 0.3);
+        }
 
         /* ----- PLEDGE (Signature) ----- */
         .pledge-box {
@@ -296,7 +302,7 @@
             border: 1px solid rgba(45, 212, 191, 0.2);
         }
 
-        /* Signature Canvas */
+        /* Signature Canvas - FIXED HEIGHT 200px */
         .signature-pad-wrapper {
             margin: 12px 0 8px;
             background: #0a0a18;
@@ -317,7 +323,7 @@
         #signatureCanvas {
             display: block;
             width: 100%;
-            height: 160px;
+            height: 200px;
             touch-action: none;
             cursor: crosshair;
             background: #0a0a18;
@@ -355,7 +361,10 @@
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: rgba(7, 7, 15, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -371,17 +380,42 @@
             background: #1e293b;
             border-radius: 32px;
             padding: 28px 24px 20px;
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
             text-align: center;
         }
         .modal-card .modal-icon { font-size: 48px; margin-bottom: 12px; }
         .modal-card h3 { font-size: 22px; color: #fbbf24; margin-bottom: 8px; }
         .modal-card p { color: #94a3b8; font-size: 15px; line-height: 1.5; margin-bottom: 20px; }
-        .modal-actions { display: flex; gap: 12px; }
-        .modal-actions .btn { margin-bottom: 0; flex: 1; padding: 14px; font-size: 15px; }
+        .modal-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .modal-actions .btn { margin-bottom: 0; flex: 1; min-width: 100px; padding: 14px; font-size: 15px; }
 
-        /* ----- PANIC OVERLAY (Breathing) ----- */
+        /* Trigger Buttons */
+        .trigger-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .trigger-btn {
+            padding: 10px 4px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            background: transparent;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .trigger-btn:active { transform: scale(0.95); }
+        .trigger-btn.selected {
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+        }
+
+        /* ----- PANIC OVERLAY (Breathing + Emergency Exit) ----- */
         .panic-overlay {
             display: none;
             position: fixed;
@@ -400,12 +434,12 @@
         .panic-overlay.active { display: flex; }
         .breath-wrapper {
             position: relative;
-            width: 220px;
-            height: 220px;
+            width: 200px;
+            height: 200px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         .breath-ring {
             position: absolute;
@@ -423,8 +457,8 @@
         }
         .breath-circle {
             position: relative;
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #2dd4bf, #0f172a);
             box-shadow: 0 0 60px rgba(45, 212, 191, 0.2);
@@ -444,7 +478,7 @@
             box-shadow: 0 0 20px rgba(239, 68, 68, 0.1), inset 0 0 40px rgba(239, 68, 68, 0.05);
         }
         .breath-circle .phase-text {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: white;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
@@ -452,12 +486,38 @@
             line-height: 1;
         }
         .breath-circle .countdown-text {
-            font-size: 48px;
+            font-size: 40px;
             font-weight: 800;
             color: #fbbf24;
             text-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
             line-height: 1;
             margin-top: 4px;
+        }
+        .panic-emergency-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 20px;
+            padding: 16px 20px;
+            margin: 12px 0 16px;
+            text-align: center;
+            max-width: 320px;
+            width: 100%;
+        }
+        .panic-emergency-box .label {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .panic-emergency-box .action {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fbbf24;
+            margin: 6px 0;
+        }
+        .panic-emergency-box .sub {
+            font-size: 13px;
+            color: #94a3b8;
         }
 
         /* ----- ENHANCED STATS PAGE ----- */
@@ -547,6 +607,73 @@
             background: linear-gradient(90deg, #fbbf24, #2dd4bf);
             transition: width 0.8s ease;
         }
+
+        /* ----- CALENDAR HEATMAP ----- */
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-top: 8px;
+        }
+        .heatmap-day {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            background: #1e293b;
+            border: 1px solid #2d3748;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #64748b;
+            transition: 0.2s;
+        }
+        .heatmap-day.clean {
+            background: #2dd4bf;
+            border-color: #2dd4bf;
+            color: #0f172a;
+            font-weight: 700;
+        }
+        .heatmap-day.relapse {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+            font-weight: 700;
+        }
+        .heatmap-day.skip {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: #0f172a;
+            font-weight: 700;
+        }
+        .heatmap-day.today {
+            border-color: #fbbf24;
+            border-width: 2px;
+        }
+        .heatmap-legend {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 8px;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .heatmap-legend span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .heatmap-legend .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .heatmap-legend .dot.green { background: #2dd4bf; }
+        .heatmap-legend .dot.red { background: #ef4444; }
+        .heatmap-legend .dot.yellow { background: #f59e0b; }
+        .heatmap-legend .dot.grey { background: #1e293b; border: 1px solid #2d3748; }
+
+        /* Week dots (existing) */
         .week-card {
             background: rgba(255, 255, 255, 0.02);
             border-radius: 20px;
@@ -585,6 +712,12 @@
             color: #fbbf24;
             box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
         }
+        .week-dot.skipped {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #f59e0b;
+            color: #f59e0b;
+        }
+
         .equiv-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -652,7 +785,7 @@
             color: #fbbf24;
         }
 
-        /* ----- WHY QUIT? SECTION ----- */
+        /* ----- WHY QUIT? (Now Explicitly Porn) ----- */
         .why-quit-card {
             background: rgba(239, 68, 68, 0.05);
             border: 1px solid rgba(239, 68, 68, 0.15);
@@ -756,6 +889,9 @@
             .mini-stats-grid {
                 grid-template-columns: 1fr 1fr;
             }
+            .trigger-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
         }
     </style>
 </head>
@@ -766,7 +902,7 @@
         <div class="splash-content">
             <div class="splash-logo">⛰️</div>
             <div class="splash-title">Reclaim</div>
-            <div class="splash-sub">Your reset begins now</div>
+            <div class="splash-sub">Breaking the Overstimulation Cycle</div>
             <div class="splash-loader"></div>
         </div>
     </div>
@@ -778,24 +914,24 @@
             <!-- ===== PAGE 1: HOME ===== -->
             <div id="page-home" class="page active">
                 <div class="flex-between header">
-                    <h1>⛰️ Reclaim</h1>
+                    <h1>⛰️ Reclaim: <span>Dopamine Reset</span></h1>
                     <span class="streak-pill" id="streakDisplay">🔥 0 Days</span>
                 </div>
 
                 <div id="pledgeStatus" style="background:rgba(45,212,191,0.05); border-radius:16px; padding:12px; margin-bottom:16px; border-left:4px solid #2dd4bf;">
-                    <span id="pledgeText">You haven't pledged today. 👋</span>
+                    <span id="pledgeText">You haven't checked in today. 👋</span>
                 </div>
 
-                <!-- WHY QUIT? SECTION -->
+                <!-- WHY QUIT? (Now explicitly porn) -->
                 <div class="why-quit-card">
-                    <h3>🔥 Why Quit?</h3>
+                    <h3>🔥 Why Quit Porn & Overstimulation?</h3>
                     <ul>
-                        <li>Reclaim your mental clarity</li>
-                        <li>Boost real-life confidence</li>
+                        <li>Rewire your brain from compulsive urges</li>
                         <li>Fix your dopamine reward system</li>
-                        <li>Improve focus &amp; productivity</li>
-                        <li>Build genuine relationships</li>
-                        <li>Become the person you admire</li>
+                        <li>Regain mental clarity and focus</li>
+                        <li>Build real confidence in real life</li>
+                        <li>Escape the shame and guilt cycle</li>
+                        <li>Become the person you truly want to be</li>
                     </ul>
                 </div>
 
@@ -826,10 +962,12 @@
                 </div>
 
                 <!-- BUTTONS -->
-                <!-- The yellow button text will be dynamically changed by JS -->
                 <button class="btn btn-primary" id="pledgeTodayBtn">📝 Loading...</button>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn btn-skip" id="skipTodayBtn" style="flex:1; margin-bottom:10px;">⏭️ Skip Today</button>
+                    <button class="btn btn-outline" id="relapseBtn" style="flex:1; margin-bottom:10px;">↺ Reset</button>
+                </div>
                 <button class="btn btn-danger" id="panicBtn">⚡ Panic Button (Urge)</button>
-                <button class="btn btn-outline" id="relapseBtn">↺ Reset Streak</button>
 
                 <!-- QUICK JOURNAL -->
                 <div style="margin-top:16px; background:rgba(255,255,255,0.02); border-radius:16px; padding:12px;">
@@ -844,7 +982,7 @@
             <div id="page-pledge" class="page">
                 <div class="pledge-box">
                     <h3>🕊️ Let's Commit.</h3>
-                    <p style="color:#94a3b8; margin-bottom:12px;">From this day onwards, I commit to:</p>
+                    <p style="color:#94a3b8; margin-bottom:12px;">From this day onwards, I commit to breaking free from compulsive urges and reclaiming my mind:</p>
                     <ul>
                         <li>Prioritizing my mental and physical health</li>
                         <li>Staying focused and productive</li>
@@ -871,23 +1009,37 @@
                 </div>
             </div>
 
-            <!-- ===== PAGE 3: STATS + BADGES ===== -->
+            <!-- ===== PAGE 3: STATS + BADGES + HEATMAP ===== -->
             <div id="page-stats" class="page">
                 <h2 style="font-size:22px; margin-bottom:4px;">📊 Your Impact</h2>
                 <p class="muted" style="margin-bottom:16px;">What your progress really looks like.</p>
 
                 <div class="stats-dashboard">
+                    <!-- Hero -->
                     <div class="hero-stats">
                         <div class="hero-number" id="heroTimeRegained">0</div>
                         <div class="hero-label">Hours Regained During This Streak</div>
                         <div class="hero-sub" id="heroMotivation">Every minute counts. Keep going!</div>
                     </div>
+
+                    <!-- CLEAN PERCENTAGE (NEW) -->
+                    <div class="milestone-card" style="border-color: rgba(45,212,191,0.2);">
+                        <div class="flex-between">
+                            <span style="font-weight:600; color:#cbd5e1;">📈 30-Day Success Rate</span>
+                            <span style="font-size:24px; font-weight:800; color:#2dd4bf;" id="cleanPercentage">0%</span>
+                        </div>
+                        <div style="font-size:12px; color:#94a3b8; margin-top:4px;" id="cleanPercentageDetail">0 clean days out of 0 logged</div>
+                    </div>
+
+                    <!-- Mini Stats -->
                     <div class="mini-stats-grid">
                         <div class="mini-stat"><div class="num" id="miniDaily">0</div><div class="lbl">Daily (min)</div></div>
                         <div class="mini-stat"><div class="num" id="miniYearly">0</div><div class="lbl">Yearly (min)</div></div>
                         <div class="mini-stat"><div class="num" id="miniBooks">0</div><div class="lbl">Books</div></div>
                         <div class="mini-stat"><div class="num" id="miniMoney">$0</div><div class="lbl">Min Wage</div></div>
                     </div>
+
+                    <!-- Milestones -->
                     <div class="milestone-card">
                         <div style="font-weight:600; margin-bottom:8px; color:#cbd5e1;">🚀 Milestone Tracker</div>
                         <div class="milestone-item"><div class="flex-between"><span>3 Day Streak</span><span id="milestone3">0 / 3</span></div><div class="milestone-bar"><div class="fill" id="milestone3Bar" style="width:0%"></div></div></div>
@@ -895,10 +1047,30 @@
                         <div class="milestone-item"><div class="flex-between"><span>30 Day Streak</span><span id="milestone30">0 / 30</span></div><div class="milestone-bar"><div class="fill" id="milestone30Bar" style="width:0%"></div></div></div>
                         <div class="milestone-item"><div class="flex-between"><span>90 Day Streak</span><span id="milestone90">0 / 90</span></div><div class="milestone-bar"><div class="fill" id="milestone90Bar" style="width:0%"></div></div></div>
                     </div>
+
+                    <!-- Weekly Consistency (with counter) -->
                     <div class="week-card">
-                        <div style="font-weight:600; color:#cbd5e1;">📅 Weekly Consistency</div>
+                        <div class="flex-between">
+                            <div style="font-weight:600; color:#cbd5e1;">📅 Weekly Consistency</div>
+                            <span style="font-size:13px; color:#fbbf24;" id="weeklyCounter">0/7 clean</span>
+                        </div>
                         <div class="week-dots" id="weekDotsContainer"></div>
                     </div>
+
+                    <!-- MONTHLY HEATMAP (NEW) -->
+                    <div class="milestone-card">
+                        <div style="font-weight:600; margin-bottom:4px; color:#cbd5e1;">📆 Monthly Heatmap</div>
+                        <div style="font-size:11px; color:#64748b; margin-bottom:8px;" id="heatmapMonthLabel">January 2025</div>
+                        <div class="heatmap-grid" id="heatmapGrid"></div>
+                        <div class="heatmap-legend">
+                            <span><span class="dot green"></span> Clean</span>
+                            <span><span class="dot red"></span> Relapse</span>
+                            <span><span class="dot yellow"></span> Skipped</span>
+                            <span><span class="dot grey"></span> Not logged</span>
+                        </div>
+                    </div>
+
+                    <!-- Equivalents -->
                     <div class="milestone-card">
                         <div style="font-weight:600; margin-bottom:8px; color:#cbd5e1;">🎯 What you could do with that time</div>
                         <div class="equiv-grid">
@@ -907,6 +1079,8 @@
                             <div class="equiv-item"><div class="icon">🏃</div><div class="val" id="equivRun">0</div><div class="lbl">Km Run</div></div>
                         </div>
                     </div>
+
+                    <!-- BADGE SYSTEM -->
                     <div class="milestone-card">
                         <div style="font-weight:600; margin-bottom:8px; color:#fbbf24;">🎖️ Your Badges</div>
                         <div class="badge-grid" id="badgeGrid"></div>
@@ -932,12 +1106,13 @@
         </div>
     </div>
 
-    <!-- ===== CUSTOM MODAL (For Reset & Messages) ===== -->
+    <!-- ===== CUSTOM MODAL ===== -->
     <div class="modal-overlay" id="customModal">
         <div class="modal-card">
             <div class="modal-icon" id="modalIcon">⚠️</div>
             <h3 id="modalTitle">Are you sure?</h3>
             <p id="modalDesc">This action cannot be undone.</p>
+            <div id="modalDynamicContent"></div>
             <div class="modal-actions" id="modalActions">
                 <button class="btn btn-outline" id="modalCancelBtn">Go Back</button>
                 <button class="btn btn-danger" id="modalConfirmBtn">Yes, Proceed</button>
@@ -945,7 +1120,7 @@
         </div>
     </div>
 
-    <!-- ===== PANIC OVERLAY ===== -->
+    <!-- ===== PANIC OVERLAY (With Emergency Exit) ===== -->
     <div class="panic-overlay" id="panicOverlay">
         <div class="breath-wrapper">
             <div class="breath-ring"></div>
@@ -954,13 +1129,22 @@
                 <span class="countdown-text" id="countdownText">4</span>
             </div>
         </div>
-        <p style="color:#94a3b8; text-align:center; max-width:300px; margin-bottom:20px;">Inhale 4s · Hold 7s · Exhale 8s</p>
-        <button class="btn btn-primary" style="max-width:200px; background:#334155; color:white; margin-bottom:0;" id="closePanicBtn">I feel calmer. Close</button>
+        <p style="color:#94a3b8; text-align:center; max-width:300px; margin-bottom:8px;">Inhale 4s · Hold 7s · Exhale 8s</p>
+
+        <!-- EMERGENCY EXIT BOX -->
+        <div class="panic-emergency-box" id="emergencyBox">
+            <div class="label">🚨 Emergency Action</div>
+            <div class="action" id="emergencyAction">Do 10 pushups</div>
+            <div class="sub">You must complete this before closing</div>
+            <button class="btn" style="background:#2dd4bf; color:#0f172a; padding:10px; margin-top:8px; font-size:14px; margin-bottom:0;" id="emergencyDoneBtn">✅ I did it!</button>
+        </div>
+
+        <button class="btn btn-primary" style="max-width:200px; background:#334155; color:white; margin-bottom:0; opacity:0.5; cursor:not-allowed;" id="closePanicBtn" disabled>Complete action to close</button>
     </div>
 
     <script>
         // ============================================================
-        // 1. DYNAMIC APP LOGO GENERATION (PWA Icon)
+        // 1. APP LOGO GENERATION (PWA Icon)
         // ============================================================
         function generateAppLogo() {
             const size = 512;
@@ -968,15 +1152,11 @@
             canvas.width = size;
             canvas.height = size;
             const ctx = canvas.getContext('2d');
-
-            // Background (Dark)
             const bg = ctx.createRadialGradient(256, 256, 0, 256, 256, 512);
             bg.addColorStop(0, '#1e293b');
             bg.addColorStop(1, '#07070f');
             ctx.fillStyle = bg;
             ctx.fillRect(0, 0, size, size);
-
-            // Glowing Sun (Gold)
             const sunGrad = ctx.createRadialGradient(256, 180, 20, 256, 180, 120);
             sunGrad.addColorStop(0, '#fbbf24');
             sunGrad.addColorStop(0.6, '#f59e0b');
@@ -985,8 +1165,6 @@
             ctx.arc(256, 180, 120, 0, Math.PI * 2);
             ctx.fillStyle = sunGrad;
             ctx.fill();
-
-            // Mountain (Teal/Gold gradient)
             ctx.beginPath();
             ctx.moveTo(60, 400);
             ctx.lineTo(180, 200);
@@ -994,7 +1172,6 @@
             ctx.lineTo(340, 150);
             ctx.lineTo(450, 400);
             ctx.closePath();
-
             const mountainGrad = ctx.createLinearGradient(0, 150, 0, 400);
             mountainGrad.addColorStop(0, '#2dd4bf');
             mountainGrad.addColorStop(0.5, '#14b8a6');
@@ -1004,8 +1181,6 @@
             ctx.strokeStyle = '#fbbf24';
             ctx.lineWidth = 6;
             ctx.stroke();
-
-            // Snow cap
             ctx.beginPath();
             ctx.moveTo(310, 170);
             ctx.lineTo(340, 150);
@@ -1013,25 +1188,18 @@
             ctx.closePath();
             ctx.fillStyle = 'rgba(255,255,255,0.3)';
             ctx.fill();
-
-            // "R" Text overlay (subtle)
             ctx.fillStyle = 'rgba(251,191,36,0.15)';
             ctx.font = 'bold 140px Inter, sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText('R', 256, 320);
-
-            // Border glow
             ctx.strokeStyle = 'rgba(251,191,36,0.1)';
             ctx.lineWidth = 4;
             ctx.beginPath();
             ctx.roundRect(10, 10, size - 20, size - 20, 40);
             ctx.stroke();
-
             return canvas.toDataURL('image/png');
         }
-
-        // Polyfill roundRect if needed
         if (!CanvasRenderingContext2D.prototype.roundRect) {
             CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
                 if (r > w / 2) r = w / 2;
@@ -1047,50 +1215,32 @@
 
         function setupPWA() {
             const logoDataUrl = generateAppLogo();
-
-            // Favicon
-            const favicon = document.getElementById('dynamicFavicon');
-            favicon.rel = 'icon';
-            favicon.href = logoDataUrl;
-
-            // Apple Touch Icon
-            const appleIcon = document.getElementById('dynamicAppleIcon');
-            appleIcon.rel = 'apple-touch-icon';
-            appleIcon.href = logoDataUrl;
-
-            // Manifest
+            document.getElementById('dynamicFavicon').rel = 'icon';
+            document.getElementById('dynamicFavicon').href = logoDataUrl;
+            document.getElementById('dynamicAppleIcon').rel = 'apple-touch-icon';
+            document.getElementById('dynamicAppleIcon').href = logoDataUrl;
             const manifest = {
-                name: 'Reclaim - Habit Breaker',
+                name: 'Reclaim - Dopamine Reset',
                 short_name: 'Reclaim',
-                description: 'Break bad habits and reclaim your life.',
+                description: 'Break free from compulsive urges and reclaim your mind.',
                 start_url: '/',
                 display: 'standalone',
                 background_color: '#07070f',
                 theme_color: '#07070f',
-                icons: [{
-                    src: logoDataUrl,
-                    sizes: '512x512',
-                    type: 'image/png',
-                    purpose: 'any maskable'
-                }]
+                icons: [{ src: logoDataUrl, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }]
             };
             const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
             const manifestURL = URL.createObjectURL(manifestBlob);
-            const manifestLink = document.getElementById('dynamicManifest');
-            manifestLink.rel = 'manifest';
-            manifestLink.href = manifestURL;
+            document.getElementById('dynamicManifest').rel = 'manifest';
+            document.getElementById('dynamicManifest').href = manifestURL;
         }
-
-        // Run logo generation
         setupPWA();
 
         // ============================================================
-        // 2. SPLASH SCREEN
+        // 2. SPLASH
         // ============================================================
         window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.getElementById('splash-screen').classList.add('hide');
-            }, 1800);
+            setTimeout(function() { document.getElementById('splash-screen').classList.add('hide'); }, 1800);
         });
 
         // ============================================================
@@ -1102,6 +1252,8 @@
         const SIG_IMG_KEY = 'reclaim_sig_img';
         const JOURNAL_KEY = 'reclaim_journal';
         const DAILY_MIN_KEY = 'reclaim_daily_min';
+        const DAILY_LOGS_KEY = 'reclaim_daily_logs';
+        const TRIGGER_LOGS_KEY = 'reclaim_trigger_logs';
 
         function getStreak() { return parseInt(localStorage.getItem(STREAK_KEY)) || 0; }
 
@@ -1110,6 +1262,26 @@
         function getPledgeDate() { return localStorage.getItem(PLEDGE_KEY) || null; }
 
         function getDailyMin() { return parseInt(localStorage.getItem(DAILY_MIN_KEY)) || 15; }
+
+        function getDailyLogs() {
+            try { return JSON.parse(localStorage.getItem(DAILY_LOGS_KEY)) || {}; } catch (e) { return {}; }
+        }
+
+        function getTriggerLogs() {
+            try { return JSON.parse(localStorage.getItem(TRIGGER_LOGS_KEY)) || {}; } catch (e) { return {}; }
+        }
+
+        function saveDailyLog(date, status) {
+            const logs = getDailyLogs();
+            logs[date] = status;
+            localStorage.setItem(DAILY_LOGS_KEY, JSON.stringify(logs));
+        }
+
+        function saveTriggerLog(date, trigger) {
+            const logs = getTriggerLogs();
+            logs[date] = trigger;
+            localStorage.setItem(TRIGGER_LOGS_KEY, JSON.stringify(logs));
+        }
 
         function saveStreak(count, date) {
             localStorage.setItem(STREAK_KEY, count.toString());
@@ -1122,89 +1294,265 @@
             updateAllUI();
         }
 
-        function isSignatureSaved() {
-            return !!localStorage.getItem(SIG_IMG_KEY);
+        function isSignatureSaved() { return !!localStorage.getItem(SIG_IMG_KEY); }
+
+        // ============================================================
+        // 4. MODAL SYSTEM (Enhanced for Triggers)
+        // ============================================================
+        let modalResolve = null;
+
+        function showModal(icon, title, desc, confirmText, cancelText, onConfirm, dynamicHTML = '') {
+            return new Promise((resolve) => {
+                const modal = document.getElementById('customModal');
+                document.getElementById('modalIcon').innerText = icon;
+                document.getElementById('modalTitle').innerText = title;
+                document.getElementById('modalDesc').innerText = desc;
+                document.getElementById('modalDynamicContent').innerHTML = dynamicHTML;
+                document.getElementById('modalConfirmBtn').innerText = confirmText || 'Yes';
+                document.getElementById('modalCancelBtn').innerText = cancelText || 'Go Back';
+
+                const confirmBtn = document.getElementById('modalConfirmBtn');
+                const cancelBtn = document.getElementById('modalCancelBtn');
+                const newConfirm = confirmBtn.cloneNode(true);
+                const newCancel = cancelBtn.cloneNode(true);
+                confirmBtn.parentNode.replaceChild(newConfirm, confirmBtn);
+                cancelBtn.parentNode.replaceChild(newCancel, cancelBtn);
+
+                newConfirm.addEventListener('click', function() {
+                    modal.classList.remove('active');
+                    if (onConfirm) onConfirm();
+                    resolve(true);
+                });
+                newCancel.addEventListener('click', function() {
+                    modal.classList.remove('active');
+                    resolve(false);
+                });
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) { modal.classList.remove('active');
+                        resolve(false); }
+                });
+
+                modal.classList.add('active');
+            });
         }
 
         // ============================================================
-        // 4. CUSTOM MODAL SYSTEM
+        // 5. STREAK & LOGIC
         // ============================================================
-        function showModal(icon, title, desc, confirmText, cancelText, onConfirm) {
-            const modal = document.getElementById('customModal');
-            document.getElementById('modalIcon').innerText = icon;
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalDesc').innerText = desc;
-            document.getElementById('modalConfirmBtn').innerText = confirmText || 'Yes';
-            document.getElementById('modalCancelBtn').innerText = cancelText || 'Go Back';
-
-            // Remove old listeners
-            const confirmBtn = document.getElementById('modalConfirmBtn');
-            const cancelBtn = document.getElementById('modalCancelBtn');
-            const newConfirm = confirmBtn.cloneNode(true);
-            const newCancel = cancelBtn.cloneNode(true);
-            confirmBtn.parentNode.replaceChild(newConfirm, confirmBtn);
-            cancelBtn.parentNode.replaceChild(newCancel, cancelBtn);
-
-            newConfirm.addEventListener('click', function() {
-                modal.classList.remove('active');
-                if (onConfirm) onConfirm();
-            });
-            newCancel.addEventListener('click', function() {
-                modal.classList.remove('active');
-            });
-            // Click outside to close
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) modal.classList.remove('active');
-            });
-
-            modal.classList.add('active');
-        }
-
-        // ============================================================
-        // 5. STREAK ADVANCEMENT (Daily Check-in)
-        // ============================================================
-        function dailyCheckIn() {
+        function advanceStreak() {
             const today = new Date().toISOString().split('T')[0];
             const lastDate = getLastDate();
-            const current = getStreak();
+            let current = getStreak();
 
             if (lastDate === today) {
-                showModal('✅', 'Already Checked In!', 'You have already locked in today. Come back tomorrow to continue your streak.', 'Great', '', null);
+                showModal('✅', 'Already Checked In!', 'You have already locked in today. Come back tomorrow.', 'Great', '',
+                null);
                 return;
             }
 
-            let newStreak = current;
             if (lastDate) {
                 const yesterday = new Date();
                 yesterday.setDate(yesterday.getDate() - 1);
                 const yStr = yesterday.toISOString().split('T')[0];
-                if (lastDate === yStr) {
-                    newStreak += 1;
-                } else {
-                    newStreak = 1;
-                }
-            } else {
-                newStreak = 1;
-            }
+                if (lastDate === yStr) { current += 1; } else { current = 1; }
+            } else { current = 1; }
 
-            saveStreak(newStreak, today);
+            saveStreak(current, today);
             savePledge(today);
+            saveDailyLog(today, 'clean');
 
-            // Show success
-            let message = `Day ${newStreak} locked in! 🔥`;
-            if (newStreak === 1) message = 'Day 1 starts now! You got this. 💪';
-            else if (newStreak === 3) message = '🌱 3 days! You\'re sprouting!';
-            else if (newStreak === 7) message = '🌿 7 days! You\'re grounded!';
-            else if (newStreak === 21) message = '💪 21 days! You\'re a warrior!';
-            else if (newStreak === 30) message = '🏆 30 days! You\'re a champion!';
-            else if (newStreak % 10 === 0) message = `🎉 ${newStreak} days! Unstoppable!`;
+            let message = `Day ${current} locked in! 🔥`;
+            if (current === 1) message = 'Day 1 starts now! You got this. 💪';
+            else if (current === 3) message = '🌱 3 days! You\'re sprouting!';
+            else if (current === 7) message = '🌿 7 days! You\'re grounded!';
+            else if (current === 21) message = '💪 21 days! You\'re a warrior!';
+            else if (current === 30) message = '🏆 30 days! You\'re a champion!';
+            else if (current % 10 === 0) message = `🎉 ${current} days! Unstoppable!`;
 
             showModal('🔥', 'Daily Check-in Successful!', message, 'Awesome', '', null);
             updateAllUI();
         }
 
+        function skipToday() {
+            const today = new Date().toISOString().split('T')[0];
+            const lastDate = getLastDate();
+
+            if (lastDate === today) {
+                showModal('⏭️', 'Already Skipped', 'You already marked today. Try "Check-in" or "Reset" instead.', 'OK', '',
+                null);
+                return;
+            }
+
+            // Skip: mark as skipped, but do NOT change streak.
+            saveDailyLog(today, 'skip');
+            // If no pledge date, set it so the UI knows this day is handled.
+            if (!getPledgeDate()) savePledge(today);
+
+            showModal('⏭️', 'Day Skipped', 'Today is marked as neutral. Your streak stays at ' + getStreak() + ' days.', 'Got it',
+                '', null);
+            updateAllUI();
+        }
+
         // ============================================================
-        // 6. SIGNATURE CANVAS – FIXED & LOCKABLE
+        // 6. RESET WITH TRIGGER LOGGING
+        // ============================================================
+        async function handleReset() {
+            const triggers = ['Stress', 'Boredom', 'Loneliness', 'Saw Content', 'Tired', 'Other'];
+            let triggerHTML = '<div class="trigger-grid">';
+            triggers.forEach(t => {
+                triggerHTML +=
+                    `<button class="trigger-btn" data-trigger="${t}">${t}</button>`;
+            });
+            triggerHTML += '</div>';
+            triggerHTML += '<p style="font-size:12px; color:#94a3b8; margin-top:4px;">Select what triggered the relapse</p>';
+
+            const confirmed = await showModal(
+                '⚠️',
+                'Reset Your Streak?',
+                'Are you sure you want to reset your streak back to 0? Select a trigger to help you learn from this.',
+                'Yes, Reset',
+                'Go Back',
+                null,
+                triggerHTML
+            );
+
+            if (!confirmed) return;
+
+            // Wait for trigger selection
+            const selectedTrigger = await new Promise((resolve) => {
+                const btns = document.querySelectorAll('.trigger-btn');
+                btns.forEach(b => {
+                    b.onclick = function() {
+                        btns.forEach(bb => bb.classList.remove('selected'));
+                        this.classList.add('selected');
+                        resolve(this.dataset.trigger);
+                    };
+                });
+                // If they somehow close the modal without selecting, resolve 'Other'
+                const observer = new MutationObserver(() => {
+                    if (!document.getElementById('customModal').classList.contains('active')) {
+                        resolve('Other');
+                        observer.disconnect();
+                    }
+                });
+                observer.observe(document.getElementById('customModal'), { attributes: true, attributeFilter: [
+                        'class'
+                    ] });
+            });
+
+            const today = new Date().toISOString().split('T')[0];
+            saveDailyLog(today, 'relapse');
+            saveTriggerLog(today, selectedTrigger || 'Other');
+            saveStreak(0, today);
+
+            showModal('💪', 'Streak Reset', `Trigger logged: ${selectedTrigger || 'Other'}. Day 1 starts now. You've got this!`,
+                'Let\'s Go', '', null);
+            updateAllUI();
+        }
+
+        // ============================================================
+        // 7. PANIC + EMERGENCY EXIT
+        // ============================================================
+        const EMERGENCY_ACTIONS = [
+            'Do 10 pushups right now',
+            'Walk outside for 2 minutes',
+            'Splash cold water on your face',
+            'Call a friend or family member',
+            'Listen to 1 full song without distractions',
+            'Stretch your whole body for 2 minutes',
+            'Drink a full glass of water slowly',
+            'Write down 3 things you are grateful for'
+        ];
+        let emergencyCompleted = false;
+
+        document.getElementById('panicBtn')?.addEventListener('click', function() {
+            emergencyCompleted = false;
+            document.getElementById('closePanicBtn').disabled = true;
+            document.getElementById('closePanicBtn').style.opacity = '0.5';
+            document.getElementById('closePanicBtn').style.cursor = 'not-allowed';
+            document.getElementById('closePanicBtn').innerText = 'Complete action to close';
+
+            // Pick random action
+            const action = EMERGENCY_ACTIONS[Math.floor(Math.random() * EMERGENCY_ACTIONS.length)];
+            document.getElementById('emergencyAction').innerText = action;
+
+            document.getElementById('panicOverlay').classList.add('active');
+            startBreathing();
+        });
+
+        document.getElementById('emergencyDoneBtn')?.addEventListener('click', function() {
+            emergencyCompleted = true;
+            document.getElementById('closePanicBtn').disabled = false;
+            document.getElementById('closePanicBtn').style.opacity = '1';
+            document.getElementById('closePanicBtn').style.cursor = 'pointer';
+            document.getElementById('closePanicBtn').innerText = 'I feel calmer. Close';
+            document.getElementById('emergencyBox').style.borderColor = '#2dd4bf';
+            document.getElementById('emergencyBox').style.background = 'rgba(45,212,191,0.1)';
+            // Change action text to show completion
+            document.getElementById('emergencyAction').innerHTML = '✅ Done! You are safe.';
+        });
+
+        document.getElementById('closePanicBtn')?.addEventListener('click', function() {
+            if (this.disabled) return;
+            document.getElementById('panicOverlay').classList.remove('active');
+            clearInterval(window.breathInterval);
+            clearTimeout(window.breathTimeout);
+            const circle = document.getElementById('breathCircle');
+            circle.className = 'breath-circle';
+            document.getElementById('phaseText').innerText = 'Breathe';
+            document.getElementById('countdownText').innerText = '4';
+            // Reset emergency box
+            document.getElementById('emergencyBox').style.borderColor = 'rgba(239, 68, 68, 0.3)';
+            document.getElementById('emergencyBox').style.background = 'rgba(239, 68, 68, 0.1)';
+        });
+
+        function startBreathing() {
+            const circle = document.getElementById('breathCircle');
+            const phaseText = document.getElementById('phaseText');
+            const countdownText = document.getElementById('countdownText');
+            let step = 0;
+            let timer = null;
+            let countdown = 4;
+            clearInterval(window.breathInterval);
+            clearTimeout(window.breathTimeout);
+
+            function updateCountdown(value, text) {
+                phaseText.innerText = text;
+                countdownText.innerText = value;
+            }
+
+            function doStep() {
+                if (step === 0) {
+                    circle.className = 'breath-circle inhale';
+                    countdown = 4;
+                    updateCountdown(4, 'Inhale');
+                    timer = setInterval(() => { countdown -= 1; if (countdown <= 0) { clearInterval(timer); return; }
+                        countdownText.innerText = countdown; }, 1000);
+                    window.breathTimeout = setTimeout(() => { step = 1;
+                        doStep(); }, 4000);
+                } else if (step === 1) {
+                    circle.className = 'breath-circle';
+                    countdown = 7;
+                    updateCountdown(7, 'Hold');
+                    timer = setInterval(() => { countdown -= 1; if (countdown <= 0) { clearInterval(timer); return; }
+                        countdownText.innerText = countdown; }, 1000);
+                    window.breathTimeout = setTimeout(() => { step = 2;
+                        doStep(); }, 7000);
+                } else if (step === 2) {
+                    circle.className = 'breath-circle exhale';
+                    countdown = 8;
+                    updateCountdown(8, 'Exhale');
+                    timer = setInterval(() => { countdown -= 1; if (countdown <= 0) { clearInterval(timer); return; }
+                        countdownText.innerText = countdown; }, 1000);
+                    window.breathTimeout = setTimeout(() => { step = 0;
+                        doStep(); }, 8000);
+                }
+            }
+            doStep();
+        }
+
+        // ============================================================
+        // 8. SIGNATURE CANVAS
         // ============================================================
         let isDrawing = false;
         let lastX = 0,
@@ -1224,7 +1572,6 @@
             loadSignatureToCanvas();
             applyPledgeLockState();
 
-            // Remove old listeners to avoid duplicates
             canvas.removeEventListener('mousedown', startDraw);
             canvas.removeEventListener('mousemove', drawMove);
             canvas.removeEventListener('mouseup', endDraw);
@@ -1248,94 +1595,51 @@
             const rect = canvas.getBoundingClientRect();
             const scaleX = canvas.width / rect.width;
             const scaleY = canvas.height / rect.height;
-            return {
-                x: (e.clientX - rect.left) * scaleX,
-                y: (e.clientY - rect.top) * scaleY
-            };
+            return { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
         }
 
-        function startDraw(e) {
-            if (isCanvasLocked()) return;
-            isDrawing = true;
-            const pos = getPos(e);
+        function startDraw(e) { if (isCanvasLocked()) return;
+            isDrawing = true; const pos = getPos(e);
             lastX = pos.x;
             lastY = pos.y;
-            document.getElementById('sigWrapper').classList.add('active');
-        }
+            document.getElementById('sigWrapper').classList.add('active'); }
 
-        function drawMove(e) {
-            if (!isDrawing || isCanvasLocked()) return;
-            const pos = getPos(e);
+        function drawMove(e) { if (!isDrawing || isCanvasLocked()) return; const pos = getPos(e);
             ctx.beginPath();
             ctx.moveTo(lastX, lastY);
             ctx.lineTo(pos.x, pos.y);
             ctx.stroke();
             lastX = pos.x;
-            lastY = pos.y;
-        }
+            lastY = pos.y; }
 
-        function endDraw() {
-            if (isCanvasLocked()) return;
-            if (isDrawing) {
-                isDrawing = false;
+        function endDraw() { if (isCanvasLocked()) return; if (isDrawing) { isDrawing = false;
                 document.getElementById('sigWrapper').classList.remove('active');
-                saveSignatureImage();
-            }
-        }
+                saveSignatureImage(); } }
 
-        function touchStart(e) {
-            if (isCanvasLocked()) return;
-            e.preventDefault();
-            const touch = e.touches[0];
-            const mouseEvent = new MouseEvent('mousedown', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(mouseEvent);
-        }
+        function touchStart(e) { if (isCanvasLocked()) return;
+            e.preventDefault(); const touch = e.touches[0]; const mouseEvent = new MouseEvent('mousedown', { clientX: touch
+                    .clientX, clientY: touch.clientY });
+            canvas.dispatchEvent(mouseEvent); }
 
-        function touchMove(e) {
-            if (isCanvasLocked()) return;
-            e.preventDefault();
-            const touch = e.touches[0];
-            const mouseEvent = new MouseEvent('mousemove', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(mouseEvent);
-        }
+        function touchMove(e) { if (isCanvasLocked()) return;
+            e.preventDefault(); const touch = e.touches[0]; const mouseEvent = new MouseEvent('mousemove', { clientX: touch
+                    .clientX, clientY: touch.clientY });
+            canvas.dispatchEvent(mouseEvent); }
 
-        function touchEnd(e) {
-            if (isCanvasLocked()) return;
-            e.preventDefault();
-            const mouseEvent = new MouseEvent('mouseup', {});
-            canvas.dispatchEvent(mouseEvent);
-        }
+        function touchEnd(e) { if (isCanvasLocked()) return;
+            e.preventDefault(); const mouseEvent = new MouseEvent('mouseup', {});
+            canvas.dispatchEvent(mouseEvent); }
 
-        function saveSignatureImage() {
-            if (!canvas) return;
-            const dataUrl = canvas.toDataURL('image/png');
+        function saveSignatureImage() { if (!canvas) return; const dataUrl = canvas.toDataURL('image/png');
             localStorage.setItem(SIG_IMG_KEY, dataUrl);
-            applyPledgeLockState();
-        }
+            applyPledgeLockState(); }
 
-        function loadSignatureToCanvas() {
-            if (!canvas || !ctx) return;
-            const dataUrl = localStorage.getItem(SIG_IMG_KEY);
+        function loadSignatureToCanvas() { if (!canvas || !ctx) return; const dataUrl = localStorage.getItem(SIG_IMG_KEY);
             ctx.fillStyle = '#0a0a18';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            if (dataUrl) {
-                const img = new Image();
-                img.onload = function() {
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                };
-                img.src = dataUrl;
-            }
-        }
+            ctx.fillRect(0, 0, canvas.width, canvas.height); if (dataUrl) { const img = new Image();
+                img.onload = function() { ctx.drawImage(img, 0, 0, canvas.width, canvas.height); };
+                img.src = dataUrl; } }
 
-        // ============================================================
-        // 7. PLEDGE LOCK STATE UI
-        // ============================================================
         function applyPledgeLockState() {
             const hasSig = isSignatureSaved();
             const wrapper = document.getElementById('sigWrapper');
@@ -1352,10 +1656,8 @@
                     canvasEl.style.cursor = 'default'; }
                 if (clearBtn) clearBtn.classList.add('hidden');
                 if (lockedBadge) lockedBadge.style.display = 'block';
-                if (commitBtn) {
-                    commitBtn.innerText = '✅ Commitment Signed (Lifetime)';
-                    commitBtn.disabled = true;
-                }
+                if (commitBtn) { commitBtn.innerText = '✅ Commitment Signed (Lifetime)';
+                    commitBtn.disabled = true; }
             } else {
                 wrapper.classList.remove('locked');
                 wrapper.classList.remove('active');
@@ -1364,32 +1666,29 @@
                     canvasEl.style.cursor = 'crosshair'; }
                 if (clearBtn) clearBtn.classList.remove('hidden');
                 if (lockedBadge) lockedBadge.style.display = 'none';
-                if (commitBtn) {
-                    commitBtn.innerText = '✅ I commit to myself (Forever)';
-                    commitBtn.disabled = false;
-                }
+                if (commitBtn) { commitBtn.innerText = '✅ I commit to myself (Forever)';
+                    commitBtn.disabled = false; }
             }
-            updateYellowButtonText(); // Update home button based on sig state
+            updateYellowButtonText();
         }
 
         document.getElementById('clearSignatureBtn')?.addEventListener('click', function() {
             if (isSignatureSaved()) {
-                showModal('🔒', 'Cannot Clear', 'Your lifetime commitment is locked. It cannot be undone.', 'OK', '', null);
+                showModal('🔒', 'Cannot Clear', 'Your lifetime commitment is locked. It cannot be undone.', 'OK', '',
+                null);
                 return;
             }
             if (confirm('Clear your signature?')) {
                 localStorage.removeItem(SIG_IMG_KEY);
-                if (ctx) {
-                    ctx.fillStyle = '#0a0a18';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                }
+                if (ctx) { ctx.fillStyle = '#0a0a18';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height); }
                 applyPledgeLockState();
                 updateAllUI();
             }
         });
 
         // ============================================================
-        // 8. BADGE SYSTEM
+        // 9. BADGE SYSTEM
         // ============================================================
         const BADGE_DEFS = [
             { days: 3, icon: '🌱', name: 'Sprout' },
@@ -1408,26 +1707,78 @@
             let html = '';
             BADGE_DEFS.forEach(b => {
                 const unlocked = streak >= b.days;
-                html += `
-                        <div class="badge-item ${unlocked ? 'unlocked' : ''}">
-                            <span class="badge-icon">${b.icon}</span>
-                            <div class="badge-name">${b.name}</div>
-                            <div class="badge-days">${b.days} days</div>
-                        </div>
-                    `;
+                html +=
+                    `<div class="badge-item ${unlocked ? 'unlocked' : ''}"><span class="badge-icon">${b.icon}</span><div class="badge-name">${b.name}</div><div class="badge-days">${b.days} days</div></div>`;
             });
             grid.innerHTML = html;
             let next = BADGE_DEFS.find(b => streak < b.days);
             const nextMsg = document.getElementById('badgeNextMilestone');
-            if (next) {
-                nextMsg.innerText = `🏁 Next badge: "${next.name}" at ${next.days} days (${next.days - streak} more to go)`;
-            } else {
-                nextMsg.innerText = '🎉 You have unlocked ALL badges! You are a true master.';
-            }
+            if (next) { nextMsg.innerText =
+                    `🏁 Next badge: "${next.name}" at ${next.days} days (${next.days - streak} more to go)`; } else { nextMsg
+                    .innerText = '🎉 You have unlocked ALL badges!'; }
         }
 
         // ============================================================
-        // 9. UI UPDATES
+        // 10. HEATMAP & CLEAN PERCENTAGE
+        // ============================================================
+        function renderHeatmap() {
+            const grid = document.getElementById('heatmapGrid');
+            const label = document.getElementById('heatmapMonthLabel');
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const firstDay = new Date(year, month, 1).getDay(); // 0=Sun
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const todayStr = now.toISOString().split('T')[0];
+            const logs = getDailyLogs();
+
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                'October', 'November', 'December'
+            ];
+            label.innerText = `${monthNames[month]} ${year}`;
+
+            let html = '';
+            // Empty cells for first day offset
+            for (let i = 0; i < firstDay; i++) {
+                html += `<div class="heatmap-day" style="background:transparent;border:none;"></div>`;
+            }
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const status = logs[dateStr] || 'none';
+                const isToday = dateStr === todayStr;
+                let cls = 'heatmap-day';
+                if (status === 'clean') cls += ' clean';
+                else if (status === 'relapse') cls += ' relapse';
+                else if (status === 'skip') cls += ' skip';
+                if (isToday) cls += ' today';
+                html += `<div class="${cls}">${d}</div>`;
+            }
+            grid.innerHTML = html;
+        }
+
+        function calculateCleanPercentage() {
+            const logs = getDailyLogs();
+            const now = new Date();
+            let clean = 0,
+                total = 0;
+            for (let i = 0; i < 30; i++) {
+                const d = new Date(now);
+                d.setDate(d.getDate() - i);
+                const dateStr = d.toISOString().split('T')[0];
+                if (logs[dateStr]) {
+                    total++;
+                    if (logs[dateStr] === 'clean') clean++;
+                }
+            }
+            const pct = total === 0 ? 0 : Math.round((clean / total) * 100);
+            document.getElementById('cleanPercentage').innerText = pct + '%';
+            document.getElementById('cleanPercentageDetail').innerText =
+                `${clean} clean days out of ${total} logged (last 30 days)`;
+            return { clean, total, pct };
+        }
+
+        // ============================================================
+        // 11. UI UPDATES
         // ============================================================
         function updateYellowButtonText() {
             const btn = document.getElementById('pledgeTodayBtn');
@@ -1443,6 +1794,7 @@
             const last = getLastDate();
             const pledgeDate = getPledgeDate();
             const dailyMin = getDailyMin();
+            const logs = getDailyLogs();
 
             document.getElementById('streakDisplay').innerHTML = `🔥 ${streak} Days`;
 
@@ -1453,7 +1805,9 @@
             if (pledgeDate === today) {
                 pledgeText.innerHTML = `✅ You checked in today! Stay strong.`;
             } else {
-                if (hasSig) {
+                if (logs[today] === 'skip') {
+                    pledgeText.innerHTML = `⏭️ Today is skipped. Tap "Check-in" to resume tomorrow.`;
+                } else if (hasSig) {
                     pledgeText.innerHTML = `⏳ Tap "Daily Check-in" to lock in today's streak.`;
                 } else {
                     pledgeText.innerHTML = `⏳ Sign the lifetime pledge first to start tracking.`;
@@ -1471,7 +1825,9 @@
             loadSignatureToCanvas();
             updateStatsPage();
             renderBadges(streak);
-            applyPledgeLockState(); // This updates the yellow button too
+            renderHeatmap();
+            calculateCleanPercentage();
+            applyPledgeLockState();
         }
 
         function calculateStats(minutes) {
@@ -1489,7 +1845,7 @@
         }
 
         // ============================================================
-        // 10. ENHANCED STATS PAGE
+        // 12. STATS PAGE (Detailed)
         // ============================================================
         function updateStatsPage() {
             const streak = getStreak();
@@ -1522,11 +1878,13 @@
                 document.getElementById(`milestone${target}Bar`).style.width = `${progress}%`;
             });
 
+            // Weekly dots with counter
             const container = document.getElementById('weekDotsContainer');
             container.innerHTML = '';
             const today = new Date();
             const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
             const lastDate = getLastDate();
+            let cleanCount = 0;
             for (let i = 6; i >= 0; i--) {
                 const dot = document.createElement('div');
                 dot.className = 'week-dot';
@@ -1535,15 +1893,19 @@
                 const dow = d.getDay() === 0 ? 6 : d.getDay() - 1;
                 dot.innerText = dayNames[dow];
                 const dateStr = d.toISOString().split('T')[0];
+                const logs = getDailyLogs();
+                const status = logs[dateStr];
                 let isActive = false;
-                if (lastDate) {
-                    const diffDays = Math.floor((new Date(lastDate) - new Date(dateStr)) / (1000 * 60 * 60 * 24));
-                    if (diffDays >= 0 && diffDays < streak) { isActive = true; }
-                }
+                let isSkipped = false;
+                if (status === 'clean') { isActive = true;
+                    cleanCount++; }
+                if (status === 'skip') isSkipped = true;
                 if (isActive) dot.classList.add('active');
+                if (isSkipped) dot.classList.add('skipped');
                 if (i === 0) dot.classList.add('today');
                 container.appendChild(dot);
             }
+            document.getElementById('weeklyCounter').innerText = `${cleanCount}/7 clean`;
 
             const totalHours = yearlyMins / 60;
             document.getElementById('equivMovies').innerText = Math.round(totalHours / 2);
@@ -1552,7 +1914,7 @@
         }
 
         // ============================================================
-        // 11. NAVIGATION
+        // 13. NAVIGATION
         // ============================================================
         function navigateToPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1566,24 +1928,34 @@
         }
 
         // ============================================================
-        // 12. BUTTON HANDLERS
+        // 14. BUTTON HANDLERS
         // ============================================================
-
-        // Home Yellow Button
         document.getElementById('pledgeTodayBtn')?.addEventListener('click', function() {
             if (isSignatureSaved()) {
-                // Daily Check-in mode
                 dailyCheckIn();
             } else {
-                // Need to sign first
                 navigateToPage('page-pledge');
             }
         });
 
-        // Pledge page "Commit" button
+        // Alias for dailyCheckIn function (used above)
+        function dailyCheckIn() {
+            advanceStreak();
+        }
+
+        document.getElementById('skipTodayBtn')?.addEventListener('click', function() {
+            if (!isSignatureSaved()) {
+                showModal('📝', 'Sign First!', 'You need to sign the lifetime pledge before you can skip days.', 'OK', '',
+                null);
+                return;
+            }
+            skipToday();
+        });
+
         document.getElementById('finalCommitBtn')?.addEventListener('click', function() {
             if (isSignatureSaved()) {
-                showModal('🔒', 'Already Committed', 'Your lifetime agreement is already signed and locked.', 'OK', '', null);
+                showModal('🔒', 'Already Committed', 'Your lifetime agreement is already signed and locked.', 'OK', '',
+                null);
                 return;
             }
             const canvas = document.getElementById('signatureCanvas');
@@ -1601,7 +1973,6 @@
 
             saveSignatureImage();
             const today = new Date().toISOString().split('T')[0];
-            // Start the streak from day 1 automatically.
             const lastDate = getLastDate();
             let current = getStreak();
             if (lastDate === today) { /* already */ } else if (lastDate) {
@@ -1612,99 +1983,25 @@
             } else { current = 1; }
             saveStreak(current, today);
             savePledge(today);
+            saveDailyLog(today, 'clean');
 
-            showModal('🕊️', 'Lifetime Commitment Signed!', `Your agreement is locked forever. Day ${current} begins now. You cannot clear this signature.`, 'I Understand', '', null);
+            showModal('🕊️', 'Lifetime Commitment Signed!',
+                `Your agreement is locked forever. Day ${current} begins now. You cannot clear this signature.`,
+                'I Understand', '', null);
             updateAllUI();
             applyPledgeLockState();
             navigateToPage('page-home');
         });
 
-        // Reset Streak Button (with custom modal)
+        // Reset Streak (now with trigger logging)
         document.getElementById('relapseBtn')?.addEventListener('click', function() {
-            showModal(
-                '⚠️',
-                'Reset Your Streak?',
-                'Are you sure you want to reset your streak back to 0? This cannot be undone (but you can always start again!).',
-                'Yes, Reset It',
-                'Go Back',
-                function() {
-                    const today = new Date().toISOString().split('T')[0];
-                    saveStreak(0, today);
-                    showModal('💪', 'Streak Reset', 'Day 1 starts now. You\'ve got this!', 'Let\'s Go', '', null);
-                    updateAllUI();
-                }
-            );
-        });
-
-        // Panic Button
-        document.getElementById('panicBtn')?.addEventListener('click', function() {
-            document.getElementById('panicOverlay').classList.add('active');
-            startBreathing();
-        });
-
-        document.getElementById('closePanicBtn')?.addEventListener('click', function() {
-            document.getElementById('panicOverlay').classList.remove('active');
-            clearInterval(window.breathInterval);
-            clearTimeout(window.breathTimeout);
-            const circle = document.getElementById('breathCircle');
-            circle.className = 'breath-circle';
-            document.getElementById('phaseText').innerText = 'Breathe';
-            document.getElementById('countdownText').innerText = '4';
-        });
-
-        function startBreathing() {
-            const circle = document.getElementById('breathCircle');
-            const phaseText = document.getElementById('phaseText');
-            const countdownText = document.getElementById('countdownText');
-            let step = 0;
-            let timer = null;
-            let countdown = 4;
-            clearInterval(window.breathInterval);
-            clearTimeout(window.breathTimeout);
-
-            function updateCountdown(value, text) {
-                phaseText.innerText = text;
-                countdownText.innerText = value;
+            if (!isSignatureSaved()) {
+                showModal('📝', 'Sign First!', 'You need to sign the lifetime pledge before you can track relapses.', 'OK',
+                    '', null);
+                return;
             }
-
-            function doStep() {
-                if (step === 0) {
-                    circle.className = 'breath-circle inhale';
-                    countdown = 4;
-                    updateCountdown(4, 'Inhale');
-                    timer = setInterval(() => {
-                        countdown -= 1;
-                        if (countdown <= 0) { clearInterval(timer); return; }
-                        countdownText.innerText = countdown;
-                    }, 1000);
-                    window.breathTimeout = setTimeout(() => { step = 1;
-                        doStep(); }, 4000);
-                } else if (step === 1) {
-                    circle.className = 'breath-circle';
-                    countdown = 7;
-                    updateCountdown(7, 'Hold');
-                    timer = setInterval(() => {
-                        countdown -= 1;
-                        if (countdown <= 0) { clearInterval(timer); return; }
-                        countdownText.innerText = countdown;
-                    }, 1000);
-                    window.breathTimeout = setTimeout(() => { step = 2;
-                        doStep(); }, 7000);
-                } else if (step === 2) {
-                    circle.className = 'breath-circle exhale';
-                    countdown = 8;
-                    updateCountdown(8, 'Exhale');
-                    timer = setInterval(() => {
-                        countdown -= 1;
-                        if (countdown <= 0) { clearInterval(timer); return; }
-                        countdownText.innerText = countdown;
-                    }, 1000);
-                    window.breathTimeout = setTimeout(() => { step = 0;
-                        doStep(); }, 8000);
-                }
-            }
-            doStep();
-        }
+            handleReset();
+        });
 
         // Calculate Stats
         document.getElementById('calcStatsBtn')?.addEventListener('click', function() {
@@ -1716,7 +2013,7 @@
         });
 
         // ============================================================
-        // 13. JOURNAL
+        // 15. JOURNAL
         // ============================================================
         function getJournals() {
             try { return JSON.parse(localStorage.getItem(JOURNAL_KEY)) || []; } catch (e) { return []; }
@@ -1766,7 +2063,7 @@
         });
 
         // ============================================================
-        // 14. BOTTOM NAV
+        // 16. BOTTOM NAV
         // ============================================================
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
@@ -1775,7 +2072,7 @@
         });
 
         // ============================================================
-        // 15. INIT
+        // 17. INIT
         // ============================================================
         document.getElementById('dailyMinInput').value = getDailyMin();
         updateAllUI();
