@@ -63,6 +63,7 @@
         .flex-between { display: flex; justify-content: space-between; align-items: center; }
         .flex-center { display: flex; justify-content: center; align-items: center; }
         .text-center { text-align: center; }
+        .gap-8 { gap: 8px; }
 
         /* ----- HEADER / STREAK ----- */
         .header { margin-bottom: 24px; }
@@ -115,8 +116,13 @@
         .btn-skip { background: #f59e0b; color: #0f172a; box-shadow: 0 8px 20px -8px rgba(245, 158, 11, 0.3); }
         .btn-sm { padding: 10px 16px; font-size: 14px; width: auto; margin-bottom: 0; }
         .btn-timer { background: #fbbf24; color: #0f172a; font-size: 15px; padding: 12px; }
+        .btn-timer-outline { background: transparent; border: 1px solid #334155; color: #cbd5e1; font-size: 13px; padding: 8px 12px; border-radius: 40px; cursor: pointer; transition: 0.2s; }
+        .btn-timer-outline:active { transform: scale(0.95); }
+        .btn-timer-outline.active { border-color: #fbbf24; color: #fbbf24; background: rgba(251,191,36,0.05); }
 
-        /* ----- RECLAIM YOUR TIME (Home) ----- */
+        /* ==========================================================
+           RECLAIM YOUR TIME – ENHANCED
+           ========================================================== */
         .reclaim-card {
             background: linear-gradient(145deg, rgba(45, 212, 191, 0.05), rgba(139, 92, 246, 0.05));
             border: 1px solid rgba(45, 212, 191, 0.15);
@@ -132,9 +138,73 @@
         .reclaim-card .subtitle {
             font-size: 13px; color: #94a3b8; margin-bottom: 12px;
         }
+
+        /* Timer Presets */
+        .timer-presets {
+            display: flex; flex-wrap: wrap; gap: 6px;
+            margin: 8px 0 12px;
+        }
+        .timer-presets .btn-timer-outline {
+            flex: 1; min-width: 48px; text-align: center;
+        }
+        .timer-presets .btn-timer-outline.active {
+            border-color: #fbbf24;
+            color: #fbbf24;
+            background: rgba(251,191,36,0.05);
+        }
+        .timer-presets .custom-time-input {
+            flex: 1; min-width: 60px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid #334155;
+            border-radius: 40px;
+            padding: 8px 12px;
+            color: #fbbf24;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            width: 60px;
+            outline: none;
+        }
+        .timer-presets .custom-time-input:focus {
+            border-color: #fbbf24;
+        }
+
+        /* Search Bar */
+        .activity-search {
+            position: relative;
+            margin: 8px 0 12px;
+        }
+        .activity-search input {
+            width: 100%;
+            padding: 10px 16px;
+            padding-right: 40px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid #334155;
+            border-radius: 40px;
+            color: #e2e8f0;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+        .activity-search input:focus {
+            border-color: #fbbf24;
+        }
+        .activity-search input::placeholder {
+            color: #64748b;
+        }
+        .activity-search .search-icon {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 16px;
+            pointer-events: none;
+        }
+
         .activity-grid {
             display: grid; grid-template-columns: 1fr 1fr;
-            gap: 8px; margin: 12px 0;
+            gap: 8px; margin: 8px 0;
         }
         .activity-btn {
             padding: 12px 8px;
@@ -142,24 +212,33 @@
             border: 1px solid #334155;
             background: rgba(0,0,0,0.3);
             color: #cbd5e1;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             cursor: pointer;
             transition: 0.2s;
             text-align: center;
             line-height: 1.3;
+            word-break: break-word;
         }
         .activity-btn:active { transform: scale(0.95); }
-        .activity-btn .emoji { font-size: 20px; display: block; margin-bottom: 4px; }
+        .activity-btn .emoji { font-size: 20px; display: block; margin-bottom: 3px; }
+        .activity-btn .cat-tag {
+            font-size: 9px;
+            color: #64748b;
+            display: block;
+            margin-top: 2px;
+        }
         .activity-btn.selected {
             border-color: #2dd4bf;
             background: rgba(45, 212, 191, 0.1);
             color: #2dd4bf;
         }
-        .activity-btn.completed {
-            border-color: #fbbf24;
-            background: rgba(251, 191, 36, 0.1);
-            color: #fbbf24;
+        .activity-btn.hidden { display: none; }
+        .no-results {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            padding: 20px 0;
         }
 
         .timer-display {
@@ -176,6 +255,33 @@
             margin: 8px 0 4px;
         }
         .timer-controls .btn { width: auto; padding: 10px 24px; font-size: 14px; margin-bottom: 0; }
+
+        /* Recent Activities */
+        .recent-activities {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .recent-activities .recent-label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+        .recent-tags {
+            display: flex; flex-wrap: wrap; gap: 6px;
+        }
+        .recent-tag {
+            padding: 4px 12px;
+            border-radius: 40px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 11px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .recent-tag:active { transform: scale(0.95); }
+        .recent-tag:hover { border-color: #fbbf24; color: #fbbf24; }
 
         /* ----- DAILY QUOTE CARD ----- */
         .quote-card {
@@ -240,7 +346,6 @@
             margin: 8px 0 12px;
             border: 1px solid rgba(45, 212, 191, 0.2);
         }
-
         .pledge-unlocked-hint {
             display: inline-block;
             background: rgba(251, 191, 36, 0.1);
@@ -459,7 +564,7 @@
         .why-quit-card ul li::before { content: "✓"; color: #2dd4bf; font-weight: 700; }
 
         /* ==========================================================
-           DEDICATED PRESENT PAGE (TONGUE TWISTERS)
+           PRESENT PAGE (TONGUE TWISTERS)
            ========================================================== */
         .present-container {
             display: flex;
@@ -613,6 +718,8 @@
             .twister-box .twister-text { font-size: 20px; }
             .nav-item { font-size: 10px; min-width: 44px; padding: 2px 4px; }
             .nav-item .nav-icon { font-size: 18px; }
+            .timer-presets .btn-timer-outline { font-size: 11px; padding: 6px 8px; min-width: 40px; }
+            .timer-presets .custom-time-input { width: 50px; font-size: 12px; padding: 6px 8px; }
         }
     </style>
 </head>
@@ -645,20 +752,41 @@
                     <div class="quote-author" id="quoteAuthor">— Abraham Lincoln</div>
                 </div>
 
-                <!-- RECLAIM YOUR TIME -->
+                <!-- ==========================================================
+                   RECLAIM YOUR TIME – ENHANCED
+                   ========================================================== -->
                 <div class="reclaim-card" id="reclaimCard">
                     <div class="title">
                         <span class="icon">⏳</span> Reclaim Your Time
                     </div>
                     <div class="subtitle">
-                        Instead of scrolling, do something that actually moves you forward.
+                        Choose an activity, set a timer, and focus. No distractions.
                         <span style="display:block; font-size:12px; color:#64748b; margin-top:4px;">
                             🎯 You've reclaimed <strong id="productivityMinutesDisplay" style="color:#fbbf24;">0</strong> minutes of productive time!
                         </span>
                     </div>
 
+                    <!-- TIMER PRESETS -->
+                    <div class="timer-presets">
+                        <button class="btn-timer-outline" data-minutes="10">10m</button>
+                        <button class="btn-timer-outline" data-minutes="15">15m</button>
+                        <button class="btn-timer-outline active" data-minutes="25">25m</button>
+                        <button class="btn-timer-outline" data-minutes="30">30m</button>
+                        <button class="btn-timer-outline" data-minutes="45">45m</button>
+                        <button class="btn-timer-outline" data-minutes="60">60m</button>
+                        <input type="number" class="custom-time-input" id="customTimeInput" placeholder="Custom" min="1" max="180" value="" />
+                    </div>
+
+                    <!-- SEARCH BAR -->
+                    <div class="activity-search">
+                        <input type="text" id="activitySearchInput" placeholder="🔍 Search activities..." />
+                        <span class="search-icon">🔍</span>
+                    </div>
+
+                    <!-- ACTIVITY GRID -->
                     <div class="activity-grid" id="activityGrid"></div>
 
+                    <!-- TIMER -->
                     <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.05);">
                         <div class="timer-display" id="timerDisplay">25:00</div>
                         <div class="timer-controls">
@@ -673,6 +801,14 @@
                     <button class="btn btn-success" id="activityDoneBtn" style="margin-top:10px; margin-bottom:0; opacity:0.5; cursor:not-allowed;" disabled>
                         ✅ I Did It! (Complete a session first)
                     </button>
+
+                    <!-- RECENT ACTIVITIES -->
+                    <div class="recent-activities" id="recentActivities">
+                        <div class="recent-label">📌 Recent Activities</div>
+                        <div class="recent-tags" id="recentTags">
+                            <span style="color:#64748b; font-size:12px;">No recent activities yet.</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- NOTIFICATION SETTINGS -->
@@ -913,7 +1049,7 @@
                 <div id="fullJournalList" style="margin-top:16px; max-height:400px; overflow-y:auto;"></div>
             </div>
 
-            <!-- ===== PAGE 5: PRESENT (NEW DEDICATED PAGE) ===== -->
+            <!-- ===== PAGE 5: PRESENT ===== -->
             <div id="page-present" class="page">
                 <div class="present-container">
                     <div class="present-header">
@@ -948,7 +1084,7 @@
                 </div>
             </div>
 
-            <!-- ===== BOTTOM NAV (5 Tabs) ===== -->
+            <!-- ===== BOTTOM NAV ===== -->
             <div class="bottom-nav">
                 <button class="nav-item active" data-page="page-home"><span class="nav-icon">🏠</span> Home</button>
                 <button class="nav-item" data-page="page-pledge"><span class="nav-icon">🕊️</span> Pledge</button>
@@ -1114,6 +1250,7 @@
             renderActivities();
             renderTwister();
             loadPresenceData();
+            loadRecentActivities();
         });
 
         // ============================================================
@@ -1132,6 +1269,7 @@
         const PRODUCTIVITY_KEY = 'reclaim_productivity';
         const RESISTED_TRIGGERS_KEY = 'reclaim_resisted_triggers';
         const PRESENCE_KEY = 'reclaim_presence';
+        const RECENT_ACTIVITIES_KEY = 'reclaim_recent_activities';
 
         function getStreak() { return parseInt(localStorage.getItem(STREAK_KEY)) || 0; }
 
@@ -1169,12 +1307,56 @@
                 return { sessions: [], totalMinutes: 0 }; }
         }
 
+        function getRecentActivities() {
+            try { return JSON.parse(localStorage.getItem(RECENT_ACTIVITIES_KEY)) || []; } catch (e) { return []; }
+        }
+
         function saveProductivityData(data) {
             localStorage.setItem(PRODUCTIVITY_KEY, JSON.stringify(data));
         }
 
         function savePresenceData(data) {
             localStorage.setItem(PRESENCE_KEY, JSON.stringify(data));
+        }
+
+        function saveRecentActivities(activities) {
+            localStorage.setItem(RECENT_ACTIVITIES_KEY, JSON.stringify(activities));
+        }
+
+        function addRecentActivity(activity) {
+            const recent = getRecentActivities();
+            // Remove duplicates
+            const filtered = recent.filter(a => a !== activity);
+            filtered.unshift(activity);
+            if (filtered.length > 5) filtered.pop();
+            saveRecentActivities(filtered);
+            loadRecentActivities();
+        }
+
+        function loadRecentActivities() {
+            const recent = getRecentActivities();
+            const container = document.getElementById('recentTags');
+            if (recent.length === 0) {
+                container.innerHTML = '<span style="color:#64748b; font-size:12px;">No recent activities yet.</span>';
+                return;
+            }
+            container.innerHTML = recent.map(a =>
+                `<span class="recent-tag" data-activity="${a}">${a}</span>`
+            ).join('');
+            // Click to select
+            container.querySelectorAll('.recent-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const act = this.dataset.activity;
+                    // Find and click the matching activity button
+                    document.querySelectorAll('.activity-btn').forEach(btn => {
+                        if (btn.dataset.label === act) {
+                            btn.click();
+                            // Scroll to it
+                            btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    });
+                });
+            });
         }
 
         function saveDailyLog(date, status) {
@@ -1463,13 +1645,13 @@
         }
 
         // ============================================================
-        // 9. TONGUE TWISTERS
+        // 9. TONGUE TWISTERS (INDIAN ACCENT PRONUNCIATION)
         // ============================================================
         const TWISTERS = [{
             text: "She sells seashells by the seashore.",
             focus: "S & Sh",
             difficulty: "easy",
-            pronunciation: { "seashore": "see · shaw", "shells": "shelz", "sells": "selz" }
+            pronunciation: { "seashore": "see · shaw", "shells": "shels", "sells": "sels" }
         }, {
             text: "Silly Sally swiftly shooed seven silly sheep.",
             focus: "S & Sh",
@@ -1519,7 +1701,7 @@
             text: "Thirty thirsty thrushes threw thirty thick thorns.",
             focus: "Th",
             difficulty: "hard",
-            pronunciation: { "thirsty": "thur · stee", "thrushes": "thrush · ez", "thorns": "thawrnz" }
+            pronunciation: { "thirsty": "thur · stee", "thrushes": "thur · shez", "thorns": "thornz" }
         }, {
             text: "Fresh fried fish, fish fresh fried, fried fish fresh.",
             focus: "Fr & Sh",
@@ -1539,7 +1721,7 @@
             text: "Fuzzy Wuzzy was a bear. Fuzzy Wuzzy had no hair.",
             focus: "F & W",
             difficulty: "easy",
-            pronunciation: { "Fuzzy": "fuz · ee", "Wuzzy": "wuz · ee", "bear": "bare", "hair": "hare" }
+            pronunciation: { "Fuzzy": "fuz · ee", "Wuzzy": "wuz · ee", "bear": "bear", "hair": "hair" }
         }, {
             text: "The sixth sick sheik's sixth sheep's sick.",
             focus: "S & Sh",
@@ -1621,64 +1803,126 @@
             document.getElementById('totalPresenceMinutes').innerText = data.totalMinutes || 0;
             document.getElementById('todayPresenceCount').innerText = todayCount;
             document.getElementById('totalPresenceCountSmall').innerText = total;
-            document.getElementById('presenceCountDisplay') ? document.getElementById('presenceCountDisplay').innerText =
-                total : null;
         }
 
         // ============================================================
-        // 10. ACTIVITIES / PRODUCTIVITY
+        // 10. ACTIVITIES / PRODUCTIVITY (ENHANCED)
         // ============================================================
         const ACTIVITIES = [
-            { emoji: '📚', label: 'Read Research Paper' },
-            { emoji: '🐍', label: 'Code ML Model' },
-            { emoji: '📊', label: 'Data Cleaning' },
-            { emoji: '🧠', label: 'LeetCode Problem' },
-            { emoji: '📝', label: 'Write Documentation' },
-            { emoji: '🎓', label: 'Watch ML Tutorial' },
-            { emoji: '📖', label: 'Read Book Chapter' },
-            { emoji: '✍️', label: 'Write Blog/Notes' },
-            { emoji: '📈', label: 'EDA / Visualization' },
-            { emoji: '🧪', label: 'Run Experiment' },
-            { emoji: '📋', label: 'Review Code PR' },
-            { emoji: '🎯', label: 'Deep Work Session' },
-            { emoji: '📰', label: 'Read AI Paper' },
-            { emoji: '💻', label: 'Build Side Project' },
-            { emoji: '📓', label: 'Journal / Reflect' },
-            { emoji: '🧘', label: 'Meditate (5 min)' },
-            { emoji: '🏋️', label: 'Quick Workout' },
-            { emoji: '📹', label: 'Record Learning Video' },
-            { emoji: '🤝', label: 'Network on LinkedIn' },
-            { emoji: '📊', label: 'Update Resume/Portfolio' },
+            { emoji: '📚', label: 'Read Research Paper', category: 'Learning' },
+            { emoji: '🐍', label: 'Code ML Model', category: 'Coding' },
+            { emoji: '📊', label: 'Data Cleaning', category: 'Coding' },
+            { emoji: '🧠', label: 'LeetCode Problem', category: 'Coding' },
+            { emoji: '📝', label: 'Write Documentation', category: 'Writing' },
+            { emoji: '🎓', label: 'Watch ML Tutorial', category: 'Learning' },
+            { emoji: '📖', label: 'Read Book Chapter', category: 'Learning' },
+            { emoji: '✍️', label: 'Write Blog/Notes', category: 'Writing' },
+            { emoji: '📈', label: 'EDA / Visualization', category: 'Coding' },
+            { emoji: '🧪', label: 'Run Experiment', category: 'Coding' },
+            { emoji: '📋', label: 'Review Code PR', category: 'Work' },
+            { emoji: '🎯', label: 'Deep Work Session', category: 'Work' },
+            { emoji: '📰', label: 'Read AI Paper', category: 'Learning' },
+            { emoji: '💻', label: 'Build Side Project', category: 'Coding' },
+            { emoji: '📓', label: 'Journal / Reflect', category: 'Writing' },
+            { emoji: '🧘', label: 'Meditate (5 min)', category: 'Health' },
+            { emoji: '🏋️', label: 'Quick Workout', category: 'Health' },
+            { emoji: '📹', label: 'Record Learning Video', category: 'Learning' },
+            { emoji: '🤝', label: 'Network on LinkedIn', category: 'Work' },
+            { emoji: '📊', label: 'Update Resume/Portfolio', category: 'Work' },
+            { emoji: '📌', label: 'Plan Your Week', category: 'Work' },
+            { emoji: '🗂️', label: 'Organize Files', category: 'Work' },
+            { emoji: '📧', label: 'Clear Email Inbox', category: 'Work' },
+            { emoji: '📱', label: 'Learn a New Skill', category: 'Learning' },
+            { emoji: '🎨', label: 'Creative Brainstorm', category: 'Writing' },
         ];
 
         let selectedActivity = null;
         let timerRunning = false;
         let timerSeconds = 1500;
         let timerInterval = null;
+        let selectedMinutes = 25;
 
-        function renderActivities() {
+        function renderActivities(filter = '') {
             const grid = document.getElementById('activityGrid');
             grid.innerHTML = '';
-            const shuffled = [...ACTIVITIES].sort(() => 0.5 - Math.random());
-            const display = shuffled.slice(0, 8);
-            display.forEach(act => {
+            const filtered = ACTIVITIES.filter(a =>
+                a.label.toLowerCase().includes(filter.toLowerCase()) ||
+                a.category.toLowerCase().includes(filter.toLowerCase()) ||
+                a.emoji.includes(filter)
+            );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="no-results">No activities found. Try a different search.</div>';
+                return;
+            }
+
+            filtered.forEach(act => {
                 const btn = document.createElement('button');
                 btn.className = 'activity-btn';
-                btn.innerHTML = `<span class="emoji">${act.emoji}</span> ${act.label}`;
+                btn.innerHTML =
+                    `<span class="emoji">${act.emoji}</span> ${act.label}<span class="cat-tag">${act.category}</span>`;
                 btn.dataset.label = act.label;
                 btn.dataset.emoji = act.emoji;
+                btn.dataset.category = act.category;
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.activity-btn').forEach(b => b.classList.remove('selected'));
                     this.classList.add('selected');
                     selectedActivity = this.dataset.label;
                     document.getElementById('timerStatus').innerText =
-                        `🧠 Focus: "${selectedActivity}" — 25 min session`;
+                        `🧠 Focus: "${selectedActivity}" — ${selectedMinutes} min session`;
                     document.getElementById('timerStatus').style.color = '#2dd4bf';
                 });
                 grid.appendChild(btn);
             });
         }
 
+        // Timer Presets
+        document.querySelectorAll('.timer-presets .btn-timer-outline').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.timer-presets .btn-timer-outline').forEach(b => b.classList.remove(
+                'active'));
+                this.classList.add('active');
+                const mins = parseInt(this.dataset.minutes);
+                if (!isNaN(mins)) {
+                    selectedMinutes = mins;
+                    timerSeconds = mins * 60;
+                    updateTimerDisplay();
+                    if (selectedActivity) {
+                        document.getElementById('timerStatus').innerText =
+                            `🧠 Focus: "${selectedActivity}" — ${selectedMinutes} min session`;
+                    } else {
+                        document.getElementById('timerStatus').innerText =
+                            `⏳ ${selectedMinutes} min timer set. Select an activity.`;
+                    }
+                    // Clear custom input
+                    document.getElementById('customTimeInput').value = '';
+                }
+            });
+        });
+
+        document.getElementById('customTimeInput').addEventListener('change', function() {
+            const val = parseInt(this.value);
+            if (!isNaN(val) && val > 0 && val <= 180) {
+                document.querySelectorAll('.timer-presets .btn-timer-outline').forEach(b => b.classList.remove('active'));
+                selectedMinutes = val;
+                timerSeconds = val * 60;
+                updateTimerDisplay();
+                if (selectedActivity) {
+                    document.getElementById('timerStatus').innerText =
+                        `🧠 Focus: "${selectedActivity}" — ${selectedMinutes} min session`;
+                } else {
+                    document.getElementById('timerStatus').innerText =
+                        `⏳ ${selectedMinutes} min timer set. Select an activity.`;
+                }
+            }
+        });
+
+        // Search
+        document.getElementById('activitySearchInput').addEventListener('input', function() {
+            renderActivities(this.value);
+        });
+
+        // Timer Logic
         document.getElementById('timerStartBtn').addEventListener('click', function() {
             if (!selectedActivity) {
                 document.getElementById('timerStatus').innerText = '⚠️ Select an activity first!';
@@ -1694,7 +1938,7 @@
                 return;
             }
             if (timerSeconds <= 0) {
-                timerSeconds = 1500;
+                timerSeconds = selectedMinutes * 60;
                 updateTimerDisplay();
             }
             timerRunning = true;
@@ -1713,7 +1957,8 @@
                     document.getElementById('timerStatus').style.color = '#2dd4bf';
                     document.getElementById('activityDoneBtn').disabled = false;
                     document.getElementById('activityDoneBtn').style.opacity = '1';
-                    document.getElementById('activityDoneBtn').innerText = '✅ I Did It! (25 min session!)';
+                    const mins = Math.round(selectedMinutes);
+                    document.getElementById('activityDoneBtn').innerText = `✅ I Did It! (${mins} min session!)`;
                     if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
                 }
             }, 1000);
@@ -1722,10 +1967,10 @@
         document.getElementById('timerResetBtn').addEventListener('click', function() {
             clearInterval(timerInterval);
             timerRunning = false;
-            timerSeconds = 1500;
+            timerSeconds = selectedMinutes * 60;
             updateTimerDisplay();
             document.getElementById('timerStartBtn').innerText = '▶ Start Focus';
-            document.getElementById('timerStatus').innerText = '⏳ Timer reset. Select an activity.';
+            document.getElementById('timerStatus').innerText = `⏳ ${selectedMinutes} min timer reset. Select an activity.`;
             document.getElementById('timerStatus').style.color = '#64748b';
             document.getElementById('activityDoneBtn').disabled = true;
             document.getElementById('activityDoneBtn').style.opacity = '0.5';
@@ -1741,39 +1986,44 @@
 
         document.getElementById('activityDoneBtn').addEventListener('click', function() {
             if (this.disabled) return;
-            if (timerSeconds > 0) {
-                if (timerSeconds > 10) {
-                    if (!confirm('Session not complete. Mark as done anyway?')) return;
-                }
-            }
+
+            const completedMinutes = Math.round((selectedMinutes * 60 - timerSeconds) / 60);
+            const actualMinutes = Math.max(1, completedMinutes);
+
             const data = getProductivityData();
             const now = new Date();
             const session = {
                 date: now.toISOString().split('T')[0],
                 time: now.toLocaleTimeString(),
                 activity: selectedActivity || 'Focused Work',
-                duration: Math.round((1500 - timerSeconds) / 60),
+                duration: actualMinutes,
             };
             data.sessions.push(session);
-            data.totalMinutes = (data.totalMinutes || 0) + session.duration;
+            data.totalMinutes = (data.totalMinutes || 0) + actualMinutes;
             saveProductivityData(data);
+
+            // Add to recent activities
+            if (selectedActivity) {
+                addRecentActivity(selectedActivity);
+            }
 
             clearInterval(timerInterval);
             timerRunning = false;
-            timerSeconds = 1500;
+            timerSeconds = selectedMinutes * 60;
             updateTimerDisplay();
             document.getElementById('timerStartBtn').innerText = '▶ Start Focus';
-            document.getElementById('timerStatus').innerText = `✅ Logged ${session.duration} min of "${session.activity}"!`;
+            document.getElementById('timerStatus').innerText = `✅ Logged ${actualMinutes} min of "${selectedActivity}"!`;
             document.getElementById('timerStatus').style.color = '#fbbf24';
             this.disabled = true;
             this.style.opacity = '0.5';
             this.innerText = '✅ I Did It! (Complete a session first)';
 
             loadProductivityData();
+            loadRecentActivities();
             updateAllUI();
 
             showModal('🎉', 'Productivity Logged!',
-                `You just spent ${session.duration} minutes on "${session.activity}". That's time well spent! 🚀`,
+                `You just spent ${actualMinutes} minutes on "${selectedActivity}". That's time well spent! 🚀`,
                 'Awesome', '', null);
         });
 
@@ -2510,6 +2760,7 @@
                 productivity: localStorage.getItem(PRODUCTIVITY_KEY),
                 resistedTriggers: localStorage.getItem(RESISTED_TRIGGERS_KEY),
                 presence: localStorage.getItem(PRESENCE_KEY),
+                recentActivities: localStorage.getItem(RECENT_ACTIVITIES_KEY),
             };
 
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -2544,6 +2795,7 @@
                     if (data.productivity) localStorage.setItem(PRODUCTIVITY_KEY, data.productivity);
                     if (data.resistedTriggers) localStorage.setItem(RESISTED_TRIGGERS_KEY, data.resistedTriggers);
                     if (data.presence) localStorage.setItem(PRESENCE_KEY, data.presence);
+                    if (data.recentActivities) localStorage.setItem(RECENT_ACTIVITIES_KEY, data.recentActivities);
 
                     showModal('✅', 'Import Successful!', 'Your backup has been restored.', 'Awesome', '', null);
                     updateAllUI();
@@ -2620,6 +2872,7 @@
             renderDailyQuote();
             loadProductivityData();
             loadPresenceData();
+            loadRecentActivities();
 
             const skipBtn = document.getElementById('skipTodayBtn');
             if (canSkipThisWeek()) {
@@ -2711,7 +2964,7 @@
         }
 
         // ============================================================
-        // 19. NAVIGATION (UPDATED)
+        // 19. NAVIGATION
         // ============================================================
         function navigateToPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -2838,6 +3091,12 @@
         updateAllUI();
         renderFullJournal();
         setTimeout(initCanvas, 200);
+        // Initial timer display
+        const defaultMins = 25;
+        timerSeconds = defaultMins * 60;
+        selectedMinutes = defaultMins;
+        updateTimerDisplay();
+        renderActivities();
     </script>
 </body>
 </html>
