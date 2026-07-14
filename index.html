@@ -116,96 +116,66 @@
         .btn-sm { padding: 10px 16px; font-size: 14px; width: auto; margin-bottom: 0; }
         .btn-timer { background: #fbbf24; color: #0f172a; font-size: 15px; padding: 12px; }
 
-        /* ==========================================================
-           BE PRESENT – TONGUE TWISTERS (NEW)
-           ========================================================== */
-        .presence-card {
-            background: linear-gradient(145deg, rgba(139, 92, 246, 0.05), rgba(45, 212, 191, 0.05));
-            border: 1px solid rgba(139, 92, 246, 0.15);
+        /* ----- RECLAIM YOUR TIME (Home) ----- */
+        .reclaim-card {
+            background: linear-gradient(145deg, rgba(45, 212, 191, 0.05), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(45, 212, 191, 0.15);
             border-radius: 24px;
             padding: 20px;
             margin-bottom: 16px;
         }
-        .presence-card .title {
-            font-size: 18px; font-weight: 700; color: #8b5cf6;
+        .reclaim-card .title {
+            font-size: 18px; font-weight: 700; color: #2dd4bf;
             display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
         }
-        .presence-card .title .icon { font-size: 24px; }
-        .presence-card .subtitle {
+        .reclaim-card .title .icon { font-size: 24px; }
+        .reclaim-card .subtitle {
             font-size: 13px; color: #94a3b8; margin-bottom: 12px;
         }
-
-        .twister-box {
+        .activity-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 8px; margin: 12px 0;
+        }
+        .activity-btn {
+            padding: 12px 8px;
+            border-radius: 16px;
+            border: 1px solid #334155;
             background: rgba(0,0,0,0.3);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 12px 0;
-            border: 1px solid rgba(139, 92, 246, 0.1);
-            min-height: 120px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .twister-box .focus-badge {
-            display: inline-block;
-            background: rgba(139, 92, 246, 0.15);
-            color: #8b5cf6;
-            padding: 2px 12px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-            align-self: flex-start;
-        }
-        .twister-box .difficulty-badge {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 600;
-            margin-left: 8px;
-        }
-        .twister-box .difficulty-badge.easy { background: rgba(45, 212, 191, 0.15); color: #2dd4bf; }
-        .twister-box .difficulty-badge.medium { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-        .twister-box .difficulty-badge.hard { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-
-        .twister-box .twister-text {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fbbf24;
-            line-height: 1.5;
-            margin: 6px 0;
-            font-style: italic;
-        }
-        .twister-box .pronunciation-guide {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-top: 8px;
-            padding: 8px 12px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 12px;
-            line-height: 1.6;
-        }
-        .twister-box .pronunciation-guide .word-break {
-            display: inline-block;
-            background: rgba(139, 92, 246, 0.08);
-            padding: 2px 8px;
-            border-radius: 4px;
-            margin: 2px 4px 2px 0;
-            font-weight: 600;
             color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+            line-height: 1.3;
         }
-        .twister-box .pronunciation-guide .sep {
-            color: #64748b;
-            margin: 0 2px;
+        .activity-btn:active { transform: scale(0.95); }
+        .activity-btn .emoji { font-size: 20px; display: block; margin-bottom: 4px; }
+        .activity-btn.selected {
+            border-color: #2dd4bf;
+            background: rgba(45, 212, 191, 0.1);
+            color: #2dd4bf;
+        }
+        .activity-btn.completed {
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
         }
 
-        .presence-actions {
-            display: flex; gap: 10px;
-            margin-top: 10px;
+        .timer-display {
+            font-size: 48px;
+            font-weight: 800;
+            color: #fbbf24;
+            text-align: center;
+            padding: 12px 0;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 2px;
         }
-        .presence-actions .btn { margin-bottom: 0; flex: 1; padding: 12px; font-size: 14px; }
+        .timer-controls {
+            display: flex; gap: 12px; justify-content: center;
+            margin: 8px 0 4px;
+        }
+        .timer-controls .btn { width: auto; padding: 10px 24px; font-size: 14px; margin-bottom: 0; }
 
         /* ----- DAILY QUOTE CARD ----- */
         .quote-card {
@@ -337,9 +307,6 @@
         .sig-actions button.clear-btn {
             background: #ef4444;
             color: white;
-        }
-        .sig-actions button.clear-btn:hover {
-            background: #dc2626;
         }
         .sig-actions button.clear-btn.hidden {
             display: none;
@@ -491,20 +458,139 @@
         .why-quit-card ul li { font-size: 13px; color: #cbd5e1; padding: 4px 0; display: flex; align-items: center; gap: 6px; }
         .why-quit-card ul li::before { content: "✓"; color: #2dd4bf; font-weight: 700; }
 
+        /* ==========================================================
+           DEDICATED PRESENT PAGE (TONGUE TWISTERS)
+           ========================================================== */
+        .present-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .present-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .present-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #8b5cf6;
+        }
+        .present-header .present-stats {
+            font-size: 13px;
+            color: #94a3b8;
+            text-align: right;
+        }
+        .present-header .present-stats strong {
+            color: #fbbf24;
+            font-weight: 700;
+        }
+
+        .present-card {
+            background: linear-gradient(145deg, rgba(139, 92, 246, 0.08), rgba(45, 212, 191, 0.03));
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            border-radius: 24px;
+            padding: 24px 20px;
+            flex: 1;
+        }
+
+        .twister-box {
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 24px 20px;
+            margin: 12px 0 16px;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .twister-box .focus-badge {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.15);
+            color: #8b5cf6;
+            padding: 2px 16px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            align-self: flex-start;
+        }
+        .twister-box .difficulty-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .twister-box .difficulty-badge.easy { background: rgba(45, 212, 191, 0.15); color: #2dd4bf; }
+        .twister-box .difficulty-badge.medium { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+        .twister-box .difficulty-badge.hard { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+        .twister-box .twister-text {
+            font-size: 26px;
+            font-weight: 700;
+            color: #fbbf24;
+            line-height: 1.5;
+            margin: 8px 0;
+            font-style: italic;
+        }
+        .twister-box .pronunciation-guide {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            line-height: 1.8;
+        }
+        .twister-box .pronunciation-guide .word-break {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.08);
+            padding: 2px 10px;
+            border-radius: 4px;
+            margin: 2px 6px 2px 0;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+        .twister-box .pronunciation-guide .sep {
+            color: #64748b;
+            margin: 0 4px;
+        }
+
+        .present-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .present-actions .btn { margin-bottom: 0; flex: 1; padding: 14px; font-size: 15px; }
+
         /* ----- BOTTOM NAV ----- */
         .bottom-nav {
-            display: flex; justify-content: space-around;
-            margin-top: 24px; padding-top: 16px;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 24px;
+            padding-top: 16px;
             border-top: 1px solid rgba(255,255,255,0.05);
         }
         .nav-item {
             background: none; border: none;
-            color: #64748b; font-size: 12px; font-weight: 600;
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
-            cursor: pointer; transition: 0.2s; padding: 4px 12px;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 4px 6px;
+            min-width: 52px;
         }
         .nav-item.active { color: #fbbf24; }
-        .nav-item .nav-icon { font-size: 22px; }
+        .nav-item .nav-icon { font-size: 20px; }
 
         .page { display: none; animation: fadeUp 0.3s ease; }
         .page.active { display: block; }
@@ -523,8 +609,10 @@
             .why-quit-card ul { grid-template-columns: 1fr; }
             .notif-card { flex-direction: column; align-items: stretch; }
             .activity-grid { grid-template-columns: 1fr 1fr; }
-            .presence-actions { flex-direction: column; }
-            .twister-box .twister-text { font-size: 18px; }
+            .present-actions { flex-direction: column; }
+            .twister-box .twister-text { font-size: 20px; }
+            .nav-item { font-size: 10px; min-width: 44px; padding: 2px 4px; }
+            .nav-item .nav-icon { font-size: 18px; }
         }
     </style>
 </head>
@@ -555,37 +643,6 @@
                 <div class="quote-card" id="dailyQuoteCard">
                     <div class="quote-text" id="quoteText">"Discipline is choosing between what you want now and what you want most."</div>
                     <div class="quote-author" id="quoteAuthor">— Abraham Lincoln</div>
-                </div>
-
-                <!-- ==========================================================
-                   BE PRESENT – TONGUE TWISTERS (NEW)
-                   ========================================================== -->
-                <div class="presence-card" id="presenceCard">
-                    <div class="title">
-                        <span class="icon">🎯</span> Be Present – Tongue Twisters
-                    </div>
-                    <div class="subtitle">
-                        Train your mind to be in the moment. Focus on the sounds, not the urges.
-                        <span style="display:block; font-size:12px; color:#64748b; margin-top:4px;">
-                            🧠 You've completed <strong id="presenceCountDisplay" style="color:#8b5cf6;">0</strong> presence sessions!
-                        </span>
-                    </div>
-
-                    <div class="twister-box" id="twisterBox">
-                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                            <span class="focus-badge" id="twisterFocus">S & Sh</span>
-                            <span class="difficulty-badge easy" id="twisterDifficulty">Easy</span>
-                        </div>
-                        <div class="twister-text" id="twisterText">She sells seashells by the seashore.</div>
-                        <div class="pronunciation-guide" id="twisterPronunciation">
-                            <span class="word-break">seashore</span><span class="sep">→</span> see · shaw
-                        </div>
-                    </div>
-
-                    <div class="presence-actions">
-                        <button class="btn btn-primary" id="newTwisterBtn" style="flex:1; padding:12px; font-size:14px;">🔄 New Twister</button>
-                        <button class="btn btn-success" id="twisterDoneBtn" style="flex:1; padding:12px; font-size:14px;">✅ I Did It!</button>
-                    </div>
                 </div>
 
                 <!-- RECLAIM YOUR TIME -->
@@ -646,7 +703,7 @@
                     </ul>
                 </div>
 
-                <!-- STATS CARD -->
+                <!-- STATS CARD (Compact) -->
                 <div class="stats-card">
                     <div class="flex-between">
                         <span class="muted">⏳ Your Yearly Waste</span>
@@ -739,7 +796,6 @@
                 <p class="muted" style="margin-bottom:16px;">Your progress at a glance.</p>
 
                 <div class="stats-dashboard">
-                    <!-- HERO ROW -->
                     <div class="hero-row">
                         <div class="hero-card">
                             <div class="number" id="heroTimeRegained">0</div>
@@ -753,7 +809,7 @@
                         </div>
                     </div>
 
-                    <!-- PRESENCE SESSIONS (NEW) -->
+                    <!-- PRESENCE SESSIONS -->
                     <div class="card" style="border-color: rgba(139,92,246,0.2);">
                         <div class="card-title" style="color:#8b5cf6;">🎯 Presence Sessions</div>
                         <div style="display:flex; justify-content:space-around; padding:4px 0;">
@@ -768,7 +824,6 @@
                         </div>
                     </div>
 
-                    <!-- PRODUCTIVITY SESSIONS -->
                     <div class="card" style="border-color: rgba(45,212,191,0.2);">
                         <div class="card-title" style="color:#2dd4bf;">📈 Productivity Sessions</div>
                         <div style="display:flex; justify-content:space-around; padding:4px 0;">
@@ -783,7 +838,6 @@
                         </div>
                     </div>
 
-                    <!-- MINI STATS -->
                     <div class="mini-stats-grid">
                         <div class="mini-stat"><div class="num" id="miniDaily">0</div><div class="lbl">Daily (min)</div></div>
                         <div class="mini-stat"><div class="num" id="miniYearly">0</div><div class="lbl">Yearly (min)</div></div>
@@ -791,7 +845,6 @@
                         <div class="mini-stat"><div class="num" id="miniMoney">$0</div><div class="lbl">Min Wage</div></div>
                     </div>
 
-                    <!-- GROUP: Milestones + Badges -->
                     <div class="group-row">
                         <div class="card">
                             <div class="card-title">🚀 Milestones</div>
@@ -807,7 +860,6 @@
                         </div>
                     </div>
 
-                    <!-- HEATMAP + WEEKLY -->
                     <div class="heatmap-card">
                         <div class="flex-between">
                             <span style="font-weight:600; color:#cbd5e1;">📆 Monthly Heatmap</span>
@@ -824,7 +876,6 @@
                         <div class="week-dots" id="weekDotsContainer" style="margin-top:8px;"></div>
                     </div>
 
-                    <!-- TRIGGER ANALYTICS -->
                     <div class="card">
                         <div class="card-title" style="color:#fbbf24;">🧠 Trigger Insights</div>
                         <div id="triggerAnalyticsContainer">
@@ -834,7 +885,6 @@
                         <div style="margin-top:4px; font-size:12px; color:#64748b;" id="resistedVsRelapsed">Resisted: 0 · Relapsed: 0</div>
                     </div>
 
-                    <!-- EQUIVALENTS -->
                     <div class="card">
                         <div class="card-title">🎯 Time Equivalents</div>
                         <div class="equiv-grid">
@@ -844,7 +894,6 @@
                         </div>
                     </div>
 
-                    <!-- DATA MANAGEMENT -->
                     <div class="card" style="border-color: rgba(139,92,246,0.2);">
                         <div class="card-title" style="color:#8b5cf6;">💾 Data Management</div>
                         <div style="font-size:12px; color:#94a3b8; margin-bottom:8px;">Backup & restore your data</div>
@@ -864,12 +913,48 @@
                 <div id="fullJournalList" style="margin-top:16px; max-height:400px; overflow-y:auto;"></div>
             </div>
 
-            <!-- ===== BOTTOM NAV ===== -->
+            <!-- ===== PAGE 5: PRESENT (NEW DEDICATED PAGE) ===== -->
+            <div id="page-present" class="page">
+                <div class="present-container">
+                    <div class="present-header">
+                        <h2>🧘 Be Present</h2>
+                        <div class="present-stats">
+                            <div>Today: <strong id="todayPresenceCount">0</strong></div>
+                            <div>Total: <strong id="totalPresenceCountSmall">0</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="present-card">
+                        <p style="color:#94a3b8; font-size:14px; margin-bottom:4px;">
+                            Focus on the sounds, not the urges. Train your mind to be here, now.
+                        </p>
+
+                        <div class="twister-box" id="twisterBox">
+                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                <span class="focus-badge" id="twisterFocus">S & Sh</span>
+                                <span class="difficulty-badge easy" id="twisterDifficulty">Easy</span>
+                            </div>
+                            <div class="twister-text" id="twisterText">She sells seashells by the seashore.</div>
+                            <div class="pronunciation-guide" id="twisterPronunciation">
+                                <span class="word-break">seashore</span><span class="sep">→</span> see · shaw
+                            </div>
+                        </div>
+
+                        <div class="present-actions">
+                            <button class="btn btn-primary" id="newTwisterBtn" style="flex:1; padding:14px; font-size:15px;">🔄 New</button>
+                            <button class="btn btn-success" id="twisterDoneBtn" style="flex:1; padding:14px; font-size:15px;">✅ I Did It!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== BOTTOM NAV (5 Tabs) ===== -->
             <div class="bottom-nav">
                 <button class="nav-item active" data-page="page-home"><span class="nav-icon">🏠</span> Home</button>
                 <button class="nav-item" data-page="page-pledge"><span class="nav-icon">🕊️</span> Pledge</button>
                 <button class="nav-item" data-page="page-stats"><span class="nav-icon">📊</span> Stats</button>
                 <button class="nav-item" data-page="page-journal"><span class="nav-icon">📖</span> Memory</button>
+                <button class="nav-item" data-page="page-present"><span class="nav-icon">🧘</span> Present</button>
             </div>
         </div>
     </div>
@@ -1378,7 +1463,7 @@
         }
 
         // ============================================================
-        // 9. TONGUE TWISTERS (NEW)
+        // 9. TONGUE TWISTERS
         // ============================================================
         const TWISTERS = [{
             text: "She sells seashells by the seashore.",
@@ -1475,14 +1560,12 @@
 
             document.getElementById('twisterFocus').innerText = twister.focus;
 
-            // Difficulty badge
             const diffBadge = document.getElementById('twisterDifficulty');
             diffBadge.innerText = twister.difficulty.charAt(0).toUpperCase() + twister.difficulty.slice(1);
             diffBadge.className = 'difficulty-badge ' + twister.difficulty;
 
             document.getElementById('twisterText').innerText = twister.text;
 
-            // Build pronunciation guide
             const keys = Object.keys(twister.pronunciation);
             let pronHTML = '';
             keys.forEach((word, idx) => {
@@ -1492,21 +1575,17 @@
             document.getElementById('twisterPronunciation').innerHTML = pronHTML;
         }
 
-        // New Twister button
         document.getElementById('newTwisterBtn').addEventListener('click', function() {
             renderTwister();
-            // Reset the done button
             const doneBtn = document.getElementById('twisterDoneBtn');
             doneBtn.disabled = false;
             doneBtn.style.opacity = '1';
             doneBtn.innerText = '✅ I Did It!';
         });
 
-        // "I Did It!" for Tongue Twister
         document.getElementById('twisterDoneBtn').addEventListener('click', function() {
             if (this.disabled) return;
 
-            // Log the presence session
             const data = getPresenceData();
             const now = new Date();
             const session = {
@@ -1514,7 +1593,7 @@
                 time: now.toLocaleTimeString(),
                 twister: currentTwister ? currentTwister.text : 'Tongue Twister',
                 focus: currentTwister ? currentTwister.focus : 'General',
-                minutes: 2, // Average time to practice
+                minutes: 2,
             };
             data.sessions.push(session);
             data.totalMinutes = (data.totalMinutes || 0) + session.minutes;
@@ -1522,7 +1601,7 @@
 
             this.disabled = true;
             this.style.opacity = '0.5';
-            this.innerText = '✅ Done! Great job!';
+            this.innerText = '✅ Done!';
 
             showModal('🎯', 'Presence Session Logged!',
                 `You practiced "${currentTwister ? currentTwister.focus : 'Tongue Twister'}" sounds and stayed present. 🧠`,
@@ -1534,9 +1613,16 @@
 
         function loadPresenceData() {
             const data = getPresenceData();
-            document.getElementById('presenceCountDisplay').innerText = data.sessions.length || 0;
-            document.getElementById('totalPresenceSessions').innerText = data.sessions.length || 0;
+            const total = data.sessions.length || 0;
+            const today = new Date().toISOString().split('T')[0];
+            const todayCount = data.sessions.filter(s => s.date === today).length || 0;
+
+            document.getElementById('totalPresenceSessions').innerText = total;
             document.getElementById('totalPresenceMinutes').innerText = data.totalMinutes || 0;
+            document.getElementById('todayPresenceCount').innerText = todayCount;
+            document.getElementById('totalPresenceCountSmall').innerText = total;
+            document.getElementById('presenceCountDisplay') ? document.getElementById('presenceCountDisplay').innerText =
+                total : null;
         }
 
         // ============================================================
@@ -2625,7 +2711,7 @@
         }
 
         // ============================================================
-        // 19. NAVIGATION
+        // 19. NAVIGATION (UPDATED)
         // ============================================================
         function navigateToPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -2637,6 +2723,8 @@
                 updateStatsPage();
                 renderTriggerAnalytics(); }
             if (pageId === 'page-journal') renderFullJournal();
+            if (pageId === 'page-present') { renderTwister();
+                loadPresenceData(); }
         }
 
         // ============================================================
