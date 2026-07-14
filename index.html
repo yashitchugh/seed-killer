@@ -116,66 +116,96 @@
         .btn-sm { padding: 10px 16px; font-size: 14px; width: auto; margin-bottom: 0; }
         .btn-timer { background: #fbbf24; color: #0f172a; font-size: 15px; padding: 12px; }
 
-        /* ----- RECLAIM YOUR TIME ----- */
-        .reclaim-card {
-            background: linear-gradient(145deg, rgba(45, 212, 191, 0.05), rgba(139, 92, 246, 0.05));
-            border: 1px solid rgba(45, 212, 191, 0.15);
+        /* ==========================================================
+           BE PRESENT – TONGUE TWISTERS (NEW)
+           ========================================================== */
+        .presence-card {
+            background: linear-gradient(145deg, rgba(139, 92, 246, 0.05), rgba(45, 212, 191, 0.05));
+            border: 1px solid rgba(139, 92, 246, 0.15);
             border-radius: 24px;
             padding: 20px;
             margin-bottom: 16px;
         }
-        .reclaim-card .title {
-            font-size: 18px; font-weight: 700; color: #2dd4bf;
+        .presence-card .title {
+            font-size: 18px; font-weight: 700; color: #8b5cf6;
             display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
         }
-        .reclaim-card .title .icon { font-size: 24px; }
-        .reclaim-card .subtitle {
+        .presence-card .title .icon { font-size: 24px; }
+        .presence-card .subtitle {
             font-size: 13px; color: #94a3b8; margin-bottom: 12px;
         }
-        .activity-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 8px; margin: 12px 0;
-        }
-        .activity-btn {
-            padding: 12px 8px;
-            border-radius: 16px;
-            border: 1px solid #334155;
+
+        .twister-box {
             background: rgba(0,0,0,0.3);
-            color: #cbd5e1;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.2s;
-            text-align: center;
-            line-height: 1.3;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 12px 0;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        .activity-btn:active { transform: scale(0.95); }
-        .activity-btn .emoji { font-size: 20px; display: block; margin-bottom: 4px; }
-        .activity-btn.selected {
-            border-color: #2dd4bf;
-            background: rgba(45, 212, 191, 0.1);
-            color: #2dd4bf;
+        .twister-box .focus-badge {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.15);
+            color: #8b5cf6;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            align-self: flex-start;
         }
-        .activity-btn.completed {
-            border-color: #fbbf24;
-            background: rgba(251, 191, 36, 0.1);
+        .twister-box .difficulty-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .twister-box .difficulty-badge.easy { background: rgba(45, 212, 191, 0.15); color: #2dd4bf; }
+        .twister-box .difficulty-badge.medium { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+        .twister-box .difficulty-badge.hard { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+        .twister-box .twister-text {
+            font-size: 22px;
+            font-weight: 700;
             color: #fbbf24;
+            line-height: 1.5;
+            margin: 6px 0;
+            font-style: italic;
+        }
+        .twister-box .pronunciation-guide {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            line-height: 1.6;
+        }
+        .twister-box .pronunciation-guide .word-break {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin: 2px 4px 2px 0;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+        .twister-box .pronunciation-guide .sep {
+            color: #64748b;
+            margin: 0 2px;
         }
 
-        .timer-display {
-            font-size: 48px;
-            font-weight: 800;
-            color: #fbbf24;
-            text-align: center;
-            padding: 12px 0;
-            font-variant-numeric: tabular-nums;
-            letter-spacing: 2px;
+        .presence-actions {
+            display: flex; gap: 10px;
+            margin-top: 10px;
         }
-        .timer-controls {
-            display: flex; gap: 12px; justify-content: center;
-            margin: 8px 0 4px;
-        }
-        .timer-controls .btn { width: auto; padding: 10px 24px; font-size: 14px; margin-bottom: 0; }
+        .presence-actions .btn { margin-bottom: 0; flex: 1; padding: 12px; font-size: 14px; }
 
         /* ----- DAILY QUOTE CARD ----- */
         .quote-card {
@@ -201,7 +231,7 @@
         .notif-card .notif-left input[type="checkbox"] { accent-color: #8b5cf6; width: 18px; height: 18px; cursor: pointer; }
 
         /* ==========================================================
-           PLEDGE SECTION (UPDATED)
+           PLEDGE SECTION
            ========================================================== */
         .pledge-box {
             background: rgba(251, 191, 36, 0.05);
@@ -493,6 +523,8 @@
             .why-quit-card ul { grid-template-columns: 1fr; }
             .notif-card { flex-direction: column; align-items: stretch; }
             .activity-grid { grid-template-columns: 1fr 1fr; }
+            .presence-actions { flex-direction: column; }
+            .twister-box .twister-text { font-size: 18px; }
         }
     </style>
 </head>
@@ -523,6 +555,37 @@
                 <div class="quote-card" id="dailyQuoteCard">
                     <div class="quote-text" id="quoteText">"Discipline is choosing between what you want now and what you want most."</div>
                     <div class="quote-author" id="quoteAuthor">— Abraham Lincoln</div>
+                </div>
+
+                <!-- ==========================================================
+                   BE PRESENT – TONGUE TWISTERS (NEW)
+                   ========================================================== -->
+                <div class="presence-card" id="presenceCard">
+                    <div class="title">
+                        <span class="icon">🎯</span> Be Present – Tongue Twisters
+                    </div>
+                    <div class="subtitle">
+                        Train your mind to be in the moment. Focus on the sounds, not the urges.
+                        <span style="display:block; font-size:12px; color:#64748b; margin-top:4px;">
+                            🧠 You've completed <strong id="presenceCountDisplay" style="color:#8b5cf6;">0</strong> presence sessions!
+                        </span>
+                    </div>
+
+                    <div class="twister-box" id="twisterBox">
+                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                            <span class="focus-badge" id="twisterFocus">S & Sh</span>
+                            <span class="difficulty-badge easy" id="twisterDifficulty">Easy</span>
+                        </div>
+                        <div class="twister-text" id="twisterText">She sells seashells by the seashore.</div>
+                        <div class="pronunciation-guide" id="twisterPronunciation">
+                            <span class="word-break">seashore</span><span class="sep">→</span> see · shaw
+                        </div>
+                    </div>
+
+                    <div class="presence-actions">
+                        <button class="btn btn-primary" id="newTwisterBtn" style="flex:1; padding:12px; font-size:14px;">🔄 New Twister</button>
+                        <button class="btn btn-success" id="twisterDoneBtn" style="flex:1; padding:12px; font-size:14px;">✅ I Did It!</button>
+                    </div>
                 </div>
 
                 <!-- RECLAIM YOUR TIME -->
@@ -626,7 +689,7 @@
                 <div id="journalPreview" style="margin-top:8px; font-size:13px; color:#94a3b8;"></div>
             </div>
 
-            <!-- ===== PAGE 2: PLEDGE (UPDATED) ===== -->
+            <!-- ===== PAGE 2: PLEDGE ===== -->
             <div id="page-pledge" class="page">
                 <div class="pledge-box">
                     <h3>🕊️ Let's Commit.</h3>
@@ -646,7 +709,6 @@
                             </span>
                         </label>
 
-                        <!-- UNLOCKED HINT (visible before commitment) -->
                         <div id="unlockedHintContainer" style="display:block;">
                             <span class="pledge-unlocked-hint">✏️ You can clear and redraw until you commit</span>
                         </div>
@@ -655,7 +717,6 @@
                             <canvas id="signatureCanvas"></canvas>
                         </div>
 
-                        <!-- LOCKED BADGE (visible after commitment) -->
                         <div id="lockedBadgeContainer" style="display:none;">
                             <span class="pledge-locked-badge">🔒 Commitment Signed &amp; Locked</span>
                         </div>
@@ -689,6 +750,21 @@
                             <div class="number" id="cleanPercentage">0%</div>
                             <div class="label">30-Day Success Rate</div>
                             <div class="sub" id="cleanPercentageDetail">0 / 0 logged</div>
+                        </div>
+                    </div>
+
+                    <!-- PRESENCE SESSIONS (NEW) -->
+                    <div class="card" style="border-color: rgba(139,92,246,0.2);">
+                        <div class="card-title" style="color:#8b5cf6;">🎯 Presence Sessions</div>
+                        <div style="display:flex; justify-content:space-around; padding:4px 0;">
+                            <div style="text-align:center;">
+                                <div style="font-size:28px; font-weight:800; color:#8b5cf6;" id="totalPresenceSessions">0</div>
+                                <div style="font-size:11px; color:#94a3b8;">Tongue Twisters Completed</div>
+                            </div>
+                            <div style="text-align:center;">
+                                <div style="font-size:28px; font-weight:800; color:#fbbf24;" id="totalPresenceMinutes">0</div>
+                                <div style="font-size:11px; color:#94a3b8;">Minutes Present</div>
+                            </div>
                         </div>
                     </div>
 
@@ -951,6 +1027,8 @@
             setupNotificationChecker();
             loadProductivityData();
             renderActivities();
+            renderTwister();
+            loadPresenceData();
         });
 
         // ============================================================
@@ -968,6 +1046,7 @@
         const LAST_SKIP_WEEK_KEY = 'reclaim_last_skip_week';
         const PRODUCTIVITY_KEY = 'reclaim_productivity';
         const RESISTED_TRIGGERS_KEY = 'reclaim_resisted_triggers';
+        const PRESENCE_KEY = 'reclaim_presence';
 
         function getStreak() { return parseInt(localStorage.getItem(STREAK_KEY)) || 0; }
 
@@ -1000,8 +1079,17 @@
                 e) { return { sessions: [], totalMinutes: 0 }; }
         }
 
+        function getPresenceData() {
+            try { return JSON.parse(localStorage.getItem(PRESENCE_KEY)) || { sessions: [], totalMinutes: 0 }; } catch (e) {
+                return { sessions: [], totalMinutes: 0 }; }
+        }
+
         function saveProductivityData(data) {
             localStorage.setItem(PRODUCTIVITY_KEY, JSON.stringify(data));
+        }
+
+        function savePresenceData(data) {
+            localStorage.setItem(PRESENCE_KEY, JSON.stringify(data));
         }
 
         function saveDailyLog(date, status) {
@@ -1290,7 +1378,169 @@
         }
 
         // ============================================================
-        // 9. ACTIVITIES / PRODUCTIVITY
+        // 9. TONGUE TWISTERS (NEW)
+        // ============================================================
+        const TWISTERS = [{
+            text: "She sells seashells by the seashore.",
+            focus: "S & Sh",
+            difficulty: "easy",
+            pronunciation: { "seashore": "see · shaw", "shells": "shelz", "sells": "selz" }
+        }, {
+            text: "Silly Sally swiftly shooed seven silly sheep.",
+            focus: "S & Sh",
+            difficulty: "medium",
+            pronunciation: { "swiftly": "swift · lee", "shooed": "shood", "sheep": "sheep" }
+        }, {
+            text: "I saw Susie sitting in a shoe shine shop.",
+            focus: "S & Sh",
+            difficulty: "hard",
+            pronunciation: { "Susie": "soo · zee", "sitting": "sit · ting", "shoe": "shoo", "shine": "shyn" }
+        }, {
+            text: "Tom threw Tim three thumbtacks.",
+            focus: "T & D",
+            difficulty: "easy",
+            pronunciation: { "threw": "throo", "three": "three", "thumbtacks": "thum · taks" }
+        }, {
+            text: "To sit in solemn silence in a dull, dark dock.",
+            focus: "T & D",
+            difficulty: "medium",
+            pronunciation: { "solemn": "sol · em", "silence": "sy · lens", "dock": "dok" }
+        }, {
+            text: "Red lorry, yellow lorry.",
+            focus: "L & R",
+            difficulty: "easy",
+            pronunciation: { "lorry": "lor · ee", "yellow": "yel · oh" }
+        }, {
+            text: "Round and round the rugged rocks the ragged rascal ran.",
+            focus: "L & R",
+            difficulty: "hard",
+            pronunciation: { "rugged": "rug · ed", "ragged": "rag · ed", "rascal": "ras · kal" }
+        }, {
+            text: "Betty Botter bought some butter, but she said the butter's bitter.",
+            focus: "B",
+            difficulty: "medium",
+            pronunciation: { "Botter": "bot · er", "bought": "bawt", "butter": "but · er", "bitter": "bit · er" }
+        }, {
+            text: "Six slippery snails slid slowly southwards.",
+            focus: "S & Sl",
+            difficulty: "medium",
+            pronunciation: { "slippery": "slip · er · ee", "snails": "snayls", "southwards": "south · wardz" }
+        }, {
+            text: "I saw a kitten eating chicken in the kitchen.",
+            focus: "K & Ch",
+            difficulty: "easy",
+            pronunciation: { "kitten": "kit · en", "chicken": "chik · en", "kitchen": "kich · en" }
+        }, {
+            text: "Thirty thirsty thrushes threw thirty thick thorns.",
+            focus: "Th",
+            difficulty: "hard",
+            pronunciation: { "thirsty": "thur · stee", "thrushes": "thrush · ez", "thorns": "thawrnz" }
+        }, {
+            text: "Fresh fried fish, fish fresh fried, fried fish fresh.",
+            focus: "Fr & Sh",
+            difficulty: "hard",
+            pronunciation: { "fresh": "fresh", "fried": "fryd", "fish": "fish" }
+        }, {
+            text: "Peter Piper picked a peck of pickled peppers.",
+            focus: "P",
+            difficulty: "medium",
+            pronunciation: { "Piper": "py · per", "peck": "pek", "pickled": "pik · ld", "peppers": "pep · erz" }
+        }, {
+            text: "How can a clam cram in a clean cream can?",
+            focus: "C & K",
+            difficulty: "medium",
+            pronunciation: { "clam": "klam", "cram": "kram", "cream": "kreem" }
+        }, {
+            text: "Fuzzy Wuzzy was a bear. Fuzzy Wuzzy had no hair.",
+            focus: "F & W",
+            difficulty: "easy",
+            pronunciation: { "Fuzzy": "fuz · ee", "Wuzzy": "wuz · ee", "bear": "bare", "hair": "hare" }
+        }, {
+            text: "The sixth sick sheik's sixth sheep's sick.",
+            focus: "S & Sh",
+            difficulty: "hard",
+            pronunciation: { "sixth": "siksth", "sheik": "shake", "sheep": "sheep" }
+        }, ];
+
+        let currentTwister = null;
+
+        function getRandomTwister() {
+            const idx = Math.floor(Math.random() * TWISTERS.length);
+            return TWISTERS[idx];
+        }
+
+        function renderTwister() {
+            const twister = getRandomTwister();
+            currentTwister = twister;
+
+            document.getElementById('twisterFocus').innerText = twister.focus;
+
+            // Difficulty badge
+            const diffBadge = document.getElementById('twisterDifficulty');
+            diffBadge.innerText = twister.difficulty.charAt(0).toUpperCase() + twister.difficulty.slice(1);
+            diffBadge.className = 'difficulty-badge ' + twister.difficulty;
+
+            document.getElementById('twisterText').innerText = twister.text;
+
+            // Build pronunciation guide
+            const keys = Object.keys(twister.pronunciation);
+            let pronHTML = '';
+            keys.forEach((word, idx) => {
+                pronHTML += `<span class="word-break">${word}</span><span class="sep">→</span> ${twister.pronunciation[word]}`;
+                if (idx < keys.length - 1) pronHTML += '<span class="sep"> &nbsp;·&nbsp; </span>';
+            });
+            document.getElementById('twisterPronunciation').innerHTML = pronHTML;
+        }
+
+        // New Twister button
+        document.getElementById('newTwisterBtn').addEventListener('click', function() {
+            renderTwister();
+            // Reset the done button
+            const doneBtn = document.getElementById('twisterDoneBtn');
+            doneBtn.disabled = false;
+            doneBtn.style.opacity = '1';
+            doneBtn.innerText = '✅ I Did It!';
+        });
+
+        // "I Did It!" for Tongue Twister
+        document.getElementById('twisterDoneBtn').addEventListener('click', function() {
+            if (this.disabled) return;
+
+            // Log the presence session
+            const data = getPresenceData();
+            const now = new Date();
+            const session = {
+                date: now.toISOString().split('T')[0],
+                time: now.toLocaleTimeString(),
+                twister: currentTwister ? currentTwister.text : 'Tongue Twister',
+                focus: currentTwister ? currentTwister.focus : 'General',
+                minutes: 2, // Average time to practice
+            };
+            data.sessions.push(session);
+            data.totalMinutes = (data.totalMinutes || 0) + session.minutes;
+            savePresenceData(data);
+
+            this.disabled = true;
+            this.style.opacity = '0.5';
+            this.innerText = '✅ Done! Great job!';
+
+            showModal('🎯', 'Presence Session Logged!',
+                `You practiced "${currentTwister ? currentTwister.focus : 'Tongue Twister'}" sounds and stayed present. 🧠`,
+                'Awesome', '', null);
+
+            loadPresenceData();
+            updateAllUI();
+        });
+
+        function loadPresenceData() {
+            const data = getPresenceData();
+            document.getElementById('presenceCountDisplay').innerText = data.sessions.length || 0;
+            document.getElementById('totalPresenceSessions').innerText = data.sessions.length || 0;
+            document.getElementById('totalPresenceMinutes').innerText = data.totalMinutes || 0;
+        }
+
+        // ============================================================
+        // 10. ACTIVITIES / PRODUCTIVITY
         // ============================================================
         const ACTIVITIES = [
             { emoji: '📚', label: 'Read Research Paper' },
@@ -1450,7 +1700,7 @@
         }
 
         // ============================================================
-        // 10. STREAK, SKIP, RESET
+        // 11. STREAK, SKIP, RESET
         // ============================================================
         function advanceStreak() {
             const today = new Date().toISOString().split('T')[0];
@@ -1513,7 +1763,7 @@
         }
 
         // ============================================================
-        // 11. RESET WITH TRIGGER
+        // 12. RESET WITH TRIGGER
         // ============================================================
         async function handleReset() {
             const triggers = ['Stress', 'Boredom', 'Loneliness', 'Saw Content', 'Tired', 'Other'];
@@ -1568,7 +1818,7 @@
         }
 
         // ============================================================
-        // 12. PANIC BUTTON
+        // 13. PANIC BUTTON
         // ============================================================
         const EMERGENCY_ACTIONS = [
             'Do 10 pushups right now',
@@ -1732,7 +1982,7 @@
         }
 
         // ============================================================
-        // 13. SIGNATURE CANVAS (UPDATED)
+        // 14. SIGNATURE CANVAS
         // ============================================================
         let isDrawing = false;
         let lastX = 0,
@@ -1851,9 +2101,6 @@
             }
         }
 
-        // ============================================================
-        // 14. PLEDGE LOCK STATE (UPDATED)
-        // ============================================================
         function applyPledgeLockState() {
             const hasSig = isSignatureSaved();
             const wrapper = document.getElementById('sigWrapper');
@@ -1864,7 +2111,6 @@
             const unlockedHint = document.getElementById('unlockedHintContainer');
 
             if (hasSig) {
-                // LOCKED STATE
                 wrapper.classList.add('locked');
                 wrapper.classList.remove('active');
                 if (canvasEl) {
@@ -1880,7 +2126,6 @@
                     commitBtn.disabled = true;
                 }
             } else {
-                // UNLOCKED STATE
                 wrapper.classList.remove('locked');
                 wrapper.classList.remove('active');
                 if (canvasEl) {
@@ -1905,7 +2150,6 @@
                     null);
                 return;
             }
-            // Clear the signature from canvas and localStorage
             localStorage.removeItem(SIG_IMG_KEY);
             if (ctx) {
                 ctx.fillStyle = '#0a0a18';
@@ -1922,7 +2166,6 @@
                 return;
             }
 
-            // Check if canvas has any drawing
             const canvas = document.getElementById('signatureCanvas');
             const ctx = canvas.getContext('2d');
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -1939,10 +2182,8 @@
                 return;
             }
 
-            // Save the signature permanently
             saveSignatureImage();
 
-            // Advance streak
             const today = new Date().toISOString().split('T')[0];
             const lastDate = getLastDate();
             let current = getStreak();
@@ -2083,7 +2324,6 @@
 
             let html = '';
 
-            // Resisted triggers (from Panic Button)
             if (resistedKeys.length > 0) {
                 const resistedCounts = {};
                 resistedKeys.forEach(date => {
@@ -2114,7 +2354,6 @@
                 html += '</div>';
             }
 
-            // Relapse triggers (from Reset)
             if (relapseKeys.length > 0) {
                 const relapseCounts = {};
                 relapseKeys.forEach(date => {
@@ -2184,6 +2423,7 @@
                 lastSkipWeek: localStorage.getItem(LAST_SKIP_WEEK_KEY),
                 productivity: localStorage.getItem(PRODUCTIVITY_KEY),
                 resistedTriggers: localStorage.getItem(RESISTED_TRIGGERS_KEY),
+                presence: localStorage.getItem(PRESENCE_KEY),
             };
 
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -2217,6 +2457,7 @@
                     if (data.lastSkipWeek) localStorage.setItem(LAST_SKIP_WEEK_KEY, data.lastSkipWeek);
                     if (data.productivity) localStorage.setItem(PRODUCTIVITY_KEY, data.productivity);
                     if (data.resistedTriggers) localStorage.setItem(RESISTED_TRIGGERS_KEY, data.resistedTriggers);
+                    if (data.presence) localStorage.setItem(PRESENCE_KEY, data.presence);
 
                     showModal('✅', 'Import Successful!', 'Your backup has been restored.', 'Awesome', '', null);
                     updateAllUI();
@@ -2292,6 +2533,7 @@
             applyPledgeLockState();
             renderDailyQuote();
             loadProductivityData();
+            loadPresenceData();
 
             const skipBtn = document.getElementById('skipTodayBtn');
             if (canSkipThisWeek()) {
