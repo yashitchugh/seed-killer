@@ -121,7 +121,7 @@
         .btn-timer-outline.active { border-color: #fbbf24; color: #fbbf24; background: rgba(251,191,36,0.05); }
 
         /* ==========================================================
-           RECLAIM YOUR TIME – ENHANCED
+           RECLAIM YOUR TIME
            ========================================================== */
         .reclaim-card {
             background: linear-gradient(145deg, rgba(45, 212, 191, 0.05), rgba(139, 92, 246, 0.05));
@@ -139,7 +139,6 @@
             font-size: 13px; color: #94a3b8; margin-bottom: 12px;
         }
 
-        /* Timer Presets */
         .timer-presets {
             display: flex; flex-wrap: wrap; gap: 6px;
             margin: 8px 0 12px;
@@ -169,7 +168,6 @@
             border-color: #fbbf24;
         }
 
-        /* Search Bar */
         .activity-search {
             position: relative;
             margin: 8px 0 12px;
@@ -256,7 +254,6 @@
         }
         .timer-controls .btn { width: auto; padding: 10px 24px; font-size: 14px; margin-bottom: 0; }
 
-        /* Recent Activities */
         .recent-activities {
             margin-top: 12px;
             padding-top: 12px;
@@ -293,22 +290,119 @@
         .quote-card .quote-text { font-size: 15px; font-weight: 500; color: #e2e8f0; line-height: 1.6; font-style: italic; }
         .quote-card .quote-author { font-size: 12px; color: #fbbf24; margin-top: 6px; font-weight: 600; }
 
-        /* ----- NOTIFICATION SETTINGS ----- */
+        /* ==========================================================
+           NOTIFICATION SETTINGS – ENHANCED UI
+           ========================================================== */
         .notif-card {
             background: rgba(139, 92, 246, 0.05);
             border: 1px solid rgba(139, 92, 246, 0.15);
-            border-radius: 20px; padding: 14px 16px;
+            border-radius: 20px;
+            padding: 16px;
             margin-bottom: 16px;
-            display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 8px;
         }
-        .notif-card .notif-left { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #cbd5e1; flex-wrap: wrap; }
-        .notif-card .notif-left input[type="time"] { background: rgba(0,0,0,0.4); border: 1px solid #334155; border-radius: 8px; padding: 4px 8px; color: #fbbf24; font-size: 14px; width: 80px; }
-        .notif-card .notif-left input[type="checkbox"] { accent-color: #8b5cf6; width: 18px; height: 18px; cursor: pointer; }
+        .notif-card .notif-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .notif-card .notif-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .notif-card .notif-icon {
+            font-size: 22px;
+        }
+        .notif-card .notif-left .notif-title {
+            font-weight: 600;
+            color: #e2e8f0;
+            font-size: 15px;
+        }
+        .notif-card .notif-left .notif-sub {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .notif-card .notif-left .notif-sub strong {
+            color: #fbbf24;
+            font-weight: 600;
+        }
 
-        /* ==========================================================
-           PLEDGE SECTION
-           ========================================================== */
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #334155;
+            transition: .3s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background: #8b5cf6;
+        }
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        .notif-body {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .notif-body input[type="time"] {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: #fbbf24;
+            font-size: 14px;
+            flex: 1;
+            min-width: 100px;
+            outline: none;
+        }
+        .notif-body input[type="time"]:focus {
+            border-color: #8b5cf6;
+        }
+        .notif-body .notif-status-text {
+            font-size: 11px;
+            color: #64748b;
+            flex: 1;
+            min-width: 80px;
+        }
+        .notif-body .notif-status-text.enabled {
+            color: #2dd4bf;
+        }
+        .notif-body .notif-status-text.disabled {
+            color: #64748b;
+        }
+
+        /* ----- PLEDGE SECTION ----- */
         .pledge-box {
             background: rgba(251, 191, 36, 0.05);
             border: 1px solid rgba(251, 191, 36, 0.15);
@@ -544,6 +638,25 @@
         .equiv-item .val { font-size: 14px; font-weight: 700; color: #e2e8f0; }
         .equiv-item .lbl { font-size: 9px; color: #94a3b8; }
 
+        /* Trigger Timeline (NEW) */
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.2);
+            margin-bottom: 6px;
+            border-left: 3px solid #64748b;
+        }
+        .timeline-item.panic { border-left-color: #2dd4bf; }
+        .timeline-item.relapse { border-left-color: #ef4444; }
+        .timeline-item .timeline-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+        .timeline-item .timeline-content { flex: 1; }
+        .timeline-item .timeline-date { font-size: 11px; color: #64748b; }
+        .timeline-item .timeline-label { font-size: 14px; font-weight: 600; color: #e2e8f0; }
+        .timeline-item .timeline-detail { font-size: 12px; color: #94a3b8; }
+
         .data-mgmt-actions { display: flex; gap: 10px; margin-top: 8px; }
         .data-mgmt-actions button { flex: 1; padding: 10px; border-radius: 12px; border: none; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s; }
         .data-mgmt-actions button:active { transform: scale(0.95); }
@@ -563,33 +676,12 @@
         .why-quit-card ul li { font-size: 13px; color: #cbd5e1; padding: 4px 0; display: flex; align-items: center; gap: 6px; }
         .why-quit-card ul li::before { content: "✓"; color: #2dd4bf; font-weight: 700; }
 
-        /* ==========================================================
-           PRESENT PAGE (TONGUE TWISTERS)
-           ========================================================== */
-        .present-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .present-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .present-header h2 {
-            font-size: 22px;
-            font-weight: 800;
-            color: #8b5cf6;
-        }
-        .present-header .present-stats {
-            font-size: 13px;
-            color: #94a3b8;
-            text-align: right;
-        }
-        .present-header .present-stats strong {
-            color: #fbbf24;
-            font-weight: 700;
-        }
+        /* ----- PRESENT PAGE ----- */
+        .present-container { display: flex; flex-direction: column; gap: 16px; }
+        .present-header { display: flex; justify-content: space-between; align-items: center; }
+        .present-header h2 { font-size: 22px; font-weight: 800; color: #8b5cf6; }
+        .present-header .present-stats { font-size: 13px; color: #94a3b8; text-align: right; }
+        .present-header .present-stats strong { color: #fbbf24; font-weight: 700; }
 
         .present-card {
             background: linear-gradient(145deg, rgba(139, 92, 246, 0.08), rgba(45, 212, 191, 0.03));
@@ -712,7 +804,8 @@
             .intensity-grid { grid-template-columns: repeat(5, 1fr); }
             .data-mgmt-actions { flex-direction: column; }
             .why-quit-card ul { grid-template-columns: 1fr; }
-            .notif-card { flex-direction: column; align-items: stretch; }
+            .notif-body { flex-direction: column; align-items: stretch; }
+            .notif-body .notif-status-text { text-align: center; }
             .activity-grid { grid-template-columns: 1fr 1fr; }
             .present-actions { flex-direction: column; }
             .twister-box .twister-text { font-size: 20px; }
@@ -753,7 +846,7 @@
                 </div>
 
                 <!-- ==========================================================
-                   RECLAIM YOUR TIME – ENHANCED
+                   RECLAIM YOUR TIME
                    ========================================================== -->
                 <div class="reclaim-card" id="reclaimCard">
                     <div class="title">
@@ -766,7 +859,6 @@
                         </span>
                     </div>
 
-                    <!-- TIMER PRESETS -->
                     <div class="timer-presets">
                         <button class="btn-timer-outline" data-minutes="10">10m</button>
                         <button class="btn-timer-outline" data-minutes="15">15m</button>
@@ -777,16 +869,13 @@
                         <input type="number" class="custom-time-input" id="customTimeInput" placeholder="Custom" min="1" max="180" value="" />
                     </div>
 
-                    <!-- SEARCH BAR -->
                     <div class="activity-search">
                         <input type="text" id="activitySearchInput" placeholder="🔍 Search activities..." />
                         <span class="search-icon">🔍</span>
                     </div>
 
-                    <!-- ACTIVITY GRID -->
                     <div class="activity-grid" id="activityGrid"></div>
 
-                    <!-- TIMER -->
                     <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.05);">
                         <div class="timer-display" id="timerDisplay">25:00</div>
                         <div class="timer-controls">
@@ -802,7 +891,6 @@
                         ✅ I Did It! (Complete a session first)
                     </button>
 
-                    <!-- RECENT ACTIVITIES -->
                     <div class="recent-activities" id="recentActivities">
                         <div class="recent-label">📌 Recent Activities</div>
                         <div class="recent-tags" id="recentTags">
@@ -811,15 +899,28 @@
                     </div>
                 </div>
 
-                <!-- NOTIFICATION SETTINGS -->
+                <!-- ==========================================================
+                   NOTIFICATION SETTINGS – ENHANCED UI
+                   ========================================================== -->
                 <div class="notif-card" id="notifCard">
-                    <div class="notif-left">
-                        <span>🔔</span>
-                        <span style="font-weight:600;">Reminder</span>
-                        <input type="time" id="reminderTime" value="09:00" />
-                        <label><input type="checkbox" id="reminderToggle" /> Enable</label>
+                    <div class="notif-header">
+                        <div class="notif-left">
+                            <span class="notif-icon">🔔</span>
+                            <div>
+                                <div class="notif-title">Daily Reminder</div>
+                                <div class="notif-sub" id="notifStatus">⏰ Next: <strong id="nextReminderTime">--:--</strong></div>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="reminderToggle" />
+                            <span class="slider round"></span>
+                        </label>
                     </div>
-                    <button class="btn btn-sm btn-purple" id="testNotifBtn" style="margin:0;">Test</button>
+                    <div class="notif-body">
+                        <input type="time" id="reminderTime" value="09:00" />
+                        <button class="btn btn-sm btn-purple" id="testNotifBtn" style="margin:0; padding:8px 16px; font-size:13px;">🔔 Test</button>
+                        <span class="notif-status-text" id="notifStatusDetail">Disabled</span>
+                    </div>
                 </div>
 
                 <div id="pledgeStatus" style="background:rgba(45,212,191,0.05); border-radius:16px; padding:12px; margin-bottom:16px; border-left:4px solid #2dd4bf;">
@@ -1012,13 +1113,16 @@
                         <div class="week-dots" id="weekDotsContainer" style="margin-top:8px;"></div>
                     </div>
 
+                    <!-- TRIGGER INSIGHTS – TIMELINE (NEW) -->
                     <div class="card">
-                        <div class="card-title" style="color:#fbbf24;">🧠 Trigger Insights</div>
-                        <div id="triggerAnalyticsContainer">
-                            <div style="font-size:14px; color:#94a3b8;">No data yet. Use the Panic Button or Reset to start tracking.</div>
+                        <div class="flex-between">
+                            <div class="card-title" style="color:#fbbf24;">🧠 Trigger Timeline</div>
+                            <div style="font-size:12px; color:#64748b;" id="resistedVsRelapsed">Resisted: 0 · Relapsed: 0</div>
+                        </div>
+                        <div id="triggerTimelineContainer" style="max-height:300px; overflow-y:auto; margin-top:4px;">
+                            <div style="font-size:14px; color:#94a3b8; padding:12px 0; text-align:center;">No data yet. Use the Panic Button or Reset to start tracking.</div>
                         </div>
                         <div style="margin-top:6px; font-size:12px; color:#64748b;" id="urgeIntensitySummary">Avg urge intensity: --</div>
-                        <div style="margin-top:4px; font-size:12px; color:#64748b;" id="resistedVsRelapsed">Resisted: 0 · Relapsed: 0</div>
                     </div>
 
                     <div class="card">
@@ -1325,7 +1429,6 @@
 
         function addRecentActivity(activity) {
             const recent = getRecentActivities();
-            // Remove duplicates
             const filtered = recent.filter(a => a !== activity);
             filtered.unshift(activity);
             if (filtered.length > 5) filtered.pop();
@@ -1343,15 +1446,12 @@
             container.innerHTML = recent.map(a =>
                 `<span class="recent-tag" data-activity="${a}">${a}</span>`
             ).join('');
-            // Click to select
             container.querySelectorAll('.recent-tag').forEach(tag => {
                 tag.addEventListener('click', function() {
                     const act = this.dataset.activity;
-                    // Find and click the matching activity button
                     document.querySelectorAll('.activity-btn').forEach(btn => {
                         if (btn.dataset.label === act) {
                             btn.click();
-                            // Scroll to it
                             btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
                     });
@@ -1506,22 +1606,30 @@
         });
 
         // ============================================================
-        // 6. NOTIFICATIONS
+        // 6. NOTIFICATIONS – ENHANCED
         // ============================================================
         let reminderInterval = null;
 
         function setupNotificationChecker() {
             const savedTime = localStorage.getItem('reclaim_reminder_time') || '09:00';
             const savedToggle = localStorage.getItem('reclaim_reminder_enabled') === 'true';
+
             document.getElementById('reminderTime').value = savedTime;
             document.getElementById('reminderToggle').checked = savedToggle;
+
+            updateReminderStatus();
+
             if (savedToggle) { startReminderChecker(); }
+
             document.getElementById('reminderTime').addEventListener('change', function() {
                 localStorage.setItem('reclaim_reminder_time', this.value);
+                updateReminderStatus();
                 if (document.getElementById('reminderToggle').checked) { startReminderChecker(); }
             });
+
             document.getElementById('reminderToggle').addEventListener('change', function() {
                 localStorage.setItem('reclaim_reminder_enabled', this.checked);
+                updateReminderStatus();
                 if (this.checked) {
                     startReminderChecker();
                     if ('Notification' in window && Notification.permission === 'default') {
@@ -1533,6 +1641,32 @@
             });
         }
 
+        function updateReminderStatus() {
+            const time = document.getElementById('reminderTime').value;
+            const enabled = document.getElementById('reminderToggle').checked;
+            const statusEl = document.getElementById('notifStatus');
+            const nextTimeEl = document.getElementById('nextReminderTime');
+            const detailEl = document.getElementById('notifStatusDetail');
+
+            if (enabled && time) {
+                const now = new Date();
+                const [hours, minutes] = time.split(':').map(Number);
+                const target = new Date(now);
+                target.setHours(hours, minutes, 0, 0);
+                if (target <= now) target.setDate(target.getDate() + 1);
+                const timeStr = target.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                nextTimeEl.innerText = timeStr;
+                statusEl.innerHTML = `⏰ Next: <strong style="color:#fbbf24;">${timeStr}</strong>`;
+                detailEl.innerText = '✅ Enabled';
+                detailEl.className = 'notif-status-text enabled';
+            } else {
+                nextTimeEl.innerText = '--:--';
+                statusEl.innerHTML = `⏰ Next: <strong style="color:#64748b;">off</strong>`;
+                detailEl.innerText = '❌ Disabled';
+                detailEl.className = 'notif-status-text disabled';
+            }
+        }
+
         function startReminderChecker() {
             clearInterval(reminderInterval);
             reminderInterval = setInterval(checkReminder, 60000);
@@ -1542,47 +1676,78 @@
         function checkReminder() {
             const enabled = document.getElementById('reminderToggle').checked;
             if (!enabled) return;
+
             const timeStr = document.getElementById('reminderTime').value;
             if (!timeStr) return;
+
             const now = new Date();
             const [hours, minutes] = timeStr.split(':').map(Number);
             const target = new Date(now);
             target.setHours(hours, minutes, 0, 0);
+
             if (target < now) { return; }
+
             const diff = target - now;
             if (diff < 60000 && diff > -60000) {
                 const today = new Date().toISOString().split('T')[0];
                 const logs = getDailyLogs();
                 if (logs[today] === 'clean') { return; }
+
+                const lastSent = localStorage.getItem('reclaim_last_notif_sent');
+                if (lastSent === today) { return; }
+                localStorage.setItem('reclaim_last_notif_sent', today);
+
                 sendReminderNotification();
             }
         }
 
         function sendReminderNotification() {
             if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
             const streak = getStreak();
-            const body = streak > 0 ?
-                `You have a ${streak}-day streak! Tap to check in and keep it alive. 🔥` :
-                'Start your day with a commitment. You\'ve got this! 💪';
-            new Notification('⛰️ Reclaim – Good Morning!', {
+            let body;
+            if (streak > 0) {
+                body = `You have a ${streak}-day streak! Tap to check in and keep it alive. 🔥`;
+            } else {
+                body = 'Start your day with a commitment. You\'ve got this! 💪';
+            }
+
+            const notification = new Notification('⛰️ Reclaim – Good Morning!', {
                 body: body,
                 icon: generateAppLogo(),
                 vibrate: [200, 100, 200],
                 requireInteraction: true,
+                tag: 'reclaim-reminder',
             });
+
+            notification.onclick = function() {
+                window.focus();
+                this.close();
+            };
         }
 
         document.getElementById('testNotifBtn').addEventListener('click', function() {
-            if (!('Notification' in window)) { alert('Notifications not supported.'); return; }
-            if (Notification.permission === 'denied') { alert('Notifications blocked.'); return; }
+            if (!('Notification' in window)) {
+                alert('Notifications not supported in this browser.');
+                return;
+            }
+            if (Notification.permission === 'denied') {
+                alert('Notifications are blocked. Please enable in browser settings.');
+                return;
+            }
             if (Notification.permission === 'default') {
                 Notification.requestPermission().then(perm => {
-                    if (perm === 'granted') { sendReminderNotification(); } else { alert(
-                            'Please allow notifications.'); }
+                    if (perm === 'granted') {
+                        sendReminderNotification();
+                        alert('✅ Test notification sent! Check your notifications.');
+                    } else {
+                        alert('Please allow notifications to receive reminders.');
+                    }
                 });
                 return;
             }
             sendReminderNotification();
+            alert('✅ Test notification sent! Check your notifications.');
         });
 
         // ============================================================
@@ -1645,7 +1810,7 @@
         }
 
         // ============================================================
-        // 9. TONGUE TWISTERS (INDIAN ACCENT PRONUNCIATION)
+        // 9. TONGUE TWISTERS
         // ============================================================
         const TWISTERS = [{
             text: "She sells seashells by the seashore.",
@@ -1806,7 +1971,7 @@
         }
 
         // ============================================================
-        // 10. ACTIVITIES / PRODUCTIVITY (ENHANCED)
+        // 10. ACTIVITIES (8 random on load)
         // ============================================================
         const ACTIVITIES = [
             { emoji: '📚', label: 'Read Research Paper', category: 'Learning' },
@@ -1845,11 +2010,19 @@
         function renderActivities(filter = '') {
             const grid = document.getElementById('activityGrid');
             grid.innerHTML = '';
-            const filtered = ACTIVITIES.filter(a =>
-                a.label.toLowerCase().includes(filter.toLowerCase()) ||
-                a.category.toLowerCase().includes(filter.toLowerCase()) ||
-                a.emoji.includes(filter)
-            );
+
+            let filtered = ACTIVITIES;
+            if (filter.trim()) {
+                filtered = ACTIVITIES.filter(a =>
+                    a.label.toLowerCase().includes(filter.toLowerCase()) ||
+                    a.category.toLowerCase().includes(filter.toLowerCase()) ||
+                    a.emoji.includes(filter)
+                );
+            } else {
+                // Show only 8 random activities
+                const shuffled = [...ACTIVITIES].sort(() => 0.5 - Math.random());
+                filtered = shuffled.slice(0, 8);
+            }
 
             if (filtered.length === 0) {
                 grid.innerHTML = '<div class="no-results">No activities found. Try a different search.</div>';
@@ -1894,7 +2067,6 @@
                         document.getElementById('timerStatus').innerText =
                             `⏳ ${selectedMinutes} min timer set. Select an activity.`;
                     }
-                    // Clear custom input
                     document.getElementById('customTimeInput').value = '';
                 }
             });
@@ -1917,12 +2089,10 @@
             }
         });
 
-        // Search
         document.getElementById('activitySearchInput').addEventListener('input', function() {
             renderActivities(this.value);
         });
 
-        // Timer Logic
         document.getElementById('timerStartBtn').addEventListener('click', function() {
             if (!selectedActivity) {
                 document.getElementById('timerStatus').innerText = '⚠️ Select an activity first!';
@@ -2002,7 +2172,6 @@
             data.totalMinutes = (data.totalMinutes || 0) + actualMinutes;
             saveProductivityData(data);
 
-            // Add to recent activities
             if (selectedActivity) {
                 addRecentActivity(selectedActivity);
             }
@@ -2585,7 +2754,7 @@
         }
 
         // ============================================================
-        // 16. HEATMAP, CLEAN %, TRIGGER ANALYTICS
+        // 16. HEATMAP, CLEAN %, TRIGGER TIMELINE (NEW)
         // ============================================================
         function renderHeatmap() {
             const grid = document.getElementById('heatmapGrid');
@@ -2642,88 +2811,83 @@
             return { clean, total, pct };
         }
 
-        function renderTriggerAnalytics() {
-            const triggerLogs = getTriggerLogs();
-            const resistedLogs = getResistedTriggers();
-            const container = document.getElementById('triggerAnalyticsContainer');
+        function renderTriggerTimeline() {
+            const triggerLogs = getTriggerLogs(); // relapse triggers
+            const resistedLogs = getResistedTriggers(); // panic triggers
+            const container = document.getElementById('triggerTimelineContainer');
 
-            const relapseKeys = Object.keys(triggerLogs);
-            const resistedKeys = Object.keys(resistedLogs);
+            // Combine all events into one timeline
+            const events = [];
 
-            if (relapseKeys.length === 0 && resistedKeys.length === 0) {
+            // Add relapse events
+            Object.keys(triggerLogs).forEach(date => {
+                const trigger = triggerLogs[date];
+                // Get intensity from urge logs if available
+                const urgeLogs = getUrgeIntensity();
+                const intensity = urgeLogs[date] || '--';
+                events.push({
+                    date: date,
+                    type: 'relapse',
+                    trigger: trigger,
+                    intensity: intensity,
+                    label: '🔴 Relapse',
+                });
+            });
+
+            // Add resisted (panic) events
+            Object.keys(resistedLogs).forEach(date => {
+                const entry = resistedLogs[date];
+                if (entry && entry.trigger) {
+                    events.push({
+                        date: date,
+                        type: 'panic',
+                        trigger: entry.trigger,
+                        intensity: entry.intensity || '--',
+                        label: '🟢 Resisted',
+                    });
+                }
+            });
+
+            // Sort by date (newest first)
+            events.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (events.length === 0) {
                 container.innerHTML =
-                    '<div style="font-size:14px; color:#94a3b8;">No data yet. Use the Panic Button or Reset to start tracking.</div>';
-                document.getElementById('urgeIntensitySummary').innerText = 'Avg urge intensity: --';
+                    '<div style="font-size:14px; color:#94a3b8; padding:12px 0; text-align:center;">No data yet. Use the Panic Button or Reset to start tracking.</div>';
                 document.getElementById('resistedVsRelapsed').innerText = 'Resisted: 0 · Relapsed: 0';
+                document.getElementById('urgeIntensitySummary').innerText = 'Avg urge intensity: --';
                 return;
             }
 
             let html = '';
+            events.forEach(event => {
+                const dateObj = new Date(event.date);
+                const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                const timeStr = dateObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                const cls = event.type === 'panic' ? 'panic' : 'relapse';
+                const icon = event.type === 'panic' ? '🟢' : '🔴';
+                const label = event.type === 'panic' ? 'Resisted' : 'Relapsed';
 
-            if (resistedKeys.length > 0) {
-                const resistedCounts = {};
-                resistedKeys.forEach(date => {
-                    const entry = resistedLogs[date];
-                    if (entry && entry.trigger) {
-                        resistedCounts[entry.trigger] = (resistedCounts[entry.trigger] || 0) + 1;
-                    }
-                });
-                const sortedResisted = Object.entries(resistedCounts).sort((a, b) => b[1] - a[1]);
-                html +=
-                    '<div style="margin-bottom:10px;"><div style="font-size:13px; color:#2dd4bf; font-weight:600; margin-bottom:4px;">🟢 Successfully Resisted (Panic)</div>';
-                if (sortedResisted.length > 0) {
-                    sortedResisted.slice(0, 3).forEach(([trigger, count]) => {
-                        const barWidth = Math.max(10, Math.min(100, count * 25));
-                        html += `
-                                    <div style="display:flex; align-items:center; gap:6px; margin:3px 0;">
-                                        <span style="font-size:12px; color:#94a3b8; min-width:40px;">${trigger}</span>
-                                        <div style="flex:1; height:5px; background:#1e293b; border-radius:10px; overflow:hidden;">
-                                            <div style="height:100%; width:${barWidth}%; background: linear-gradient(90deg, #2dd4bf, #fbbf24); border-radius:10px;"></div>
-                                        </div>
-                                        <span style="font-size:11px; color:#2dd4bf; font-weight:600;">${count}x</span>
+                html += `
+                            <div class="timeline-item ${cls}">
+                                <div class="timeline-icon">${icon}</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-label">${label}: ${event.trigger}</div>
+                                    <div class="timeline-detail">
+                                        ${dateStr} · ${timeStr}
+                                        ${event.intensity !== '--' ? `· Intensity: ${event.intensity}/10` : ''}
                                     </div>
-                                `;
-                    });
-                } else {
-                    html += '<div style="font-size:12px; color:#64748b;">No resisted triggers logged.</div>';
-                }
-                html += '</div>';
-            }
-
-            if (relapseKeys.length > 0) {
-                const relapseCounts = {};
-                relapseKeys.forEach(date => {
-                    const trigger = triggerLogs[date];
-                    if (trigger) {
-                        relapseCounts[trigger] = (relapseCounts[trigger] || 0) + 1;
-                    }
-                });
-                const sortedRelapse = Object.entries(relapseCounts).sort((a, b) => b[1] - a[1]);
-                html +=
-                    '<div><div style="font-size:13px; color:#ef4444; font-weight:600; margin-bottom:4px;">🔴 Relapse Triggers (Reset)</div>';
-                if (sortedRelapse.length > 0) {
-                    sortedRelapse.slice(0, 3).forEach(([trigger, count]) => {
-                        const barWidth = Math.max(10, Math.min(100, count * 25));
-                        html += `
-                                    <div style="display:flex; align-items:center; gap:6px; margin:3px 0;">
-                                        <span style="font-size:12px; color:#94a3b8; min-width:40px;">${trigger}</span>
-                                        <div style="flex:1; height:5px; background:#1e293b; border-radius:10px; overflow:hidden;">
-                                            <div style="height:100%; width:${barWidth}%; background: linear-gradient(90deg, #fbbf24, #ef4444); border-radius:10px;"></div>
-                                        </div>
-                                        <span style="font-size:11px; color:#ef4444; font-weight:600;">${count}x</span>
-                                    </div>
-                                `;
-                    });
-                } else {
-                    html += '<div style="font-size:12px; color:#64748b;">No relapse triggers logged.</div>';
-                }
-                html += '</div>';
-            }
+                                    <div class="timeline-date">${event.type === 'panic' ? '✅ Successfully resisted' : '⚠️ Relapse logged'}</div>
+                                </div>
+                            </div>
+                        `;
+            });
 
             container.innerHTML = html;
 
-            const totalResisted = resistedKeys.length;
-            const totalRelapses = relapseKeys.length;
+            // Summary stats
+            const totalResisted = Object.keys(resistedLogs).length;
+            const totalRelapses = Object.keys(triggerLogs).length;
             document.getElementById('resistedVsRelapsed').innerText =
                 `Resisted: ${totalResisted} · Relapsed: ${totalRelapses}`;
 
@@ -2867,7 +3031,7 @@
             renderBadges(streak);
             renderHeatmap();
             calculateCleanPercentage();
-            renderTriggerAnalytics();
+            renderTriggerTimeline();
             applyPledgeLockState();
             renderDailyQuote();
             loadProductivityData();
@@ -2974,7 +3138,7 @@
             if (pageId === 'page-pledge') setTimeout(initCanvas, 150);
             if (pageId === 'page-stats') { updateAllUI();
                 updateStatsPage();
-                renderTriggerAnalytics(); }
+                renderTriggerTimeline(); }
             if (pageId === 'page-journal') renderFullJournal();
             if (pageId === 'page-present') { renderTwister();
                 loadPresenceData(); }
